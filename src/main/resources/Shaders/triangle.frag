@@ -2,7 +2,7 @@
 
 uniform sampler2D texSample;
 
-out vec4 gl_FragColor;
+//out vec4 gl_FragColor;
 in vec2 texCoord;
 
 void main() {

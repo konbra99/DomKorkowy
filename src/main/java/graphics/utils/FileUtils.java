@@ -7,7 +7,8 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class FileUtils {
-    private FileUtils() {}
+    private FileUtils() {
+    }
 
     public static String loadFile(String filename) {
         File file = new File(Main.SHADERS_PATH + filename);

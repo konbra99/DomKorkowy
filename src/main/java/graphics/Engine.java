@@ -1,41 +1,18 @@
 package graphics;
 
-import graphics.utils.BufferUtils;
-import graphics.utils.ImageUtils;
 import org.lwjgl.Version;
 import org.lwjgl.opengl.GL;
+
+import java.util.Objects;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL30.glBindVertexArray;
 
 public class Engine implements Runnable {
     private Window window;
-    private VertexArrayObject VAO;
-    private Program program;
-    private int location;
-    float offset = 0.0f;
-
-    private float[] vertices = {
-            -0.5f, -0.5f, 0.0f,
-            -0.5f, 0.5f, 0.0f,
-            0.5f, 0.5f, 0.0f,
-            0.5f, -0.5f, 0.0f
-    };
-
-    private int[] indices = {
-            0, 1, 2,
-            0, 3, 2
-    };
-
-    private float[] texCoords = {
-            0.0f, 1.0f,
-            0.0f, 0.0f,
-            1.0f, 0.0f,
-            1.0f, 1.0f
-    };
+    Rectangle[] rectangles;
+    float offsetX = 0.0f, offsetY = 0.0f;
 
     @Override
     public void run() {
@@ -44,13 +21,10 @@ public class Engine implements Runnable {
         init();
         loop();
 
-        // Free the window callbacks and destroy the window
         glfwFreeCallbacks(window.getWindowHandle());
         glfwDestroyWindow(window.getWindowHandle());
-
-        // Terminate GLFW and free the error callback
         glfwTerminate();
-        glfwSetErrorCallback(null).free();
+        Objects.requireNonNull(glfwSetErrorCallback(null)).free();
     }
 
     private void init() {
@@ -59,39 +33,44 @@ public class Engine implements Runnable {
     }
 
     private void action() {
-        glUseProgram(program.programID);
-        glBindVertexArray(VAO.VAO);
-        glDrawElements(GL_TRIANGLES, indices.length, GL_UNSIGNED_INT, 0);
-
-        glUniform1f(location, offset);
         if (Window.RIGHT) {
-            offset += 0.01f;
+            offsetX = 0.01f;
         } else if (Window.LEFT) {
-            offset -= 0.01f;
+            offsetX = -0.01f;
         }
+
+        if (Window.UP) {
+            offsetY = 0.01f;
+        } else if (Window.DOWN) {
+            offsetY = -0.01f;
+        }
+
+        rectangles[0].draw();
+
+        if (rectangles[1].collidesWith(rectangles[2]) && offsetY < 0.0f) {
+            offsetY = 0.0f;
+        }
+
+        rectangles[1].move(offsetX, offsetY);
+        rectangles[1].draw();
+
+        rectangles[2].draw();
+
+        offsetX = 0.0f;
+        offsetY = 0.0f;
     }
 
     private void loop() {
-        // Set the clear color
         glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
 
-        program = new Program("triangle.vert.glsl", "triangle.frag");
-        VAO = new VertexArrayObject(vertices, indices, texCoords);
-
-        location = glGetUniformLocation(program.programID, "offset");
-
-        int texture = glGenTextures();
-        glBindTexture(GL_TEXTURE_2D, texture);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        int[] pixels = ImageUtils.load("korkowa_postac.png");
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, ImageUtils.width, ImageUtils.height, 0, GL_RGBA,
-                GL_UNSIGNED_BYTE, BufferUtils.createIntBuffer(pixels));
+        rectangles = new Rectangle[3];
+        rectangles[0] = new Rectangle(-1.0f, -1.0f * 9.0f/16.0f, 2.0f, 2.0f * 9.0f/16.0f, "bg.jpg");
+        rectangles[1] = new Rectangle(-0.7f, -0.4f, 0.3f, 0.3f, "korkowa_postac.png");
+        rectangles[2] = new Rectangle(-0.2f, -0.2f, 1.0f, 0.1f, "platforma.png");
 
         // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-        // Run the rendering loop until the user has attempted to close
-        // the window or has pressed the ESCAPE key.
+        // glowna petla programu
         while (!glfwWindowShouldClose(window.getWindowHandle())) {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
 
@@ -99,8 +78,7 @@ public class Engine implements Runnable {
 
             glfwSwapBuffers(window.getWindowHandle()); // swap the color buffers
 
-            // Poll for window events. The key callback above will only be
-            // invoked during this call.
+            // sprawdza czy zaszly jakies eventy
             glfwPollEvents();
         }
     }

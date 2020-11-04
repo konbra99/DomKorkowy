@@ -6,5 +6,8 @@ out vec4 gl_FragColor;
 in vec2 texCoord;
 
 void main() {
-    gl_FragColor = texture(texSample, texCoord);
+    vec4 texColor = texture(texSample, texCoord);
+    if (texColor.a < 0.1)
+        discard;
+    gl_FragColor = texColor;
 }

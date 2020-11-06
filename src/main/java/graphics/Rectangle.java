@@ -1,14 +1,18 @@
 package graphics;
 
+import items.items_tree.GameItem;
+
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.glUseProgram;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
+import static constants.ItemTypes.*;
 
 public class Rectangle {
     private final VertexArrayObject VAO;
     private final Texture texture;
     private final Program program;
     public float org_posX, org_posY, posX, posY, width, height;
+    private int type;
 
 
     public Rectangle(float posX, float posY, float width, float height, String textureName) {
@@ -37,6 +41,7 @@ public class Rectangle {
         this.posY = posY;
         this.width = width;
         this.height = height;
+        this.type = STATIC_ITEM;
         VAO = new VertexArrayObject(vertices, indices, texCoords);
         texture = new Texture(textureName);
         program = new Program("triangle.vert.glsl", "triangle.frag");
@@ -77,5 +82,9 @@ public class Rectangle {
         }
 
         return false;
+    }
+
+    public int getType() {
+        return type;
     }
 }

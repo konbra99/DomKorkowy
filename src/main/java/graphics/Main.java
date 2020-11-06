@@ -7,6 +7,7 @@ public class Main {
     public static String TEX_PATH = "src/main/resources/Textures/";
 
     public static void main(String[] args) {
+
         new Engine().run();
     }
 

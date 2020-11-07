@@ -33,15 +33,15 @@ public class Engine implements Runnable {
     }
 
     private void action() {
-        if (Window.RIGHT) {
+        if (Input.RIGHT) {
             offsetX = 0.01f;
-        } else if (Window.LEFT) {
+        } else if (Input.LEFT) {
             offsetX = -0.01f;
         }
 
-        if (Window.UP) {
+        if (Input.UP) {
             offsetY = 0.01f;
-        } else if (Window.DOWN) {
+        } else if (Input.DOWN) {
             offsetY = -0.01f;
         }
 
@@ -54,10 +54,17 @@ public class Engine implements Runnable {
         rectangles[1].move(offsetX, offsetY);
         rectangles[1].draw();
 
+        if (Input.MOUSE_X > -2.0f && Input.MOUSE_Y > -2.0f) {
+            if (rectangles[2].hasPoint(Input.MOUSE_X, Input.MOUSE_Y)) {
+                rectangles[2].move(-0.3f, 0.2f);
+            }
+        }
         rectangles[2].draw();
 
         offsetX = 0.0f;
         offsetY = 0.0f;
+
+        Input.resetMouse();
     }
 
     private void loop() {
@@ -72,6 +79,7 @@ public class Engine implements Runnable {
 
         rectangles[2] = new Rectangle(-0.2f, -0.2f, 1.0f, 0.1f);
         rectangles[2].initGL("platforma.png");
+
 
         // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 

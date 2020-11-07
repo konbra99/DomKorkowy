@@ -18,8 +18,6 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 public class Window {
     private final long windowHandle;
 
-    public static boolean LEFT = false, RIGHT = false, UP = false, DOWN = false;
-
     public Window() {
         // Setup an error callback. The default implementation
         // will print the error message in System.err.
@@ -39,47 +37,18 @@ public class Window {
         if (windowHandle == NULL)
             throw new RuntimeException("Failed to create the GLFW window");
 
-        glfwSetMouseButtonCallback(windowHandle, (window, button, action, mods) -> {
-            if (button == GLFW_MOUSE_BUTTON_1 && action == GLFW_PRESS) {
-                DoubleBuffer b1 = BufferUtils.createDoubleBuffer(1);
-                DoubleBuffer b2 = BufferUtils.createDoubleBuffer(1);
-                glfwGetCursorPos(window, b1, b2);
-                System.out.println("x : " + b1.get(0) + ", y = " + b2.get(0));
-            }
-        });
+
+        glfwSetMouseButtonCallback(windowHandle, (window, button, action, mods) -> Input.handleMouse(button, action, window));
 
         // Setup a key callback. It will be called every time a key is pressed, repeated or released.
         glfwSetKeyCallback(windowHandle, (window, key, scancode, action, mods) -> {
             if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE)
                 glfwSetWindowShouldClose(window, true); // We will detect this in the rendering loop
 
-            if (key == GLFW_KEY_LEFT && action == GLFW_PRESS) {
-                LEFT = true;
-            }
-            if (key == GLFW_KEY_LEFT && action == GLFW_RELEASE) {
-                LEFT = false;
-            }
+            if (action != GLFW_PRESS && action != GLFW_RELEASE)
+                return;
 
-            if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS) {
-                RIGHT = true;
-            }
-            if (key == GLFW_KEY_RIGHT && action == GLFW_RELEASE) {
-                RIGHT = false;
-            }
-
-            if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
-                UP = true;
-            }
-            if (key == GLFW_KEY_UP && action == GLFW_RELEASE) {
-                UP = false;
-            }
-
-            if (key == GLFW_KEY_DOWN && action == GLFW_PRESS) {
-                DOWN = true;
-            }
-            if (key == GLFW_KEY_DOWN && action == GLFW_RELEASE) {
-                DOWN = false;
-            }
+            Input.handleKeyboard(key, action);
         });
 
         // Get the thread stack and push a new frame

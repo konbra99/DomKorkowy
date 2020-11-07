@@ -5,6 +5,8 @@ import items.items_utils.ItemFactory;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
 
 public class MapReader {
 
@@ -51,5 +53,9 @@ public class MapReader {
 		} catch (IOException e) {
 
 		}
+	}
+
+	public void read(MapManager map, Writer writer) {
+		System.out.println("Hello");
 	}
 }

@@ -13,8 +13,8 @@ public class MapProperties {
 
 	// domysle wartosci parametrow
 	public MapProperties() {
-		name = "empty";
-		author = "empty";
+		name = "none";
+		author = "none";
 		maxPlayers = 10;
 		time = 120;
 		creationDate = -1;

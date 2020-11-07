@@ -1,6 +1,6 @@
 package items.items_tree;
 
-public class TestRect extends GameItem {
+public class TestRect extends Item {
 
 	protected float z;
 

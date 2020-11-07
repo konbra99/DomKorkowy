@@ -1,6 +1,9 @@
 package items.items_tree;
 
-public abstract class GameItem {
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+
+public abstract class Item {
 
 	protected float x, y;
 	protected int id = -1;

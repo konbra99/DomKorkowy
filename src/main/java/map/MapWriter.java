@@ -1,49 +1,66 @@
 package map;
 
-import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import items.items_utils.GameItemManager;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonArray;
+import items.items_tree.Item;
 
+import java.awt.image.ImagingOpException;
 import java.io.FileWriter;
 import java.io.IOException;
 
 public class MapWriter {
 
-	private static Gson gson = new GsonBuilder()
-			.setPrettyPrinting()
-			.create();
+	public static void write(MapManager map, String filepath) {
+		try (FileWriter writer = new FileWriter(filepath)) {
+			// gson
+			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-	public static void write(MapProperties mapProperties, GameItemManager itemManager, String filepath) {
+			JsonObject root;
+			JsonElement obj;
+			JsonObject stage;
+			JsonArray items;
+			JsonArray stages;
 
-		try {
-			FileWriter writer = new FileWriter(filepath);
+			// root
+			root = new JsonObject();
 
-			writeMap(writer, mapProperties);
-			writeItems(writer, itemManager);
+			// map properties
+			obj = gson.toJsonTree(map.properties);
+			root.add("properties", obj);
 
-			writer.flush();
-			writer.close();
+			// stages
+			stages = new JsonArray();
+			root.add("stages", stages);
+
+			for(Stage s: map.stages) {
+				// new stage
+				stage = new JsonObject();
+
+				// stage properties
+				obj = gson.toJsonTree(s.properties);
+				stage.add("properties", obj);
+
+				// stage items
+				items = new JsonArray();
+				stage.add("items", items);
+				for(Item i: s.allItems) {
+					obj = gson.toJsonTree(i);
+					items.add(obj);
+				}
+
+				// add stage
+				stages.add(stage);
+			}
+
+			// results
+			gson.toJson(root, writer);
 
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.exit(-1);
 		}
-	}
 
-	public static void writeMap(FileWriter writer, MapProperties mapProperties) {
-		if (mapProperties == null) {
-			System.err.println("MapWriter.writeMap(): mapProperties can't be null!");
-			System.exit(-1);
-		}
-		gson.toJson(mapProperties, writer);
-	}
-
-	public static void writeItems(FileWriter writer, GameItemManager itemManager) {
-		if (itemManager == null) {
-			System.err.println("MapWriter.writeItems(): itemManager can't be null!");
-			System.exit(-1);
-		}
-		gson.toJson(itemManager.allItems, writer);
 	}
 }

@@ -1,7 +1,5 @@
 package graphics;
 
-import items.items_tree.GameItem;
-
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.glUseProgram;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;

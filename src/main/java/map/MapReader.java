@@ -1,72 +1,55 @@
 package map;
 
 import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
-import items.items_tree.GameItem;
-import items.items_tree.TestRect;
-import items.items_utils.GameItemManager;
+import items.items_utils.ItemFactory;
 
 import java.io.FileReader;
-import java.io.Reader;
-import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
 
 public class MapReader {
 
-	private static Gson gson = new GsonBuilder()
-			.setPrettyPrinting()
-			.create();
+	public static void read(MapManager map, String filepath) {
+		try (FileReader reader = new FileReader(filepath)) {
 
-	public void read(MapProperties mapProperties, GameItemManager itemManager, String filepath) {
-		try {
-			Reader reader = new FileReader(filepath);
+			// json data
+			JsonElement map_properties;
+			JsonElement stage_properties;
+			JsonObject root;
+			JsonArray stages;
+			JsonArray items;
 
-		} catch (Exception e) {
-			e.printStackTrace();
+			// map data
+			Stage currentStage;
+
+			// gson
+			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+			JsonParser parser = new JsonParser();
+			root = parser.parse(reader).getAsJsonObject();
+
+			// map properties
+			map_properties = root.getAsJsonObject("properties");
+			map.addProperties(gson.fromJson(map_properties, MapProperties.class));
+
+			// map stages
+			stages = root.getAsJsonArray("stages");
+
+			for(JsonElement stage: stages) {
+				currentStage = new Stage();
+
+				// stage properties
+				stage_properties = stage.getAsJsonObject().getAsJsonObject("properties");
+				currentStage.addProperties(gson.fromJson(stage_properties, StageProperties.class));
+				map.addStage(currentStage);
+
+				// items
+				items = stage.getAsJsonObject().getAsJsonArray("items");
+				for(JsonElement item: items) {
+					currentStage.addItem(ItemFactory.getFromJson(gson, item));
+				}
+				currentStage.loadItems();
+			}
+		} catch (IOException e) {
+
 		}
-	}
-
-	public static void readMap(Reader reader, MapProperties properties) {
-		properties = gson.fromJson(reader, MapProperties.class);
-		System.out.println(properties);
-	}
-
-	public static void readItems(Reader reader, GameItemManager itemManager) {
-
-		ItemDeserializer deserializer = new ItemDeserializer("type");
-		deserializer.registerBarnType("GameItem", GameItem.class);
-		deserializer.registerBarnType("TestRect", TestRect.class);
-		Gson gson = new GsonBuilder()
-				.registerTypeAdapter(GameItem.class, deserializer)
-				.create();
-
-		itemManager.allItems = gson.fromJson(reader, new TypeToken<List<GameItem>>(){}.getType());
-		itemManager.loadItems();
-	}
-}
-
-class ItemDeserializer implements JsonDeserializer<GameItem> {
-	private String typeElementName;
-	private Gson gson;
-	private Map<String, Class<? extends GameItem>> animalTypeRegistry;
-
-	public ItemDeserializer(String animalTypeElementName) {
-		this.typeElementName = animalTypeElementName;
-		this.gson = new Gson();
-		this.animalTypeRegistry = new HashMap<>();
-	}
-
-	public void registerBarnType(String animalTypeName, Class<? extends GameItem> animalType) {
-		animalTypeRegistry.put(animalTypeName, animalType);
-	}
-
-	public GameItem deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
-		JsonObject animalObject = json.getAsJsonObject();
-		JsonElement animalTypeElement = animalObject.get(typeElementName);
-
-		Class<? extends GameItem> animalType = animalTypeRegistry.get(animalTypeElement.getAsString());
-		return gson.fromJson(animalObject, animalType);
 	}
 }

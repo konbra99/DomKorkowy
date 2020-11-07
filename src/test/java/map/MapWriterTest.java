@@ -1,73 +1,47 @@
 package map;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import items.items_tree.GameItem;
-import items.items_tree.TestRect;
-import items.items_utils.GameItemManager;
-import org.junit.jupiter.api.Test;
-import org.lwjgl.opengl.GL;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import items.items_tree.TestRect;
 
 public class MapWriterTest {
 
 	//@Test
-	public void WriteMapTest() {
-		try {
-			// open file
-			FileWriter writer = new FileWriter("src/main/resources/Maps/test_map.json");
-			MapProperties mapProperties = new MapProperties();
-
-			// write test
-			MapWriter.writeMap(writer, mapProperties);
-
-			// close file
-			writer.flush();
-			writer.close();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	//@Test
-	public void WriteItemsTest() {
-		try {
-			// open file
-			FileWriter writer = new FileWriter("src/main/resources/Maps/test_map.json");
-			GameItemManager itemManager = new GameItemManager()
-					.addItem(new TestRect(0, 0f, 0f))
-					.addItem(new TestRect(1, 1f, 1f))
-					.addItem(new TestRect(2, 2f, 2f));
-
-			// write test
-			MapWriter.writeItems(writer, itemManager);
-
-			// close file
-			writer.flush();
-			writer.close();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	//@Test
-	public void WriteAllTest() {
-		// filepath
+	public void MapEmptyTest() {
 		String filepath = "src/main/resources/Maps/test_map.json";
-		MapProperties mapProperties = new MapProperties();
-		GameItemManager itemManager = new GameItemManager()
-				.addItem(new TestRect(0, 0f, 0f))
-				.addItem(new TestRect(1, 1f, 1f))
-				.addItem(new TestRect(2, 2f, 2f));
+		MapManager map = new MapManager();
+		MapWriter.write(map, filepath);
+	}
 
-		// write test
-		MapWriter.write(mapProperties, itemManager, filepath);
+	//@Test
+	public void MapPropertiesTest() {
+		String filepath = "src/main/resources/Maps/test_map.json";
+		MapManager map = new MapManager();
+		MapProperties properties = new MapProperties();
+		map.addProperties(properties);
+		MapWriter.write(map, filepath);
+	}
+
+	//@Test
+	public void MapStagesTest() {
+		String filepath = "src/main/resources/Maps/test_map.json";
+		MapManager map = new MapManager();
+		Stage stage1 = new Stage()
+				.addItem(new TestRect())
+				.addItem(new TestRect());
+		map.addStage(stage1);
+
+		MapWriter.write(map, filepath);
+	}
+
+	//@Test
+	public void MapPropertiesStagesTest() {
+		String filepath = "src/main/resources/Maps/test_map.json";
+		MapManager map = new MapManager();
+		map.addProperties(new MapProperties());
+		Stage stage1 = new Stage()
+				.addItem(new TestRect())
+				.addItem(new TestRect());
+		map.addStage(stage1);
+
+		MapWriter.write(map, filepath);
 	}
 }

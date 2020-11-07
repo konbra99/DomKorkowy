@@ -44,4 +44,14 @@ public class Program {
 
         return handle;
     }
+
+    // deklaruje uniform float
+    public void setFloat(String name, float value) {
+        glUniform1f(glGetUniformLocation(programID, name), value);
+    }
+
+    // deklaruje uniform vec2
+    public void setFloat2(String name, float v0, float v1) {
+        glUniform2f(glGetUniformLocation(programID, name), v0, v1);
+    }
 }

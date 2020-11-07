@@ -9,7 +9,9 @@ import java.io.IOException;
 
 public class ImageUtils {
     public static int width, height;
-    private ImageUtils() {}
+
+    private ImageUtils() {
+    }
 
     public static int[] load(String path) {
         int[] pixels = null;

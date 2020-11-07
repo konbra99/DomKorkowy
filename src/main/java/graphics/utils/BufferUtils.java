@@ -6,7 +6,8 @@ import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
 public class BufferUtils {
-    private BufferUtils() {}
+    private BufferUtils() {
+    }
 
     public static FloatBuffer createFloatBuffer(float[] data) {
         FloatBuffer buffer = ByteBuffer.allocateDirect(4 * data.length).order(ByteOrder.nativeOrder()).asFloatBuffer();

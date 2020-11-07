@@ -1,9 +1,13 @@
 package graphics;
 
+import org.lwjgl.BufferUtils;
+import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.glfw.GLFWMouseButtonCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.system.MemoryStack;
 
+import java.nio.DoubleBuffer;
 import java.nio.IntBuffer;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -34,6 +38,15 @@ public class Window {
         windowHandle = glfwCreateWindow(Main.WIDTH, Main.HEIGHT, "Hello World!", NULL, NULL);
         if (windowHandle == NULL)
             throw new RuntimeException("Failed to create the GLFW window");
+
+        glfwSetMouseButtonCallback(windowHandle, (window, button, action, mods) -> {
+            if (button == GLFW_MOUSE_BUTTON_1 && action == GLFW_PRESS) {
+                DoubleBuffer b1 = BufferUtils.createDoubleBuffer(1);
+                DoubleBuffer b2 = BufferUtils.createDoubleBuffer(1);
+                glfwGetCursorPos(window, b1, b2);
+                System.out.println("x : " + b1.get(0) + ", y = " + b2.get(0));
+            }
+        });
 
         // Setup a key callback. It will be called every time a key is pressed, repeated or released.
         glfwSetKeyCallback(windowHandle, (window, key, scancode, action, mods) -> {

@@ -19,7 +19,7 @@ public class EntityFactory {
 	public static Entity getFromName(String name, int id, float x, float y) {
 
 		switch(name) {
-			case TEST_RECT : return new TestRect(id, x, y);
+			case TEST_RECT : return new TestRect(id);
 			// TODO more
 
 			default:

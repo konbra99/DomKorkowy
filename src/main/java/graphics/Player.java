@@ -1,7 +1,7 @@
 package graphics;
 
 public class Player extends Character{
-    public Player(float a, float b, float c, float d, String texture) {
-        super(a, b, c, d, texture);
+    public Player(float posX, float posY, float width, float height, String texture) {
+        super(posX, posY, width, height, texture);
     }
 }

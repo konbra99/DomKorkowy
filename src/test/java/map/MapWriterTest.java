@@ -1,8 +1,7 @@
 package map;
 
-import items.items_tree.TestRect;
+import entity.entities_tree.TestRect;
 import org.junit.jupiter.api.Test;
-
 import java.io.StringWriter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -12,7 +11,9 @@ public class MapWriterTest {
 	@Test
 	public void MapEmptyTest() {
 		StringWriter writer = new StringWriter();
-		String results = "";
+		String results =
+				"""
+				{"properties":null,"stages":[]}""";
 		MapManager map = new MapManager();
 		MapWriter.write(map, writer);
 		assertEquals(writer.toString(), results);
@@ -33,26 +34,35 @@ public class MapWriterTest {
 
 	//@Test
 	public void MapStagesTest() {
-		String filepath = "src/main/resources/Maps/test_map.json";
+		StringWriter writer = new StringWriter();
+		String results =
+				"""
+				{"properties":null,"stages":[{"properties":{"backgroundId":0},"entity":[{"z":0.0,"x":0.0,"y":0.0,"id":-1,\
+				"type":"TestRect"},{"z":0.0,"x":0.0,"y":0.0,"id":-1,"type":"TestRect"}]}]}""";
 		MapManager map = new MapManager();
 		Stage stage1 = new Stage()
-				.addItem(new TestRect())
-				.addItem(new TestRect());
+				.addEntity(new TestRect())
+				.addEntity(new TestRect());
 		map.addStage(stage1);
-
-		MapWriter.write(map, filepath);
+		MapWriter.write(map, writer);
+		assertEquals(writer.toString(), results);
 	}
 
 	//@Test
 	public void MapPropertiesStagesTest() {
-		String filepath = "src/main/resources/Maps/test_map.json";
+		StringWriter writer = new StringWriter();
+		String results =
+				"""
+				{"properties":{"name":"none","author":"none","maxPlayers":10,"time":120,"creationDate":-1},"stages":\
+				[{"properties":{"backgrounId":0},"entity":[{"z":0.0,"x":0.0,"y":0.0,"id":-1,"type":"TestRect"},\
+				{"z":0.0,"x":0.0,"y":0.0,"id":-1,"type":"TestRect"}]}]}""";
 		MapManager map = new MapManager();
 		map.addProperties(new MapProperties());
 		Stage stage1 = new Stage()
-				.addItem(new TestRect())
-				.addItem(new TestRect());
+				.addEntity(new TestRect())
+				.addEntity(new TestRect());
 		map.addStage(stage1);
-
-		MapWriter.write(map, filepath);
+		MapWriter.write(map, writer);
+		assertEquals(writer.toString(), results);
 	}
 }

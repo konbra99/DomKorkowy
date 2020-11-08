@@ -1,23 +1,22 @@
-package items.items_utils;
+package entity.entities_utils;
 
 import static constants.ItemNames.*;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import items.items_tree.Item;
-import items.items_tree.*;
+import entity.entities_tree.Entity;
+import entity.entities_tree.*;
 
 /**
  * Zwraca obiekt, ktorego typ podano w formie stringa, poniewaz
  * kazdy obiekt jest jednoznacznie reprezentowany przez id, jest
  * to jeden z parametrow wywolania.
  */
-public class ItemFactory {
+public class EntityFactory {
 
-	private ItemFactory() {}
+	private EntityFactory() {}
 
-	public static Item getFromName(String name, int id, float x, float y) {
+	public static Entity getFromName(String name, int id, float x, float y) {
 
 		switch(name) {
 			case TEST_RECT : return new TestRect(id, x, y);
@@ -31,7 +30,7 @@ public class ItemFactory {
 		return null;
 	}
 
-	public static Item getFromJson(Gson gson, JsonElement element) {
+	public static Entity getFromJson(Gson gson, JsonElement element) {
 		System.out.println(element);
 		String name = element.getAsJsonObject().getAsJsonPrimitive("type").getAsString();
 

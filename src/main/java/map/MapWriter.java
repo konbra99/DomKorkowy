@@ -5,9 +5,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
-import items.items_tree.Item;
+import entity.entities_tree.Entity;
 
-import java.awt.image.ImagingOpException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -57,8 +56,8 @@ public class MapWriter {
 
 			// stage items
 			items = new JsonArray();
-			stage.add("items", items);
-			for(Item i: s.allItems) {
+			stage.add("entities", items);
+			for(Entity i: s.allEntities) {
 				obj = gson.toJsonTree(i);
 				items.add(obj);
 			}

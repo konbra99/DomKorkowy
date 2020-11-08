@@ -3,7 +3,7 @@ package map;
 import java.util.ArrayList;
 import java.util.List;
 
-import items.items_tree.Item;
+import entity.entities_tree.Entity;
 
 /**
  * Przechowuje wszystkie elementy danej sceny, udestepnia ujednolicony
@@ -20,23 +20,23 @@ import items.items_tree.Item;
  */
 public class Stage {
 
-	public List<Item> allItems;
-	public List<Item> staticItems;
-	public List<Item> movingItems;
+	public List<Entity> allEntities;
+	public List<Entity> staticEntities;
+	public List<Entity> movingEntities;
 	StageProperties properties;
 
 	public Stage() {
-		allItems = new ArrayList<>();
-		staticItems = new ArrayList<>();
-		movingItems = new ArrayList<>();
+		allEntities = new ArrayList<>();
+		staticEntities = new ArrayList<>();
+		movingEntities = new ArrayList<>();
 		properties = new StageProperties();
 	}
 
 	/**
 	 * Dodaje element do listy glownej oraz do odpowiednich list pomocniczych.
 	 */
-	public Stage addItem(Item item) {
-		allItems.add(item);
+	public Stage addEntity(Entity item) {
+		allEntities.add(item);
 		// TODO dodac item do list pomoczniczych
 
 		return this;
@@ -45,8 +45,8 @@ public class Stage {
 	/**
 	 * Usuwa element ze z listy glownej oraz ze wszystkich list pomocniczych.
 	 */
-	public void removeItem(Item item) {
-		allItems.remove(item);
+	public void removeEntity(Entity item) {
+		allEntities.remove(item);
 		// TODO usunac element z list pomocniczych
 	}
 
@@ -54,7 +54,7 @@ public class Stage {
 	 * Czysci listy pomocnicze oraz ponownie grupuje wszystkie elementy,
 	 * nalezy wywolac po wczytaniu mapy z jsona.
 	 */
-	public void loadItems() {
+	public void loadEntity() {
 		// TODO
 	}
 

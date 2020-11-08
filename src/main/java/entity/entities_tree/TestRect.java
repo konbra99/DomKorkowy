@@ -1,21 +1,22 @@
-package items.items_tree;
+package entity.entities_tree;
 
-public class TestRect extends Item {
+import static constants.ItemNames.TEST_RECT;
+
+public class TestRect extends Entity {
 
 	protected float z;
 
 	public TestRect() {
 		this.x = 0f;
 		this.y = 0f;
-		this.type = "TestRect";
+		this.type = TEST_RECT;
 	}
 
 	public TestRect(int id, float x, float y) {
 		this.id = id;
 		this.x = x;
 		this.y = y;
-		this.z = -10;
-		this.type = "TestRect";
+		this.type = TEST_RECT;
 	}
 
 	@Override

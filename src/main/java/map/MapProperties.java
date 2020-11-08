@@ -1,5 +1,7 @@
 package map;
 
+import static constants.MapPropertiesDefault.*;
+
 /**
  * Przechowuje podstawowe parametry mapy.
  */
@@ -7,16 +9,15 @@ public class MapProperties {
 
 	public String name;
 	public String author;
-	public int maxPlayers;
+	public int players;
 	public int time;
-	public int creationDate;
+	public int date;
 
-	// domysle wartosci parametrow
 	public MapProperties() {
-		name = "none";
-		author = "none";
-		maxPlayers = 10;
-		time = 120;
-		creationDate = -1;
+		name = DEFAULT_NAME;
+		author = DEFAULT_AUTHOR;
+		players = DEFAULT_PLAYERS;
+		time = DEFAULT_TIME;
+		date = DEFAULT_DATE;
 	}
 }

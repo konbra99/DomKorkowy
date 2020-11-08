@@ -1,13 +1,11 @@
-package items.items_tree;
+package entity.entities_tree;
+import static constants.ItemNames.ENTITY;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-
-public abstract class Item {
+public abstract class Entity {
 
 	protected float x, y;
 	protected int id = -1;
-	protected String type = "GameItem";
+	protected String type = ENTITY;
 
 	abstract public void move(float x, float y);
 	abstract public void draw();

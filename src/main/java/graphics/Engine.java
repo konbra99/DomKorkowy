@@ -1,8 +1,8 @@
 package graphics;
 
+import logic.Player;
 import org.lwjgl.Version;
 import org.lwjgl.opengl.GL;
-import org.lwjgl.system.CallbackI;
 
 import java.util.Objects;
 

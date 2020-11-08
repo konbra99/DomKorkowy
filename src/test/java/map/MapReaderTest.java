@@ -1,9 +1,10 @@
 package map;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+
 import static constants.MapPropertiesDefault.*;
 import static constants.MapReadWriteStatus.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 import java.io.Reader;
 import java.io.StringReader;

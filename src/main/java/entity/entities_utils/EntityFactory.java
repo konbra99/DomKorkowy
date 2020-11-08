@@ -31,7 +31,6 @@ public class EntityFactory {
 	}
 
 	public static Entity getFromJson(Gson gson, JsonElement element) {
-		System.out.println(element);
 		String name = element.getAsJsonObject().getAsJsonPrimitive("type").getAsString();
 
 		switch(name) {

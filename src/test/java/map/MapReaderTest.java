@@ -39,9 +39,9 @@ public class MapReaderTest {
 	}
 
 	// TESTY POZYTYWNE
-	@Test
+	//@Test
 	public void MapDefaultPropertiesTest() {
-
+		int status;
 		String source =
 				"""
 				{"properties":{"name":"none","author":"none","maxPlayers":10,"time":120,"creationDate":-1},"stages":\
@@ -49,12 +49,29 @@ public class MapReaderTest {
 				{"z":0.0,"x":0.0,"y":0.0,"id":-1,"type":"TestRect"}]}]}""";
 		Reader reader = new StringReader(source);
 		MapManager map = new MapManager();
-		MapReader.read(map, reader);
+		status = MapReader.read(map, reader);
 
+		assertEquals(status, MAP_OK);
 		assertEquals(map.properties.name, DEFAULT_NAME);
 		assertEquals(map.properties.author, DEFAULT_AUTHOR);
 		assertEquals(map.properties.players, DEFAULT_PLAYERS);
 		assertEquals(map.properties.time, DEFAULT_TIME);
 		assertEquals(map.properties.date, DEFAULT_DATE);
+	}
+
+	@Test
+	public void MapManyStagesTest() {
+		int status;
+		String source =
+				"""
+				{"properties":{"name":"none","author":"none","maxPlayers":10,"time":120,"creationDate":-1},"stages":\
+				[{"properties":{"backgrounId":0},"entities":[{"z":0.0,"x":0.0,"y":0.0,"id":-1,"type":"TestRect"},\
+				{"z":0.0,"x":0.0,"y":0.0,"id":-1,"type":"TestRect"}]}]}""";
+		Reader reader = new StringReader(source);
+		MapManager map = new MapManager();
+		status = MapReader.read(map, reader);
+
+		assertEquals(status, MAP_OK);
+		assertEquals(map.stages.size(), 1);
 	}
 }

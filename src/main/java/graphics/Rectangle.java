@@ -3,17 +3,24 @@ package graphics;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.glUseProgram;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
-import static constants.ItemTypes.*;
 
 public class Rectangle {
-    private final VertexArrayObject VAO;
-    private final Texture texture;
-    private final Program program;
+    private VertexArrayObject VAO;
+    private Texture texture;
+    private Program program;
     public float org_posX, org_posY, posX, posY, width, height;
-    private int type;
 
 
-    public Rectangle(float posX, float posY, float width, float height, String textureName) {
+    public Rectangle(float posX, float posY, float width, float height) {
+        this.org_posX = posX;
+        this.org_posY = posY;
+        this.posX = posX;
+        this.posY = posY;
+        this.width = width;
+        this.height = height;
+    }
+
+    public void initGL(String textureName) {
         float[] vertices = new float[]{
                 posX, posY, 0.0f,
                 posX, posY + height, 0.0f,
@@ -33,13 +40,6 @@ public class Rectangle {
                 1.0f, 1.0f
         };
 
-        this.org_posX = posX;
-        this.org_posY = posY;
-        this.posX = posX;
-        this.posY = posY;
-        this.width = width;
-        this.height = height;
-        this.type = STATIC_ITEM;
         VAO = new VertexArrayObject(vertices, indices, texCoords);
         texture = new Texture(textureName);
         program = new Program("triangle.vert.glsl", "triangle.frag");
@@ -80,9 +80,5 @@ public class Rectangle {
         }
 
         return false;
-    }
-
-    public int getType() {
-        return type;
     }
 }

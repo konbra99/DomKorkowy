@@ -1,0 +1,32 @@
+{
+  "properties": {
+    "name": "empty",
+    "author": "empty",
+    "maxPlayers": 10,
+    "time": 120,
+    "creationDate": -1
+  },
+  "stages": [
+    {
+      "properties": {
+        "backgrounId": 0
+      },
+      "items": [
+        {
+          "z": 0.0,
+          "x": 0.0,
+          "y": 0.0,
+          "id": -1,
+          "type": "TestRect"
+        },
+        {
+          "z": 0.0,
+          "x": 0.0,
+          "y": 0.0,
+          "id": -1,
+          "type": "TestRect"
+        }
+      ]
+    }
+  ]
+}

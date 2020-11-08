@@ -56,14 +56,12 @@ public class Engine implements Runnable {
         player.shape.move(offsetX, offsetY);
         player.shape.draw();
 
-        rectangles[1].draw();
-
         if (Input.MOUSE_X > -2.0f && Input.MOUSE_Y > -2.0f) {
-            if (rectangles[2].hasPoint(Input.MOUSE_X, Input.MOUSE_Y)) {
-                rectangles[2].move(-0.3f, 0.2f);
+            if (rectangles[1].hasPoint(Input.MOUSE_X, Input.MOUSE_Y)) {
+                rectangles[1].move(-0.3f, 0.2f);
             }
         }
-        rectangles[2].draw();
+        rectangles[1].draw();
 
         offsetX = 0.0f;
         offsetY = 0.0f;

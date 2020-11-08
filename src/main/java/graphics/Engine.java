@@ -1,8 +1,8 @@
 package graphics;
 
+import logic.Player;
 import org.lwjgl.Version;
 import org.lwjgl.opengl.GL;
-import org.lwjgl.system.CallbackI;
 
 import java.util.Objects;
 
@@ -35,15 +35,15 @@ public class Engine implements Runnable {
     }
 
     private void action() {
-        if (Window.RIGHT) {
+        if (Input.RIGHT) {
             offsetX = 0.01f;
-        } else if (Window.LEFT) {
+        } else if (Input.LEFT) {
             offsetX = -0.01f;
         }
 
-        if (Window.UP) {
+        if (Input.UP) {
             offsetY = 0.01f;
-        } else if (Window.DOWN) {
+        } else if (Input.DOWN) {
             offsetY = -0.01f;
         }
 
@@ -56,10 +56,17 @@ public class Engine implements Runnable {
         player.shape.move(offsetX, offsetY);
         player.shape.draw();
 
+        if (Input.MOUSE_X > -2.0f && Input.MOUSE_Y > -2.0f) {
+            if (rectangles[1].hasPoint(Input.MOUSE_X, Input.MOUSE_Y)) {
+                rectangles[1].move(-0.3f, 0.2f);
+            }
+        }
         rectangles[1].draw();
 
         offsetX = 0.0f;
         offsetY = 0.0f;
+
+        Input.resetMouse();
     }
 
     private void loop() {
@@ -69,8 +76,6 @@ public class Engine implements Runnable {
         rectangles[0] = new Rectangle(-1.0f, -1.0f * 9.0f / 16.0f, 2.0f, 2.0f * 9.0f / 16.0f);
         rectangles[0].initGL("bg.jpg");
 
-        //rectangles[1] = new Rectangle(-0.7f, -0.4f, 0.3f, 0.3f);
-        //rectangles[1].initGL("korkowa_postac.png");
         player = new Player(-0.7f, -0.4f, 0.3f, 0.3f, "korkowa_postac.png");
         //player.shape.initGL("korkowa_postac.png");
         rectangles[1] = new Rectangle(-0.2f, -0.2f, 1.0f, 0.1f);

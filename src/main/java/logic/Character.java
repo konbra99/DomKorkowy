@@ -1,4 +1,6 @@
-package graphics;
+package logic;
+
+import graphics.Rectangle;
 
 public class Character {
     public int hp;

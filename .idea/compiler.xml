@@ -9,5 +9,8 @@
         <module name="DomKorkowy" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="DomKorkowy" target="15" />
+    </bytecodeTargetLevel>
   </component>
 </project>

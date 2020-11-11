@@ -10,7 +10,7 @@ public abstract class Entity {
 	protected Rectangle rectangle;
 
 	abstract public void move(float x, float y);
-	abstract public void draw();
+	//abstract public void draw();
 	abstract public void update();
 
 	public String toString() {

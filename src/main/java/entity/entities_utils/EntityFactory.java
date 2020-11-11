@@ -18,8 +18,9 @@ public class EntityFactory {
 
 	public static Entity getFromName(String name, int id, float x, float y) {
 
+		// TODO delete
 		switch(name) {
-			case TEST_RECT : return new TestRect(id);
+			case TEST_RECT : return new TestRect();
 			// TODO more
 
 			default:

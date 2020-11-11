@@ -21,7 +21,7 @@ public abstract class Entity {
 	}
 
 	abstract public void move();
-	abstract public void draw();
+	//abstract public void draw();
 	abstract public void update();
 
 	public String toString() {

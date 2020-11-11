@@ -15,9 +15,7 @@ public class Character extends Entity {
     }
 
     @Override
-    public void move(float x, float y){
-        rectangle.move(x, y);
-    };
+    public void move(){ };
 
     @Override
     public void update(){

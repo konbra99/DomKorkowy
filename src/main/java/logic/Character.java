@@ -1,8 +1,9 @@
 package logic;
 
+import entity.entities_tree.Entity;
 import graphics.Rectangle;
 
-public class Character {
+public class Character extends Entity {
     public int hp;
     private String texture;
     public Rectangle shape;
@@ -12,4 +13,14 @@ public class Character {
         this.texture = texture;
         shape.initGL(this.texture);
     }
+
+    @Override
+    public void move(float x, float y){
+        rectangle.move(x, y);
+    };
+
+    @Override
+    public void update(){
+        rectangle.draw();
+    };
 }

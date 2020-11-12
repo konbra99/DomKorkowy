@@ -9,6 +9,7 @@ public abstract class Entity {
 	protected int id = -1;
 	protected String type = ENTITY;
 	protected Rectangle rectangle;
+	protected boolean gravityFlag;
 
 	public Entity() {
 
@@ -21,7 +22,7 @@ public abstract class Entity {
 	}
 
 	abstract public void move();
-	//abstract public void draw();
+	abstract public void draw();
 	abstract public void update();
 
 	public String toString() {

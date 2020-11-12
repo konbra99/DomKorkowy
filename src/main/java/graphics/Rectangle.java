@@ -10,7 +10,6 @@ public class Rectangle {
     private Program program;
     public float org_posX, org_posY, posX, posY, width, height;
 
-
     public Rectangle(float posX, float posY, float width, float height) {
         this.org_posX = posX;
         this.org_posY = posY;

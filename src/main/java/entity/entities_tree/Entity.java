@@ -5,7 +5,6 @@ import graphics.Rectangle;
 import static constants.ItemNames.ENTITY;
 
 public abstract class Entity {
-
 	protected int id = -1;
 	protected String type = ENTITY;
 	protected Rectangle rectangle;

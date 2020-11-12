@@ -1,4 +1,5 @@
 package entity.entities_tree;
+import entity.EntityProperties;
 import graphics.Rectangle;
 
 import static constants.ItemNames.ENTITY;
@@ -9,6 +10,16 @@ public abstract class Entity {
 	protected String type = ENTITY;
 	protected Rectangle rectangle;
 	protected boolean gravityFlag;
+
+	public Entity() {
+
+	}
+
+	public Entity(EntityProperties properties) {
+		id = properties.id;
+
+		// rectangle = new Rectangle(properties.width, properties.height) {}
+	}
 
 	abstract public void move();
 	abstract public void draw();

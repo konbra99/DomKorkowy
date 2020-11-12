@@ -8,11 +8,6 @@ public class TestRect extends Entity {
 		this.type = TEST_RECT;
 	}
 
-	public TestRect(int id) {
-		this.id = id;
-		this.type = TEST_RECT;
-	}
-
 	@Override
 	public void move() {}
 

@@ -1,11 +1,24 @@
 package entity.entities_tree;
 
-import static constants.ItemNames.TEST_RECT;
+import com.google.gson.JsonObject;
+
+import static constants.JsonSerializationStatus.NOTEXISTING_PROPERTY;
 
 public class TestRect extends Entity {
 
+	public boolean boolTest;
+	public int intTest;
+	public float floatTest;
+	public String stringTest;
+
 	public TestRect() {
-		this.type = TEST_RECT;
+	}
+
+	public TestRect(boolean boolTest, int intTest, float floatTest, String stringTest) {
+		this.boolTest = boolTest;
+		this.intTest = intTest;
+		this.floatTest = floatTest;
+		this.stringTest = stringTest;
 	}
 
 	@Override
@@ -16,4 +29,28 @@ public class TestRect extends Entity {
 
 	@Override
 	public void update() {}
+
+	@Override
+	public JsonObject toJson() {
+		JsonObject obj = super.toJson();
+		obj.addProperty("type", this.getClass().getSimpleName());
+		obj.addProperty("boolTest", boolTest);
+		obj.addProperty("intTest", intTest);
+		obj.addProperty("floatTest", floatTest);
+		obj.addProperty("stringTest", stringTest);
+		return obj;
+	};
+
+	@Override
+	public int fromJson(JsonObject obj) {
+		try {
+			this.boolTest = obj.get("boolTest").getAsBoolean();
+			this.intTest = obj.get("intTest").getAsInt();
+			this.floatTest = obj.get("floatTest").getAsFloat();
+			this.stringTest = obj.get("stringTest").getAsString();
+			return super.fromJson(obj);
+		} catch (NullPointerException e) {
+			return NOTEXISTING_PROPERTY;
+		}
+	};
 }

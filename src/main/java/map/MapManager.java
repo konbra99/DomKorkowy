@@ -23,7 +23,7 @@ public class MapManager {
 	 */
 	public void addStage(Stage stage) {
 		stages.add(stage);
-		stage.loadEntity();
+		stage.buildStage();
 	}
 
 	/**

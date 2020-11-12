@@ -1,31 +1,38 @@
 package entity.entities_tree;
+import com.google.gson.JsonObject;
 import entity.EntityProperties;
 import graphics.Rectangle;
+import map.JsonSerializable;
 
-import static constants.ItemNames.ENTITY;
+import static constants.JsonSerializationStatus.ENTITY_OK;
 
-public abstract class Entity {
+public abstract class Entity implements JsonSerializable {
 
-	protected int id = -1;
-	protected String type = ENTITY;
 	protected Rectangle rectangle;
 	protected boolean gravityFlag;
 
 	public Entity() {
-
 	}
 
 	public Entity(EntityProperties properties) {
-		id = properties.id;
-
-		// rectangle = new Rectangle(properties.width, properties.height) {}
+		setProperties(properties);
 	}
 
 	abstract public void move();
 	abstract public void draw();
 	abstract public void update();
 
-	public String toString() {
-		return String.format("Entity(%d %s)", id, type);
+	/** Poczatek procesu serializacji. */
+	public JsonObject toJson() {
+		return new JsonObject();
+	};
+
+	/** Koniec procesu deserializacji. */
+	public int fromJson(JsonObject obj) {
+		return ENTITY_OK;
+	};
+
+	public void setProperties(EntityProperties properties) {
 	}
+
 }

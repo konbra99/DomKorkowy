@@ -3,7 +3,7 @@ package map;
 import org.junit.Test;
 
 import static constants.MapPropertiesDefault.*;
-import static constants.MapReadWriteStatus.*;
+import static constants.JsonSerializationStatus.*;
 import static org.junit.Assert.assertEquals;
 
 import java.io.Reader;

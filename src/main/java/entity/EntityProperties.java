@@ -16,13 +16,11 @@ public class EntityProperties {
 	public EntityProperties() {
 
 		// strings
-		type = null;
 		textureName = null;
 
 		// values
 		width = -1;
 		height = -1;
-		id = -1;
 
 		// flags
 

@@ -7,7 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 
-import static constants.MapReadWriteStatus.*;
+import static constants.JsonSerializationStatus.*;
 
 public class MapReader {
 
@@ -62,7 +62,7 @@ public class MapReader {
 			for (JsonElement item : items) {
 				currentStage.addEntity(EntityFactory.getFromJson(gson, item));
 			}
-			currentStage.loadEntity();
+			currentStage.buildStage();
 		}
 
 		return MAP_OK;

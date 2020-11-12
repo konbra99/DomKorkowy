@@ -8,9 +8,10 @@ public abstract class Entity {
 	protected int id = -1;
 	protected String type = ENTITY;
 	protected Rectangle rectangle;
+	protected boolean gravityFlag;
 
-	abstract public void move(float x, float y);
-	//abstract public void draw();
+	abstract public void move();
+	abstract public void draw();
 	abstract public void update();
 
 	public String toString() {

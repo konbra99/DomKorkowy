@@ -14,11 +14,11 @@ public class TestRect extends Entity {
 	}
 
 	@Override
-	public void move(float x, float y) {}
+	public void move() {}
 
-	/*@Override
-	public void draw() {}
-	*/
 	@Override
-	public void update() {};
+	public void draw() {}
+
+	@Override
+	public void update() {}
 }

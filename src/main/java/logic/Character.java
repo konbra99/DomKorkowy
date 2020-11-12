@@ -7,6 +7,7 @@ public class Character extends Entity {
     public int hp;
     private String texture;
     public Rectangle shape;
+    public boolean gravityFlag = true;
 
     public Character(float posX, float posY, float width, float height, String texture) {
         this.shape = new Rectangle(posX, posY, width, height);
@@ -15,12 +16,15 @@ public class Character extends Entity {
     }
 
     @Override
-    public void move(float x, float y){
-        rectangle.move(x, y);
-    };
+    public void move() {}
+
+    @Override
+    public void draw() {
+        shape.draw();
+    }
 
     @Override
     public void update(){
-        rectangle.draw();
-    };
+        this.draw();
+    }
 }

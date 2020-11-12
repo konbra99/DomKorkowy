@@ -25,11 +25,11 @@ public class Player extends Character {
             offsetY = -0.01f;
         }
 
-        if (this.shape.collidesWith(Engine.PLATFORM) && offsetY < 0.0f) {
+        if (this.rectangle.collidesWith(Engine.PLATFORM) && offsetY < 0.0f) {
             offsetY = 0.0f;
         }
 
-        this.shape.move(offsetX, offsetY);
-        this.shape.draw();
+        this.rectangle.move(offsetX, offsetY);
+        this.rectangle.draw();
     }
 }

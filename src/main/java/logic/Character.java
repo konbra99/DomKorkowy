@@ -6,13 +6,13 @@ import graphics.Rectangle;
 public class Character extends Entity {
     public int hp;
     private String texture;
-    public Rectangle shape;
-    public boolean gravityFlag = true;
+    //public Rectangle shape;
 
     public Character(float posX, float posY, float width, float height, String texture) {
-        this.shape = new Rectangle(posX, posY, width, height);
+        gravityFlag = true;
+        this.rectangle = new Rectangle(posX, posY, width, height);
         this.texture = texture;
-        shape.initGL(this.texture);
+        this.rectangle.initGL(this.texture);
     }
 
     @Override
@@ -20,7 +20,7 @@ public class Character extends Entity {
 
     @Override
     public void draw() {
-        shape.draw();
+        rectangle.draw();
     }
 
     @Override

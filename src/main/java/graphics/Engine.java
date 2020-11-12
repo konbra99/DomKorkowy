@@ -45,7 +45,6 @@ public class Engine implements Runnable {
         }
         PLATFORM.draw();
         KORKOWY.move();
-        KORKOWY.draw();
 
         Input.resetMouse();
     }

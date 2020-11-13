@@ -10,6 +10,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import entity.entities_tree.Entity;
 import entity.entities_utils.EntityFactory;
+import map.json.JsonSerializable;
 
 import static constants.JsonSerializationStatus.*;
 
@@ -107,14 +108,14 @@ public class Stage implements JsonSerializable {
 				Entity entity = EntityFactory.fromName(type);
 
 				if (entity == null)
-					return NOTEXISTING_NAME;
+					return NONEXISTENT_NAME;
 				if (entity.fromJson(temp) != ENTITY_OK)
-					return NOTEXISTING_PROPERTY;
+					return NONEXISTENT_PROPERTY;
 			}
 			return STAGE_OK;
 
 		} catch (NullPointerException e) {
-			return NOTEXISTING_PROPERTY;
+			return NONEXISTENT_PROPERTY;
 		}
 	}
 }

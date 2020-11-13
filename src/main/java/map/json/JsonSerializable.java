@@ -1,4 +1,4 @@
-package map;
+package map.json;
 
 import com.google.gson.JsonObject;
 

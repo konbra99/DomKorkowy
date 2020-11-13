@@ -22,7 +22,7 @@ public class MapReader {
 
 	public static int read(MapManager map, Reader reader) {
 
-		// json data
+		// map.json data
 		JsonElement map_properties;
 		JsonElement stage_properties;
 		JsonObject root;

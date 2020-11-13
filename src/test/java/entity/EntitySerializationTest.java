@@ -3,7 +3,7 @@ package entity;
 import com.google.gson.JsonObject;
 import entity.entities_tree.TestRect;
 
-import static constants.JsonSerializationStatus.NOTEXISTING_PROPERTY;
+import static constants.JsonSerializationStatus.NONEXISTENT_PROPERTY;
 import static org.junit.Assert.assertEquals;
 
 public class EntitySerializationTest {
@@ -59,6 +59,6 @@ public class EntitySerializationTest {
 		TestRect rect = new TestRect();
 		status = rect.fromJson(obj);
 
-		assertEquals(status, NOTEXISTING_PROPERTY);
+		assertEquals(status, NONEXISTENT_PROPERTY);
 	}
 }

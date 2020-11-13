@@ -2,7 +2,7 @@ package entity.entities_tree;
 
 import com.google.gson.JsonObject;
 
-import static constants.JsonSerializationStatus.NOTEXISTING_PROPERTY;
+import static constants.JsonSerializationStatus.NONEXISTENT_PROPERTY;
 
 public class TestRect extends Entity {
 
@@ -50,7 +50,7 @@ public class TestRect extends Entity {
 			this.stringTest = obj.get("stringTest").getAsString();
 			return super.fromJson(obj);
 		} catch (NullPointerException e) {
-			return NOTEXISTING_PROPERTY;
+			return NONEXISTENT_PROPERTY;
 		}
 	};
 }

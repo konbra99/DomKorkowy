@@ -2,7 +2,7 @@ package entity.entities_tree;
 import com.google.gson.JsonObject;
 import entity.EntityProperties;
 import graphics.Rectangle;
-import map.JsonSerializable;
+import map.json.JsonSerializable;
 
 import static constants.JsonSerializationStatus.ENTITY_OK;
 

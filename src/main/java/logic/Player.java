@@ -25,8 +25,14 @@ public class Player extends Character {
             offsetY = -0.01f;
         }
 
-        if (this.rectangle.collidesWith(Engine.PLATFORM) && offsetY < 0.0f) {
-            offsetY = 0.0f;
+        for (Platform p : Engine.PLATFORMS) {
+            if (this.rectangle.collidesWith(p.getRectangle()) && offsetY < 0.0f) {
+                offsetY = 0.0f;
+            }
+        }
+
+        if (this.rectangle.collidesWith(Engine.KONIEC)) {
+            System.out.println("koniec gry");
         }
 
         this.rectangle.move(offsetX, offsetY);

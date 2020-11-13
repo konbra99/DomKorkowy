@@ -24,6 +24,10 @@ public abstract class Entity {
 	abstract public void draw();
 	abstract public void update();
 
+	public Rectangle getRectangle() {
+		return rectangle;
+	}
+
 	public String toString() {
 		return String.format("Entity(%d %s)", id, type);
 	}

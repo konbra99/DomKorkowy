@@ -1,9 +1,12 @@
 package graphics;
 
+import logic.Platform;
 import logic.Player;
 import org.lwjgl.Version;
 import org.lwjgl.opengl.GL;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
@@ -14,8 +17,8 @@ public class Engine implements Runnable {
     private Window window;
 
     public static Player KORKOWY;
-    public static Rectangle PLATFORM;
-    public static Rectangle BACKGROUND;
+    public static Rectangle BACKGROUND, KONIEC;
+    public static LinkedList<Platform> PLATFORMS;
 
     @Override
     public void run() {
@@ -38,12 +41,11 @@ public class Engine implements Runnable {
     private void action() {
         BACKGROUND.draw();
 
-        if (Input.MOUSE_X > -2.0f && Input.MOUSE_Y > -2.0f) {
-            if (PLATFORM.hasPoint(Input.MOUSE_X, Input.MOUSE_Y)) {
-                PLATFORM.move(-0.3f, 0.2f);
-            }
+        for (Platform p : PLATFORMS) {
+            p.update();
+            p.draw();
         }
-        PLATFORM.draw();
+        KONIEC.draw();;
         KORKOWY.move();
 
         Input.resetMouse();
@@ -52,11 +54,18 @@ public class Engine implements Runnable {
     private void loop() {
         glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
 
-        KORKOWY = new Player(-0.7f, -0.4f, 0.3f, 0.3f, "korkowa_postac.png");
-        PLATFORM = new Rectangle(-0.2f, -0.2f, 1.0f, 0.1f);
-        BACKGROUND = new Rectangle(-1.0f, -1.0f * 9.0f / 16.0f, 2.0f, 2.0f * 9.0f / 16.0f);
+        KORKOWY = new Player(-0.7f, -0.4f, 0.13f, 0.21f, "korkowa_postac.png");
 
-        PLATFORM.initGL("platforma.png");
+        KONIEC = new Rectangle(0.5f, -0.1f, 0.13f, 0.21f);
+
+        PLATFORMS = new LinkedList<>();
+        PLATFORMS.add(new Platform(-0.2f, -0.2f, 1.0f, 0.1f, "platforma.png"));
+        PLATFORMS.add(new Platform(-1.0f, -1.0f / Main.RESOLUTION, 2.0f, 0.1f, "platforma.png"));
+
+        BACKGROUND = new Rectangle(-1.0f, -1.0f / Main.RESOLUTION, 2.0f, 2.0f / Main.RESOLUTION);
+        BACKGROUND.X_WRAP = true;
+
+        KONIEC.initGL("koniec.png");
         BACKGROUND.initGL("bg.jpg");
 
         // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);

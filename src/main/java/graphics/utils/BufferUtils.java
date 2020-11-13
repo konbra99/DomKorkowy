@@ -4,8 +4,11 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
+import java.util.HashMap;
 
 public class BufferUtils {
+    public static HashMap<String, IntBuffer> bufferMap = new HashMap<>();
+
     private BufferUtils() {
     }
 
@@ -21,5 +24,13 @@ public class BufferUtils {
         buffer.put(data);
         buffer.flip();
         return buffer;
+    }
+
+    public static IntBuffer getBuffer(String textureName) {
+        if (!bufferMap.containsKey(textureName)) {
+            bufferMap.put(textureName, createIntBuffer(ImageUtils.load(textureName)));
+        }
+
+        return bufferMap.get(textureName);
     }
 }

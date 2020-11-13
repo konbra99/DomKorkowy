@@ -9,6 +9,7 @@ public class Rectangle {
     private Texture texture;
     private Program program;
     public float org_posX, org_posY, posX, posY, width, height;
+    public boolean X_WRAP, Y_WRAP; // musi byc ustawione przed initGL
 
     public Rectangle(float posX, float posY, float width, float height) {
         this.org_posX = posX;
@@ -39,13 +40,14 @@ public class Rectangle {
                 1.0f, 1.0f
         };
 
+        texture = new Texture(textureName, texCoords, X_WRAP, Y_WRAP, width, height);
         VAO = new VertexArrayObject(vertices, indices, texCoords);
-        texture = new Texture(textureName);
         program = new Program("triangle.vert.glsl", "triangle.frag");
     }
 
     public void draw() {
         glUseProgram(program.programID);
+        program.setFloat("resolution", Main.RESOLUTION);
         texture.bind();
         glBindVertexArray(VAO.VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
@@ -79,5 +81,9 @@ public class Rectangle {
         }
 
         return false;
+    }
+
+    public void setTexture(String imageName) {
+        this.texture.setImage(imageName);
     }
 }

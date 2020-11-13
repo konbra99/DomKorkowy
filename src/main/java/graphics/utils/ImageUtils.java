@@ -6,20 +6,28 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class ImageUtils {
-    public static int width, height;
+    public static HashMap<String, int[]> sizeMap = new HashMap<>(); // mapa wymiarow zdjec
+    private static int width, height;
 
     private ImageUtils() {
     }
 
     public static int[] load(String path) {
+        if (sizeMap.containsKey(path)) {
+            return sizeMap.get(path);
+        }
+
         int[] pixels = null;
         try {
             BufferedImage image = ImageIO.read(
                     new FileInputStream(Main.TEX_PATH + path));
             width = image.getWidth();
             height = image.getHeight();
+            sizeMap.put(path, new int[]{width, height});
+
             pixels = new int[width * height];
             image.getRGB(0, 0, width, height, pixels, 0, width);
         } catch (IOException e) {

@@ -18,68 +18,48 @@ import static constants.JsonSerializationStatus.*;
  * Przechowuje wszystkie elementy danej sceny, udestepnia ujednolicony
  * interfejs do obslugi wszystkich elementow. Dodatkowo przechowuje
  * referencje do elementow z podzialem na grupy,
- *
- * LISTA GLOWNA
- * allItems    - wszystkie elementy
- *
- * LISTY POMOCNICZE
- * staticItems - elementy nie poruszajace sie
- * movingItems - elementy poruszajace sie
- * ...
  */
 public class Stage implements JsonSerializable {
 
 	// zmienne
-	public StageProperties properties;
-	private int backgroundId;
-
-	// listy
-	public List<Entity> allEntities;
-	public List<Entity> staticEntities;
-	public List<Entity> movingEntities;
+	public int backgroundId;
 
 	// mapy
 	public Map<Integer, Entity> all;
+	public Map<Integer, Entity> platforms;
+	public Map<Integer, Entity> enemies;
+
+	// listy
+	public List<Entity> allMap;
 
 	public Stage() {
 		all = new HashMap<>();
-
-		// TODO delete
-		allEntities = new ArrayList<>();
-		staticEntities = new ArrayList<>();
-		movingEntities = new ArrayList<>();
-		properties = new StageProperties();
+		allMap = new ArrayList<>();
 	}
 
-	/** Dodaje element do listy glownej oraz do odpowiednich list pomocniczych. */
-	// TODO delete
-	public Stage addEntity(Entity entity) {
-		allEntities.add(entity);
-		return this;
+	/** Dodaje element do listy. W trybie edycji elementy nie posiadaja id */
+	public void addMapEntity(Entity entity) {
+		allMap.add(entity);
 	}
 
-	/** Dodaje element do listy glownej oraz do odpowiednich list pomocniczych. */
+	/** Dodaje element do mapy, kluczem jest podane id. */
 	public void addEntity(int id, Entity entity) {
 		all.put(id, entity);
 	}
 
 	/** Usuwa element ze z listy glownej oraz ze wszystkich list pomocniczych. */
 	public void removeEntity(Entity entity) {
-		allEntities.remove(entity);
 	}
 
-	/**
-	 * Czysci listy pomocnicze oraz ponownie grupuje wszystkie elementy,
-	 * nalezy wywolac po wczytaniu mapy z jsona.
-	 */
+	/** Grupuje elementy z all to poszczegolnych list pomocnicznych.
+	 * Nalezy wywolac po zaladowaniu mapy z jsona. */
 	public void buildStage() {
 	}
 
-	/**
-	 * Ustawia wlasciwosci pojedynczej planszy.
-	 */
-	public void addProperties(StageProperties properties) {
-		this.properties = properties;
+	/** Zamienia ArrayList na HashMap, dodaje indeksy do elementow mapy.
+	 * Nalezy wywolac po utworzeniu mapy w trybie edycji. */
+	public void buildHashMap() {
+
 	}
 
 	public JsonObject toJson() {
@@ -89,7 +69,11 @@ public class Stage implements JsonSerializable {
 
 		for (Map.Entry<Integer,Entity> element : all.entrySet()) {
 			JsonObject temp = element.getValue().toJson();
-			temp.addProperty("id", element.getKey());
+			int id = element.getKey();
+			String type = element.getValue().getClass().getSimpleName();
+			temp.addProperty("id", id);
+			temp.addProperty("type", type);
+
 			entities.add(temp);
 		}
 		obj.add("entities", entities);
@@ -98,7 +82,7 @@ public class Stage implements JsonSerializable {
 
 	public int fromJson(JsonObject obj) {
 		try {
-			backgroundId = obj.get("backgroundIs").getAsInt();
+			backgroundId = obj.get("backgroundId").getAsInt();
 			JsonArray entities = obj.getAsJsonArray("entities");
 
 			for(JsonElement element : entities) {
@@ -111,11 +95,14 @@ public class Stage implements JsonSerializable {
 					return NONEXISTENT_NAME;
 				if (entity.fromJson(temp) != ENTITY_OK)
 					return NONEXISTENT_PROPERTY;
+				addEntity(id, entity);
 			}
 			return STAGE_OK;
 
 		} catch (NullPointerException e) {
 			return NONEXISTENT_PROPERTY;
+		} catch (UnsupportedOperationException e) {
+			return INVALID_PROPERTY;
 		}
 	}
 }

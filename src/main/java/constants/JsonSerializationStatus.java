@@ -13,6 +13,7 @@ public class JsonSerializationStatus {
 	public final static int EXISTENT_FILE = -4;
 	public final static int PARSING_ERROR = -5;
 	public final static int IO_ERROR = -6;
+	public final static int INVALID_PROPERTY = -7;
 
 	// TODO old
 	public final static int MAP_PROPERTIES_NULL = -1;

@@ -14,9 +14,9 @@ public abstract class Entity implements JsonSerializable {
 	public Entity() {
 	}
 
-	public Entity(EntityProperties properties) {
-		setProperties(properties);
-	}
+//	public Entity(EntityProperties properties) {
+//		setProperties(properties);
+//	}
 
 	abstract public void move();
 	abstract public void draw();
@@ -32,7 +32,7 @@ public abstract class Entity implements JsonSerializable {
 		return ENTITY_OK;
 	};
 
-	public void setProperties(EntityProperties properties) {
-	}
+//	public void setProperties(EntityProperties properties) {
+//	}
 
 }

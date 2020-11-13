@@ -33,7 +33,6 @@ public class TestRect extends Entity {
 	@Override
 	public JsonObject toJson() {
 		JsonObject obj = super.toJson();
-		obj.addProperty("type", this.getClass().getSimpleName());
 		obj.addProperty("boolTest", boolTest);
 		obj.addProperty("intTest", intTest);
 		obj.addProperty("floatTest", floatTest);

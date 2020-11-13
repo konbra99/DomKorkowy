@@ -15,25 +15,11 @@ public class Input {
     public static void handleKeyboard(int key, int action) {
         boolean isPressed = action == GLFW_PRESS;
         switch (key) {
-            case GLFW_KEY_LEFT:
-            case GLFW_KEY_A:
-                LEFT = isPressed;
-                break;
-            case GLFW_KEY_RIGHT:
-            case GLFW_KEY_D:
-                RIGHT = isPressed;
-                break;
-            case GLFW_KEY_UP:
-            case GLFW_KEY_W:
-                UP = isPressed;
-                break;
-            case GLFW_KEY_DOWN:
-            case GLFW_KEY_S:
-                DOWN = isPressed;
-                break;
-            case GLFW_KEY_SPACE:
-                SPACE = isPressed;
-                break;
+            case GLFW_KEY_LEFT, GLFW_KEY_A -> LEFT = isPressed;
+            case GLFW_KEY_RIGHT, GLFW_KEY_D -> RIGHT = isPressed;
+            case GLFW_KEY_UP, GLFW_KEY_W -> UP = isPressed;
+            case GLFW_KEY_DOWN, GLFW_KEY_S -> DOWN = isPressed;
+            case GLFW_KEY_SPACE -> SPACE = isPressed;
         }
     }
 

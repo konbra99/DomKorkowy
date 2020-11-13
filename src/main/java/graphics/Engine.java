@@ -6,7 +6,6 @@ import org.lwjgl.Version;
 import org.lwjgl.opengl.GL;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Objects;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
@@ -45,7 +44,8 @@ public class Engine implements Runnable {
             p.update();
             p.draw();
         }
-        KONIEC.draw();;
+        KONIEC.draw();
+
         KORKOWY.move();
 
         Input.resetMouse();

@@ -9,11 +9,14 @@ public class TestRect extends Entity {
 	}
 
 	@Override
-	public void move() {}
+	public void move() {
+	}
 
 	@Override
-	public void draw() {}
+	public void draw() {
+	}
 
 	@Override
-	public void update() {}
+	public void update() {
+	}
 }

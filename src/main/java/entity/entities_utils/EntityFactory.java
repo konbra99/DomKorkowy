@@ -14,13 +14,15 @@ import entity.entities_tree.*;
  */
 public class EntityFactory {
 
-	private EntityFactory() {}
+	private EntityFactory() {
+	}
 
 	public static Entity getFromName(String name, int id, float x, float y) {
 
 		// TODO delete
-		switch(name) {
-			case TEST_RECT : return new TestRect();
+		switch (name) {
+			case TEST_RECT:
+				return new TestRect();
 			// TODO more
 
 			default:
@@ -34,8 +36,9 @@ public class EntityFactory {
 	public static Entity getFromJson(Gson gson, JsonElement element) {
 		String name = element.getAsJsonObject().getAsJsonPrimitive("type").getAsString();
 
-		switch(name) {
-			case TEST_RECT : return (TestRect)gson.fromJson(element, TestRect.class);
+		switch (name) {
+			case TEST_RECT:
+				return (TestRect) gson.fromJson(element, TestRect.class);
 			// TODO more
 
 			default:

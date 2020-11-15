@@ -1,6 +1,5 @@
 package logic;
 
-import entity.entities_tree.Entity;
 import graphics.Input;
 import graphics.Rectangle;
 

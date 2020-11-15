@@ -20,6 +20,10 @@ public abstract class Entity implements JsonSerializable {
 	abstract public void draw();
 	abstract public void update();
 
+	public Rectangle getRectangle() {
+		return rectangle;
+	}
+
 	/** Poczatek procesu serializacji. */
 	public JsonObject toJson() {
 		return new JsonObject();

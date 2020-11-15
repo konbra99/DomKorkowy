@@ -8,8 +8,11 @@ import java.util.Map;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import graphics.Main;
+import graphics.Rectangle;
 import logic.Entity;
 import logic.EntityFactory;
+import logic.Platform;
 import map.json.JsonSerializable;
 
 import static constants.EntityConstants.*;
@@ -24,6 +27,7 @@ public class Stage implements JsonSerializable {
 
 	// zmienne
 	public int backgroundId;
+	private Rectangle background;
 
 	// mapy
 	public Map<Integer, Entity> all;
@@ -40,12 +44,17 @@ public class Stage implements JsonSerializable {
 		allMap = new ArrayList<>();
 	}
 
+	public void move() {
+
+	}
+
 	public void update() {
 		for(Entity entity: all.values())
 			entity.update();
 	}
 
 	public void draw() {
+		background.draw();
 		for(Entity entity: all.values())
 			entity.draw();
 	}
@@ -75,7 +84,8 @@ public class Stage implements JsonSerializable {
 	}
 
 	/** Grupuje elementy z all do poszczegolnych map pomocnicznych.
-	 * Nalezy wywolac po zaladowaniu mapy z jsona. */
+	 * Ustawia tlo, ktoremu odpowiada backgroundId. Nalezy wywolac
+	 * po zaladowaniu mapy z jsona. */
 	public void buildStage() {
 		for (Map.Entry<Integer,Entity> element : all.entrySet()) {
 
@@ -86,8 +96,12 @@ public class Stage implements JsonSerializable {
 			if (entity.isInGroup(GROUP_PLATFORMS))
 				platforms.put(id, entity);
 			if (entity.isInGroup(GROUP_MOBS))
-				platforms.put(id, entity);
+				mobs.put(id, entity);
 		}
+
+		background = new Rectangle(-1.0f, -1.0f / Main.RESOLUTION, 2.0f, 2.0f / Main.RESOLUTION);
+		background.X_WRAP = true;
+		background.initGL("bg.jpg");
 	}
 
 	/** Zamienia ArrayList na HashMap, dodaje indeksy do elementow mapy.

@@ -52,7 +52,7 @@ public class Engine implements Runnable {
     }
 
     private void action() {
-        BACKGROUND.draw();
+        //BACKGROUND.draw();
 
 //        for (Platform p : PLATFORMS) {
 //            p.update();

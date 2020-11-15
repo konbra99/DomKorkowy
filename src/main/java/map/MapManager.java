@@ -3,6 +3,7 @@ package map;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import logic.Player;
 import map.json.JsonSerializable;
 
 import java.util.ArrayList;
@@ -28,6 +29,10 @@ public class MapManager implements JsonSerializable {
 		currentStage = 0;
 	}
 
+	/** Move bierzacej sceny. */
+	public void move() {
+	}
+
 	/** Update bierzacej sceny. */
 	public void update() {
 		stages.get(currentStage).update();
@@ -41,6 +46,11 @@ public class MapManager implements JsonSerializable {
 	/** Dodaje nowa scene do mapy.*/
 	public void addStage(Stage stage) {
 		stages.add(stage);
+	}
+
+	/** Zwraca bierzaca scene. */
+	public Stage getCurrentStage() {
+		return stages.get(currentStage);
 	}
 
 	/** Przechodzi do nastepnej sceny, zwraca false, jesli nastepna scena nie istnieje. */

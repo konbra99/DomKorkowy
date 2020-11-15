@@ -25,7 +25,8 @@ public class Player extends Character {
             offsetY = -0.01f;
         }
 
-        for (Platform p : Engine.PLATFORMS) {
+//        for (Platform p : Engine.PLATFORMS) {
+        for (Entity p : Engine.map.getCurrentStage().platforms.values()) {
             if (this.rectangle.collidesWith(p.getRectangle()) && offsetY < 0.0f) {
                 offsetY = 0.0f;
             }

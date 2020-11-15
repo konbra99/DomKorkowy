@@ -1,67 +1,137 @@
 package map;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import entity.entities_tree.Entity;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import logic.Entity;
+import logic.EntityFactory;
+import map.json.JsonSerializable;
+
+import static constants.EntityConstants.*;
+import static constants.JsonSerializationStatus.*;
 
 /**
  * Przechowuje wszystkie elementy danej sceny, udestepnia ujednolicony
  * interfejs do obslugi wszystkich elementow. Dodatkowo przechowuje
  * referencje do elementow z podzialem na grupy,
- *
- * LISTA GLOWNA
- * allItems    - wszystkie elementy
- *
- * LISTY POMOCNICZE
- * staticItems - elementy nie poruszajace sie
- * movingItems - elementy poruszajace sie
- * ...
  */
-public class Stage {
+public class Stage implements JsonSerializable {
 
-	public List<Entity> allEntities;
-	public List<Entity> staticEntities;
-	public List<Entity> movingEntities;
-	StageProperties properties;
+	// zmienne
+	public int backgroundId;
+
+	// mapy
+	public Map<Integer, Entity> all;
+	public Map<Integer, Entity> platforms;
+	public Map<Integer, Entity> mobs;
+
+	// listy
+	public List<Entity> allMap;
 
 	public Stage() {
-		allEntities = new ArrayList<>();
-		staticEntities = new ArrayList<>();
-		movingEntities = new ArrayList<>();
-		properties = new StageProperties();
+		all = new HashMap<>();
+		platforms = new HashMap<>();
+		mobs = new HashMap<>();
+		allMap = new ArrayList<>();
 	}
 
-	/**
-	 * Dodaje element do listy glownej oraz do odpowiednich list pomocniczych.
-	 */
-	public Stage addEntity(Entity item) {
-		allEntities.add(item);
-		// TODO dodac item do list pomoczniczych
-
-		return this;
+	/** Dodaje element do listy. W trybie edycji elementy nie posiadaja id */
+	public void addMapEntity(Entity entity) {
+		allMap.add(entity);
 	}
 
-	/**
-	 * Usuwa element ze z listy glownej oraz ze wszystkich list pomocniczych.
-	 */
-	public void removeEntity(Entity item) {
-		allEntities.remove(item);
-		// TODO usunac element z list pomocniczych
+	/** Dodaje element do mapy, kluczem jest podane id. */
+	public void addEntity(int id, Entity entity) {
+		all.put(id, entity);
 	}
 
-	/**
-	 * Czysci listy pomocnicze oraz ponownie grupuje wszystkie elementy,
-	 * nalezy wywolac po wczytaniu mapy z jsona.
-	 */
-	public void loadEntity() {
-		// TODO
+	/** Usuwa element o podanym id ze wszystkich slownikow.
+	 * Zwraca true, jesli element o podanym id istnieje. */
+	public boolean removeEntity(int id) {
+		Entity entity = all.get(id);
+		if (entity == null)
+			return false;
+		if (entity.isInGroup(GROUP_PLATFORMS))
+			platforms.remove(id);
+		if (entity.isInGroup(GROUP_MOBS))
+			mobs.remove(id);
+		all.remove(id);
+		return true;
 	}
 
-	/**
-	 * Ustawia wlasciwosci pojedynczej planszy.
-	 */
-	public void addProperties(StageProperties properties) {
-		this.properties = properties;
+	/** Grupuje elementy z all do poszczegolnych map pomocnicznych.
+	 * Nalezy wywolac po zaladowaniu mapy z jsona. */
+	public void buildStage() {
+		for (Map.Entry<Integer,Entity> element : all.entrySet()) {
+			int id = element.getKey();
+			Entity entity = element.getValue();
+
+			all.put(id,entity);
+			if (entity.isInGroup(GROUP_PLATFORMS))
+				platforms.put(id, entity);
+			if (entity.isInGroup(GROUP_MOBS))
+				platforms.put(id, entity);
+		}
+	}
+
+	/** Zamienia ArrayList na HashMap, dodaje indeksy do elementow mapy.
+	 * Nalezy wywolac po utworzeniu mapy w trybie edycji. */
+	public void buildHashMap() {
+		int counter = 0;
+		for (Entity entity: allMap) {
+			all.put(counter, entity);
+			counter++;
+		}
+		allMap = null;
+	}
+
+	public JsonObject toJson() {
+		JsonObject obj = new JsonObject();
+		JsonArray entities = new JsonArray();
+		obj.addProperty("backgroundId", backgroundId);
+
+		for (Map.Entry<Integer,Entity> element : all.entrySet()) {
+			JsonObject temp = element.getValue().toJson();
+			int id = element.getKey();
+			String type = element.getValue().getClass().getSimpleName();
+			temp.addProperty("id", id);
+			temp.addProperty("type", type);
+
+			entities.add(temp);
+		}
+		obj.add("entities", entities);
+		return obj;
+	};
+
+	public int fromJson(JsonObject obj) {
+		try {
+			backgroundId = obj.get("backgroundId").getAsInt();
+			JsonArray entities = obj.getAsJsonArray("entities");
+
+			for(JsonElement element : entities) {
+				JsonObject temp = element.getAsJsonObject();
+				int id = temp.get("id").getAsInt();
+				String type = temp.get("type").getAsString();
+				Entity entity = EntityFactory.fromName(type);
+
+				if (entity == null)
+					return NONEXISTENT_NAME;
+				int status = entity.fromJson(temp);
+				if (status != ENTITY_OK)
+					return status;
+				addEntity(id, entity);
+			}
+			return STAGE_OK;
+
+		} catch (NullPointerException e) {
+			return NONEXISTENT_PROPERTY;
+		} catch (UnsupportedOperationException e) {
+			return INVALID_PROPERTY;
+		}
 	}
 }

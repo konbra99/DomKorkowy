@@ -1,6 +1,5 @@
 package logic;
 
-import entity.entities_tree.Entity;
 import graphics.Rectangle;
 
 public class Character extends Entity {

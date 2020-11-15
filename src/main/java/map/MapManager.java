@@ -1,15 +1,25 @@
 package map;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import map.json.JsonSerializable;
+
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Przechowuje liste scen oraz numer aktualnej sceny. Mapa sklada sie
- * z co najmniej jednej sceny.
- */
-public class MapManager {
+import static constants.JsonSerializationStatus.*;
 
-	MapProperties properties;
+/** Przechowuje liste scen oraz numer aktualnej sceny. */
+public class MapManager implements JsonSerializable {
+
+	// zmienne
+	public String mapName;
+	public String author;
+	public int maxPlayers;
+	public int time;
+
+	// sceny
 	List<Stage> stages;
 	int currentStage;
 
@@ -18,18 +28,55 @@ public class MapManager {
 		currentStage = 0;
 	}
 
-	/**
-	 * Dodaje scene do mapy oraz grupuje elementy.
-	 */
+	/** Dodaje nowa scene do mapy.*/
 	public void addStage(Stage stage) {
 		stages.add(stage);
-		stage.loadEntity();
 	}
 
-	/**
-	 * Ustawia wlasciwosci mapy.
-	 */
-	public void addProperties(MapProperties properties) {
-		this.properties = properties;
+	/** Przechodzi do nastepnej sceny, zwraca false, jesli nastepna scena nie istnieje. */
+	public boolean nextStage() {
+		return false;
+	}
+
+	public JsonObject toJson() {
+		JsonObject obj = new JsonObject();
+		JsonArray json_stages = new JsonArray();
+		obj.addProperty("mapName", mapName);
+		obj.addProperty("maxPlayers", maxPlayers);
+		obj.addProperty("author", author);
+		obj.addProperty("time", time);
+		obj.add("stages", json_stages);
+
+		for(Stage stage: stages) {
+			JsonObject temp = stage.toJson();
+			json_stages.add(temp);
+		}
+		return obj;
+	}
+
+	public int fromJson(JsonObject obj) {
+		try {
+			mapName = obj.get("mapName").getAsString();
+			author = obj.get("author").getAsString();
+			maxPlayers = obj.get("maxPlayers").getAsInt();
+			time = obj.get("time").getAsInt();
+
+			JsonArray json_stages = obj.getAsJsonArray("stages");
+			for(JsonElement element: json_stages) {
+				JsonObject temp = (JsonObject)element;
+
+				Stage stage = new Stage();
+				int status = stage.fromJson(temp);
+				if (status != STAGE_OK)
+					return status;
+				addStage(stage);
+			}
+			return MAP_OK;
+
+		} catch (NullPointerException e) {
+			return NONEXISTENT_PROPERTY;
+		} catch (UnsupportedOperationException e) {
+			return INVALID_PROPERTY;
+		}
 	}
 }

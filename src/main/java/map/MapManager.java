@@ -20,12 +20,22 @@ public class MapManager implements JsonSerializable {
 	public int time;
 
 	// sceny
-	List<Stage> stages;
+	private List<Stage> stages;
 	int currentStage;
 
 	public MapManager() {
 		stages = new ArrayList<>();
 		currentStage = 0;
+	}
+
+	/** Update bierzacej sceny. */
+	public void update() {
+		stages.get(currentStage).update();
+	}
+
+	/** Draw bierzacej sceny. */
+	public void draw() {
+		stages.get(currentStage).draw();
 	}
 
 	/** Dodaje nowa scene do mapy.*/

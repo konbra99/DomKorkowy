@@ -40,6 +40,16 @@ public class Stage implements JsonSerializable {
 		allMap = new ArrayList<>();
 	}
 
+	public void update() {
+		for(Entity entity: all.values())
+			entity.update();
+	}
+
+	public void draw() {
+		for(Entity entity: all.values())
+			entity.draw();
+	}
+
 	/** Dodaje element do listy. W trybie edycji elementy nie posiadaja id */
 	public void addMapEntity(Entity entity) {
 		allMap.add(entity);
@@ -68,6 +78,7 @@ public class Stage implements JsonSerializable {
 	 * Nalezy wywolac po zaladowaniu mapy z jsona. */
 	public void buildStage() {
 		for (Map.Entry<Integer,Entity> element : all.entrySet()) {
+
 			int id = element.getKey();
 			Entity entity = element.getValue();
 

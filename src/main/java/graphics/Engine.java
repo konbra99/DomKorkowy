@@ -2,6 +2,8 @@ package graphics;
 
 import logic.Platform;
 import logic.Player;
+import map.MapManager;
+import map.Stage;
 import org.lwjgl.Version;
 import org.lwjgl.opengl.GL;
 
@@ -15,6 +17,7 @@ import static org.lwjgl.opengl.GL11.*;
 public class Engine implements Runnable {
     private Window window;
 
+    public static MapManager map;
     public static Player KORKOWY;
     public static Rectangle BACKGROUND, KONIEC;
     public static LinkedList<Platform> PLATFORMS;
@@ -34,16 +37,31 @@ public class Engine implements Runnable {
 
     private void init() {
         window = new Window();
+        map = new MapManager();
         GL.createCapabilities();
+        initTempMap();
+    }
+
+    private void initTempMap() {
+        Stage stage = new Stage();
+        stage.addMapEntity(new Platform(-0.2f, -0.2f, 1.0f, 0.1f, "platforma.png"));
+        stage.addMapEntity(new Platform(-1.0f, -1.0f / Main.RESOLUTION, 2.0f, 0.1f, "platforma.png"));
+        stage.buildHashMap();
+        stage.buildStage();
+        map.addStage(stage);
     }
 
     private void action() {
         BACKGROUND.draw();
 
-        for (Platform p : PLATFORMS) {
-            p.update();
-            p.draw();
-        }
+//        for (Platform p : PLATFORMS) {
+//            p.update();
+//            p.draw();
+//        }
+
+        map.update();
+        map.draw();
+
         KONIEC.draw();
 
         KORKOWY.move();
@@ -59,7 +77,7 @@ public class Engine implements Runnable {
         KONIEC = new Rectangle(0.5f, -0.1f, 0.13f, 0.21f);
 
         PLATFORMS = new LinkedList<>();
-        PLATFORMS.add(new Platform(-0.2f, -0.2f, 1.0f, 0.1f, "platforma.png"));
+        //PLATFORMS.add(new Platform(-0.2f, -0.2f, 1.0f, 0.1f, "platforma.png"));
         PLATFORMS.add(new Platform(-1.0f, -1.0f / Main.RESOLUTION, 2.0f, 0.1f, "platforma.png"));
 
         BACKGROUND = new Rectangle(-1.0f, -1.0f / Main.RESOLUTION, 2.0f, 2.0f / Main.RESOLUTION);

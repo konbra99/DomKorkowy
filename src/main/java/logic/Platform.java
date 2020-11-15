@@ -1,9 +1,11 @@
 package logic;
 
+import com.google.gson.JsonObject;
+import constants.EntityConstants;
 import graphics.Input;
 import graphics.Rectangle;
 
-public class Platform extends Entity {
+public class Platform extends Entity{
     private String textureName;
 
     public Platform(float posX, float posY, float width, float height, String texture) {
@@ -11,6 +13,7 @@ public class Platform extends Entity {
         this.rectangle.X_WRAP = true;
         this.rectangle.initGL(texture);
         this.textureName = texture;
+        this.groups |= EntityConstants.GROUP_PLATFORMS;
     }
 
     @Override
@@ -32,5 +35,17 @@ public class Platform extends Entity {
                 this.textureName = "platforma.png";
             }
         }
+    }
+
+    @Override
+    public JsonObject toJson() {
+        // TODO
+        return null;
+    }
+
+    @Override
+    public int fromJson(JsonObject obj) {
+        // TODO
+        return -1;
     }
 }

@@ -8,10 +8,11 @@ import java.util.Map;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import entity.entities_tree.Entity;
-import entity.entities_utils.EntityFactory;
+import logic.Entity;
+import logic.EntityFactory;
 import map.json.JsonSerializable;
 
+import static constants.EntityConstants.*;
 import static constants.JsonSerializationStatus.*;
 
 /**
@@ -27,13 +28,15 @@ public class Stage implements JsonSerializable {
 	// mapy
 	public Map<Integer, Entity> all;
 	public Map<Integer, Entity> platforms;
-	public Map<Integer, Entity> enemies;
+	public Map<Integer, Entity> mobs;
 
 	// listy
 	public List<Entity> allMap;
 
 	public Stage() {
 		all = new HashMap<>();
+		platforms = new HashMap<>();
+		mobs = new HashMap<>();
 		allMap = new ArrayList<>();
 	}
 
@@ -47,19 +50,44 @@ public class Stage implements JsonSerializable {
 		all.put(id, entity);
 	}
 
-	/** Usuwa element ze z listy glownej oraz ze wszystkich list pomocniczych. */
-	public void removeEntity(Entity entity) {
+	/** Usuwa element o podanym id ze wszystkich slownikow.
+	 * Zwraca true, jesli element o podanym id istnieje. */
+	public boolean removeEntity(int id) {
+		Entity entity = all.get(id);
+		if (entity == null)
+			return false;
+		if (entity.isInGroup(GROUP_PLATFORMS))
+			platforms.remove(id);
+		if (entity.isInGroup(GROUP_MOBS))
+			mobs.remove(id);
+		all.remove(id);
+		return true;
 	}
 
-	/** Grupuje elementy z all to poszczegolnych list pomocnicznych.
+	/** Grupuje elementy z all do poszczegolnych map pomocnicznych.
 	 * Nalezy wywolac po zaladowaniu mapy z jsona. */
 	public void buildStage() {
+		for (Map.Entry<Integer,Entity> element : all.entrySet()) {
+			int id = element.getKey();
+			Entity entity = element.getValue();
+
+			all.put(id,entity);
+			if (entity.isInGroup(GROUP_PLATFORMS))
+				platforms.put(id, entity);
+			if (entity.isInGroup(GROUP_MOBS))
+				platforms.put(id, entity);
+		}
 	}
 
 	/** Zamienia ArrayList na HashMap, dodaje indeksy do elementow mapy.
 	 * Nalezy wywolac po utworzeniu mapy w trybie edycji. */
 	public void buildHashMap() {
-
+		int counter = 0;
+		for (Entity entity: allMap) {
+			all.put(counter, entity);
+			counter++;
+		}
+		allMap = null;
 	}
 
 	public JsonObject toJson() {
@@ -93,8 +121,9 @@ public class Stage implements JsonSerializable {
 
 				if (entity == null)
 					return NONEXISTENT_NAME;
-				if (entity.fromJson(temp) != ENTITY_OK)
-					return NONEXISTENT_PROPERTY;
+				int status = entity.fromJson(temp);
+				if (status != ENTITY_OK)
+					return status;
 				addEntity(id, entity);
 			}
 			return STAGE_OK;

@@ -1,9 +1,7 @@
-package entity.entities_utils;
+package logic;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import entity.entities_tree.Entity;
-import entity.entities_tree.*;
 
 /**
  * Tworzy obiekt, ktorego typ podano w formie stringa. Zwraca

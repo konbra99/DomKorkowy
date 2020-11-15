@@ -1,4 +1,4 @@
-package entity.entities_tree;
+package logic;
 
 import com.google.gson.JsonObject;
 

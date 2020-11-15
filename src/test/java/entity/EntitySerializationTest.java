@@ -1,9 +1,8 @@
 package entity;
 
 import com.google.gson.JsonObject;
-import entity.entities_tree.TestRect;
+import logic.TestRect;
 import map.json.JsonUtils;
-import org.junit.Test;
 
 import static constants.JsonSerializationStatus.*;
 import static org.junit.Assert.assertEquals;

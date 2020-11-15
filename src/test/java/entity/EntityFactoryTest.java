@@ -1,8 +1,8 @@
 package entity;
 
-import entity.entities_tree.Entity;
-import entity.entities_tree.TestRect;
-import entity.entities_utils.EntityFactory;
+import logic.Entity;
+import logic.TestRect;
+import logic.EntityFactory;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

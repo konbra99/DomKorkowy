@@ -69,7 +69,7 @@ public class MapManager implements JsonSerializable {
 				int status = stage.fromJson(temp);
 				if (status != STAGE_OK)
 					return status;
-				stages.add(stage);
+				addStage(stage);
 			}
 			return MAP_OK;
 

@@ -1,7 +1,7 @@
 package map;
 
 import com.google.gson.JsonObject;
-import entity.entities_tree.TestRect;
+import logic.TestRect;
 import map.json.JsonUtils;
 import org.junit.Test;
 

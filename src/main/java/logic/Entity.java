@@ -1,10 +1,8 @@
-package entity.entities_tree;
+package logic;
 import com.google.gson.JsonObject;
 import constants.EntityConstants;
-import entity.EntityProperties;
 import graphics.Rectangle;
 import map.json.JsonSerializable;
-import constants.EntityConstants.*;
 
 import static constants.JsonSerializationStatus.ENTITY_OK;
 
@@ -15,12 +13,8 @@ public abstract class Entity implements JsonSerializable {
 	public static int groups;
 
 	public Entity() {
-		groups |= EntityConstants.DEFAULT;
+		groups |= EntityConstants.GROUP_DEFAULT;
 	}
-
-//	public Entity(EntityProperties properties) {
-//		setProperties(properties);
-//	}
 
 	abstract public void move();
 	abstract public void draw();
@@ -36,7 +30,8 @@ public abstract class Entity implements JsonSerializable {
 		return ENTITY_OK;
 	};
 
-//	public void setProperties(EntityProperties properties) {
-//	}
-
+	/** Sprawdza, czy encja znajduje sie w podanej grupie. */
+	public boolean isInGroup(int group) {
+		return (groups & group) != 0;
+	}
 }

@@ -5,7 +5,7 @@ import graphics.Rectangle;
 public class Character extends Entity {
     public int hp;
     private String texture;
-    //public Rectangle shape;
+    protected CharacterState state;
 
     public Character(float posX, float posY, float width, float height, String texture) {
         gravityFlag = true;

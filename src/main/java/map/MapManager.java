@@ -3,7 +3,6 @@ package map;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import logic.Player;
 import map.json.JsonSerializable;
 
 import java.util.ArrayList;

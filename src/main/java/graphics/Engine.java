@@ -94,6 +94,10 @@ public class Engine implements Runnable {
 
             action();
 
+
+            // wyliczasz czas
+            // sleep(czas);
+
             glfwSwapBuffers(window.getWindowHandle()); // swap the color buffers
 
             // sprawdza czy zaszly jakies eventy

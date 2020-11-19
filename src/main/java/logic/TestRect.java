@@ -41,15 +41,11 @@ public class TestRect extends Entity {
 	};
 
 	@Override
-	public int fromJson(JsonObject obj) {
-		try {
-			this.boolTest = obj.get("boolTest").getAsBoolean();
-			this.intTest = obj.get("intTest").getAsInt();
-			this.floatTest = obj.get("floatTest").getAsFloat();
-			this.stringTest = obj.get("stringTest").getAsString();
-			return super.fromJson(obj);
-		} catch (NullPointerException e) {
-			return NONEXISTENT_PROPERTY;
-		}
+	public void fromJson(JsonObject obj) {
+		this.boolTest = obj.get("boolTest").getAsBoolean();
+		this.intTest = obj.get("intTest").getAsInt();
+		this.floatTest = obj.get("floatTest").getAsFloat();
+		this.stringTest = obj.get("stringTest").getAsString();
+		super.fromJson(obj);
 	};
 }

@@ -1,17 +1,17 @@
 package logic;
 
+import com.google.gson.JsonObject;
 import graphics.Rectangle;
 
 public class Character extends Entity {
-    public int hp;
-    private String texture;
+    public int hp;                      /* SERIALIZED */
     protected CharacterState state;
 
-    public Character(float posX, float posY, float width, float height, String texture) {
+    public Character(float posX, float posY, float width, float height, String textureName) {
         gravityFlag = true;
         this.rectangle = new Rectangle(posX, posY, width, height);
-        this.texture = texture;
-        this.rectangle.initGL(this.texture);
+        this.textureName = textureName;
+        this.rectangle.initGL(this.textureName);
     }
 
     @Override
@@ -26,4 +26,17 @@ public class Character extends Entity {
     public void update(){
         this.draw();
     }
+
+    @Override
+    public JsonObject toJson() {
+        JsonObject obj = super.toJson();
+        obj.addProperty("hp", hp);
+        return obj;
+    };
+
+    @Override
+    public void fromJson(JsonObject obj) {
+        hp = obj.get("hp").getAsInt();
+        super.fromJson(obj);
+    };
 }

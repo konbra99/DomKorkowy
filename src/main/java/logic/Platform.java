@@ -6,7 +6,6 @@ import graphics.Input;
 import graphics.Rectangle;
 
 public class Platform extends Entity{
-    private String textureName;
 
     public Platform(float posX, float posY, float width, float height, String texture) {
         this.rectangle = new Rectangle(posX, posY, width, height);
@@ -39,13 +38,11 @@ public class Platform extends Entity{
 
     @Override
     public JsonObject toJson() {
-        // TODO
-        return null;
+        return super.toJson();
     }
 
     @Override
-    public int fromJson(JsonObject obj) {
-        // TODO
-        return -1;
+    public void fromJson(JsonObject obj) {
+        super.fromJson(obj);
     }
 }

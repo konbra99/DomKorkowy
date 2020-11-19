@@ -1,15 +1,21 @@
 package graphics;
 
+import com.google.gson.JsonObject;
+import map.json.JsonSerializable;
+
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.glUseProgram;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 
-public class Rectangle {
+public class Rectangle implements JsonSerializable {
     private VertexArrayObject VAO;
     private Texture texture;
     private Program program;
     public float org_posX, org_posY, posX, posY, width, height;
     public boolean X_WRAP, Y_WRAP; // musi byc ustawione przed initGL
+
+    public Rectangle() {
+    }
 
     public Rectangle(float posX, float posY, float width, float height) {
         this.org_posX = posX;
@@ -85,5 +91,25 @@ public class Rectangle {
 
     public void setTexture(String imageName) {
         this.texture.setImage(imageName);
+    }
+
+    /** Poczatek procesu serializacji. */
+    public JsonObject toJson() {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("posX", posX);
+        obj.addProperty("posY", posY);
+        obj.addProperty("width", width);
+        obj.addProperty("height", height);
+        return obj;
+    }
+
+    /** Koniec procesu deserializacji. */
+    public void fromJson(JsonObject obj) {
+        posX   = obj.get("posX").getAsFloat();
+        posY   = obj.get("posY").getAsFloat();
+        width  = obj.get("width").getAsFloat();
+        height = obj.get("height").getAsFloat();
+        org_posX = posX;
+        org_posY = posY;
     }
 }

@@ -73,29 +73,19 @@ public class MapManager implements JsonSerializable {
 		return obj;
 	}
 
-	public int fromJson(JsonObject obj) {
-		try {
-			mapName = obj.get("mapName").getAsString();
-			author = obj.get("author").getAsString();
-			maxPlayers = obj.get("maxPlayers").getAsInt();
-			time = obj.get("time").getAsInt();
+	public void fromJson(JsonObject obj) {
+		mapName = obj.get("mapName").getAsString();
+		author = obj.get("author").getAsString();
+		maxPlayers = obj.get("maxPlayers").getAsInt();
+		time = obj.get("time").getAsInt();
 
-			JsonArray json_stages = obj.getAsJsonArray("stages");
-			for(JsonElement element: json_stages) {
-				JsonObject temp = (JsonObject)element;
+		JsonArray json_stages = obj.getAsJsonArray("stages");
+		for(JsonElement element: json_stages) {
+			JsonObject temp = (JsonObject) element;
 
-				Stage stage = new Stage();
-				int status = stage.fromJson(temp);
-				if (status != STAGE_OK)
-					return status;
-				addStage(stage);
-			}
-			return MAP_OK;
-
-		} catch (NullPointerException e) {
-			return NONEXISTENT_PROPERTY;
-		} catch (UnsupportedOperationException e) {
-			return INVALID_PROPERTY;
+			Stage stage = new Stage();
+			stage.fromJson(temp);
+			addStage(stage);
 		}
 	}
 }

@@ -12,7 +12,6 @@ public interface JsonSerializable {
 
 	/**
 	 * Odtwarza element z podanego obiektu JsonObjet.
-	 * @return      status wyjscia
 	 */
-	int fromJson(JsonObject obj);
+	void fromJson(JsonObject obj);
 }

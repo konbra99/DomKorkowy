@@ -8,11 +8,13 @@ import static constants.JsonSerializationStatus.ENTITY_OK;
 
 public abstract class Entity implements JsonSerializable {
 
-	protected Rectangle rectangle;
-	protected boolean gravityFlag;
-	public static int groups;
+	protected Rectangle rectangle;      /* SERIALIZED */
+	protected boolean gravityFlag;      /* NOT SERIALIZED */
+	protected String textureName;       /* SERIALIZED */
+	protected int groups;               /* NOT SERIALIZED */
 
 	public Entity() {
+		rectangle = new Rectangle();
 		groups |= EntityConstants.GROUP_DEFAULT;
 	}
 
@@ -24,14 +26,15 @@ public abstract class Entity implements JsonSerializable {
 		return rectangle;
 	}
 
-	/** Poczatek procesu serializacji. */
 	public JsonObject toJson() {
-		return new JsonObject();
+		JsonObject obj = rectangle.toJson();
+		obj.addProperty("textureName", textureName);
+		return obj;
 	};
 
-	/** Koniec procesu deserializacji. */
-	public int fromJson(JsonObject obj) {
-		return ENTITY_OK;
+	public void fromJson(JsonObject obj) {
+		textureName = obj.get("textureName").getAsString();
+		rectangle.fromJson(obj);
 	};
 
 	/** Sprawdza, czy encja znajduje sie w podanej grupie. */

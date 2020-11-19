@@ -3,10 +3,9 @@ package map;
 import com.google.gson.JsonObject;
 import logic.TestRect;
 import map.json.JsonUtils;
+import org.junit.Test;
 
-import static constants.JsonSerializationStatus.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class StageSerializationTest {
 
@@ -38,58 +37,84 @@ public class StageSerializationTest {
 
 	//@Test
 	public void EmptyStageFromJsonTest() {
-		String str = """
+		try {
+			String str = """
 				{"backgroundId":0,"entities":[]}""";
-		JsonObject obj = JsonUtils.fromString(str);
-		Stage stage = new Stage();
-		int status = stage.fromJson(obj);
+			JsonObject obj = JsonUtils.fromString(str);
+			Stage stage = new Stage();
+			stage.fromJson(obj);
 
-		assertEquals(status, STAGE_OK);
-		assertEquals(stage.backgroundId, 0);
-		assertEquals(stage.all.size(), 0);
+			assertEquals(stage.backgroundId, 0);
+			assertEquals(stage.all.size(), 0);
+			assertTrue(true);
+
+		} catch (Exception e) {
+			fail();
+		}
 	}
 
 	//@Test
 	public void StageFromJsonTest() {
-		int backgroundId = 10;
-		int rectId = 20;
-		boolean b = false;
-		int i = 10;
-		float f = 99.99f;
-		String s = "abc";
-		String str = """
-				{"backgroundId":10,"entities":[{"type":"TestRect","boolTest":false,"intTest":10,\
-				"floatTest":99.99,"stringTest":"abc","id":20}]}""";
+		try {
+			int backgroundId = 10;
+			int rectId = 20;
+			boolean b = false;
+			int i = 10;
+			float f = 99.99f;
+			String s = "abc";
+			String str = """
+				{"backgroundId":10,"entities":[{"boolTest":false,"intTest":10,"floatTest":99.99,"stringTest":"abc",\
+				"id":20,"type":"TestRect"}]}""";
 
-		JsonObject obj = JsonUtils.fromString(str);
-		Stage stage = new Stage();
-		int status = stage.fromJson(obj);
+			JsonObject obj = JsonUtils.fromString(str);
+			Stage stage = new Stage();
+			stage.fromJson(obj);
 
-		assertEquals(status, STAGE_OK);
-		assertEquals(stage.backgroundId, backgroundId);
-		TestRect rect = (TestRect)stage.all.get(rectId);
-		assertNotNull(rect);
+			assertEquals(stage.backgroundId, backgroundId);
+			TestRect rect = (TestRect)stage.all.get(rectId);
 
-		assertEquals(rect.boolTest, b);
-		assertEquals(rect.intTest, i);
-		assertEquals(rect.floatTest, f, Float.MIN_VALUE);
-		assertEquals(rect.stringTest, s);
+			assertEquals(rect.boolTest, b);
+			assertEquals(rect.intTest, i);
+			assertEquals(rect.floatTest, f, Float.MIN_VALUE);
+			assertEquals(rect.stringTest, s);
+			assertTrue(true);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
 	}
 
 	//@Test
-	public void StageNoexistentPropertyTest() {
-		String str = """
+	public void NoexistentStagePropertyTest() {
+		try {
+			String str = """
 				{"bad_property":10,"entities":[{"type":"TestRect","boolTest":false,"intTest":10,\
 				"floatTest":99.99,"stringTest":"abc","id":20}]}""";
-		JsonObject obj = JsonUtils.fromString(str);
-		Stage stage = new Stage();
-		int status = stage.fromJson(obj);
+			JsonObject obj = JsonUtils.fromString(str);
+			Stage stage = new Stage();
+			stage.fromJson(obj);
+			fail();
 
-		assertEquals(status, NONEXISTENT_PROPERTY);
+		} catch (NullPointerException e) {
+			assertTrue(true);
+		}
 	}
 
 	//@Test
-	public void StageInvalidPropertyTest() {
-		// TODO
+	public void AmbigiousStagePropertyTest() {
+		try {
+			String str = """
+				{"backgroundId":10, "backgroundId":20, "entities":[{"type":"TestRect","boolTest":false,"intTest":10,\
+				"floatTest":99.99,"stringTest":"abc","id":20}]}""";
+			JsonObject obj = JsonUtils.fromString(str);
+			Stage stage = new Stage();
+			stage.fromJson(obj);
+
+			assertNotNull(stage.all.get(20));
+
+		} catch (NullPointerException e) {
+			fail();
+		}
 	}
 }

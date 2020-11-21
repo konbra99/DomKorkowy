@@ -83,6 +83,15 @@ public class Rectangle {
         return false;
     }
 
+    // sprawdza czy po move(offX, offY) zajdzie kolizja
+    public boolean willCollide(Rectangle other, float offX, float offY) {
+        if (posX + offX <= other.posX + other.width && posX + offX + width >= other.posX) {
+            return posY + offY <= other.posY + other.height && posY + offY + height >= other.posY;
+        }
+
+        return false;
+    }
+
     public void setTexture(String imageName) {
         this.texture.setImage(imageName);
     }

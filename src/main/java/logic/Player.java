@@ -7,10 +7,14 @@ import static logic.CharacterState.*;
 
 public class Player extends Character {
     private float vel_y = 0.0f;
+    private Hit hit;
 
     public Player(float posX, float posY, float width, float height, String texture) {
         super(posX, posY, width, height, texture);
+        this.hit = new Hit(posX + width / 2, posY + height / 2, 0.5f, 0.05f, "hit.png");
         state = JUMPING;
+
+        hit.setPlayer(this);
     }
 
     @Override
@@ -19,8 +23,10 @@ public class Player extends Character {
 
         if (Input.RIGHT) {
             offsetX = 0.01f;
+            isRight = true;
         } else if (Input.LEFT) {
             offsetX = -0.01f;
+            isRight = false;
         }
 
         if (Input.SPACE && state == STANDING) {
@@ -47,9 +53,20 @@ public class Player extends Character {
             System.out.println("koniec gry");
         }
 
+        this.rectangle.setOrientation(isRight);
         this.rectangle.move(offsetX, offsetY);
         this.rectangle.draw();
 
         vel_y -= 0.002f;
+    }
+
+    @Override
+    public void update() {
+        if (Input.HIT) {
+            hit.start();
+            Input.HIT = false;
+        }
+
+        hit.update();
     }
 }

@@ -1,6 +1,6 @@
 package graphics.utils;
 
-import graphics.Main;
+import graphics.Config;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -23,7 +23,7 @@ public class ImageUtils {
         int[] pixels = null;
         try {
             BufferedImage image = ImageIO.read(
-                    new FileInputStream(Main.TEX_PATH + path));
+                    new FileInputStream(Config.TEX_PATH + path));
             width = image.getWidth();
             height = image.getHeight();
             sizeMap.put(path, new int[]{width, height});

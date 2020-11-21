@@ -45,6 +45,10 @@ public class Program {
         return handle;
     }
 
+    public void setBool(String name, boolean b) {
+        glUniform1i(glGetUniformLocation(programID, name), b ? 1 : 0);
+    }
+
     // deklaruje uniform float
     public void setFloat(String name, float value) {
         glUniform1f(glGetUniformLocation(programID, name), value);
@@ -53,5 +57,9 @@ public class Program {
     // deklaruje uniform vec2
     public void setFloat2(String name, float v0, float v1) {
         glUniform2f(glGetUniformLocation(programID, name), v0, v1);
+    }
+
+    public void setFloat3(String name, float v0, float v1, float v2) {
+        glUniform3f(glGetUniformLocation(programID, name), v0, v1, v2);
     }
 }

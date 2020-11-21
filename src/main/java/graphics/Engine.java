@@ -39,32 +39,28 @@ public class Engine implements Runnable {
         window = new Window();
         map = new MapManager();
         GL.createCapabilities();
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         initTempMap();
     }
 
     private void initTempMap() {
         Stage stage = new Stage();
         stage.addMapEntity(new Platform(-0.2f, -0.2f, 1.0f, 0.1f, "platforma.png"));
-        stage.addMapEntity(new Platform(-1.0f, -1.0f / Main.RESOLUTION, 2.0f, 0.1f, "platforma.png"));
+        stage.addMapEntity(new Platform(-1.0f, -1.0f / Config.RESOLUTION, 2.0f, 0.1f, "platforma.png"));
         stage.buildHashMap();
         stage.buildStage();
         map.addStage(stage);
     }
 
     private void action() {
-        //BACKGROUND.draw();
-
-//        for (Platform p : PLATFORMS) {
-//            p.update();
-//            p.draw();
-//        }
-
         map.update();
         map.draw();
 
         KONIEC.draw();
 
         KORKOWY.move();
+        KORKOWY.update();
 
         Input.resetMouse();
     }
@@ -75,16 +71,10 @@ public class Engine implements Runnable {
         KORKOWY = new Player(-0.7f, -0.4f, 0.13f, 0.21f, "korkowa_postac.png");
 
         KONIEC = new Rectangle(0.5f, -0.1f, 0.13f, 0.21f);
+        KONIEC.initGL("koniec.png","rectangle.vert.glsl", "rectangle.frag");
 
         PLATFORMS = new LinkedList<>();
-        //PLATFORMS.add(new Platform(-0.2f, -0.2f, 1.0f, 0.1f, "platforma.png"));
-        PLATFORMS.add(new Platform(-1.0f, -1.0f / Main.RESOLUTION, 2.0f, 0.1f, "platforma.png"));
-
-        BACKGROUND = new Rectangle(-1.0f, -1.0f / Main.RESOLUTION, 2.0f, 2.0f / Main.RESOLUTION);
-        BACKGROUND.X_WRAP = true;
-
-        KONIEC.initGL("koniec.png");
-        BACKGROUND.initGL("bg.jpg");
+        PLATFORMS.add(new Platform(-1.0f, -1.0f / Config.RESOLUTION, 2.0f, 0.1f, "platforma.png"));
 
         // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
@@ -93,7 +83,6 @@ public class Engine implements Runnable {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
 
             action();
-
 
             // wyliczasz czas
             // sleep(czas);

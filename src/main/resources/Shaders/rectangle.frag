@@ -9,5 +9,6 @@ void main() {
     vec4 texColor = texture(texSample, texCoord);
     if (texColor.a < 0.1)
         discard;
+
     myColor = texColor;
 }

@@ -11,9 +11,9 @@ public class Platform extends Entity{
     public Platform(float posX, float posY, float width, float height, String texture) {
         this.rectangle = new Rectangle(posX, posY, width, height);
         this.rectangle.X_WRAP = true;
-        this.rectangle.initGL(texture);
+        this.rectangle.initGL(texture, "rectangle.vert.glsl", "rectangle.frag");
         this.textureName = texture;
-        this.groups |= EntityConstants.GROUP_PLATFORMS;
+        groups |= EntityConstants.GROUP_PLATFORMS;
     }
 
     @Override

@@ -8,13 +8,14 @@ import static logic.CharacterState.*;
 public class Player extends Character {
     private float vel_y = 0.0f;
     private Hit hit;
+    private int immune;
 
     public Player(float posX, float posY, float width, float height, String texture) {
         super(posX, posY, width, height, texture);
         this.hit = new Hit(posX + width / 2, posY + height / 2, 0.5f, 0.05f, "hit.png");
         state = JUMPING;
         hp = 3;
-
+        immune = 0;
         hit.setPlayer(this);
     }
 
@@ -53,11 +54,24 @@ public class Player extends Character {
                 break;
             }
         }
+        if (immune < 1) {
+            for (Entity mob : Engine.map.getCurrentStage().mobs.values()) {
+                if (this.rectangle.collidesWith(mob.rectangle)) {
+                    hp--;
+                    immune = 30;
+                    Engine.HEALTHBAR.initGL(hp + "hp.png", "rectangle.vert.glsl", "rectangle.frag");
+                    if (hp == 0) {
+                        hp = 3;
+                    }
+                }
+            }
+        }
 
         this.rectangle.setOrientation(direction == RIGHT);
         this.rectangle.move(offsetX, offsetY);
         this.rectangle.draw();
 
+        immune--;
         vel_y -= 0.002f;
     }
 

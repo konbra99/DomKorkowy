@@ -23,10 +23,10 @@ public class Player extends Character {
 
         if (Input.RIGHT) {
             offsetX = 0.01f;
-            isRight = true;
+            direction = RIGHT;
         } else if (Input.LEFT) {
             offsetX = -0.01f;
-            isRight = false;
+            direction = LEFT;
         }
 
         if (Input.SPACE && state == STANDING) {
@@ -49,11 +49,7 @@ public class Player extends Character {
             }
         }
 
-        if (this.rectangle.collidesWith(Engine.KONIEC)) {
-            System.out.println("koniec gry");
-        }
-
-        this.rectangle.setOrientation(isRight);
+        this.rectangle.setOrientation(direction == RIGHT);
         this.rectangle.move(offsetX, offsetY);
         this.rectangle.draw();
 

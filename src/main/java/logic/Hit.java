@@ -5,11 +5,10 @@ import graphics.Engine;
 import graphics.Rectangle;
 
 public class Hit extends Entity {
-    boolean isRight;
+    int direction;
     String textureName;
     Player player;
     private float time, start, end;
-    int sign;
     int angle_index;
 
     public Hit(float posX, float posY, float width, float height, String texture) {
@@ -32,7 +31,7 @@ public class Hit extends Entity {
         float off_x = this.player.rectangle.posX + this.player.rectangle.width / 2
                 - this.rectangle.posX - this.rectangle.width / 2;
 
-        off_x += isRight ? 0.15f : -0.15f;
+        off_x += direction * 0.15f;
 
         float off_y = this.player.rectangle.posY + this.player.rectangle.height / 2
                 - this.rectangle.posY - this.rectangle.height / 2;
@@ -41,19 +40,18 @@ public class Hit extends Entity {
 
     @Override
     public void draw() {
-        this.rectangle.setOrientation(isRight);
+        this.rectangle.setOrientation(direction == RIGHT);
         this.rectangle.draw();
     }
 
     public void start() {
         this.rectangle.rotate(Config.HIT_ANGLES[angle_index]);
         this.time = 0.0f;
-        this.isRight = this.player.isRight;
+        this.direction = this.player.direction;
         move();
 
-        start = isRight ? this.rectangle.posX: this.rectangle.posX + this.rectangle.width;
-        end = isRight ? this.rectangle.posX + this.rectangle.width : this.rectangle.posX;
-        sign = isRight ? 1 : -1;
+        start = direction == RIGHT ? this.rectangle.posX: this.rectangle.posX + this.rectangle.width;
+        end = direction == RIGHT ? this.rectangle.posX + this.rectangle.width : this.rectangle.posX;
 
         angle_index++;
         angle_index %= Config.HIT_ANGLES.length;
@@ -64,12 +62,17 @@ public class Hit extends Entity {
         float fade;
         if (time < 1.0f) {
             this.rectangle.setAlpha(1.0f);
-            fade = (start + sign * time * this.rectangle.width + 1.0f) / 2;
+            fade = (start + direction * time * this.rectangle.width + 1.0f) / 2;
             this.rectangle.setFade(fade);
             time += 0.05f;
 
             if (time >= 1.0f) {
-                // sprawdzamy kolizje
+                // sprawdzamy kolizj
+                for (Entity mob : Engine.map.getCurrentStage().mobs.values()) {
+                    if (this.rectangle.collidesWith(mob.rectangle)) {
+                        System.out.println("trafiony");
+                    }
+                }
             }
         } else if (time <= 2.0f) {
             this.rectangle.setAlpha(2.0f - time);

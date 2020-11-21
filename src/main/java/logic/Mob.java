@@ -8,7 +8,6 @@ public class Mob extends Character {
     protected float velocity;
     protected float beginX;
     protected float endX;
-    protected int direction;
 
     public Mob() {
         groups |= GROUP_MOBS;
@@ -28,15 +27,17 @@ public class Mob extends Character {
 
     @Override
     public void move() {
-        if (rectangle.posX > endX)
+        if (rectangle.posX > endX) {
             direction = LEFT;
-        else if (rectangle.posX < beginX)
+        }
+        else if (rectangle.posX < beginX) {
             direction = RIGHT;
+        }
+
+        rectangle.setOrientation(direction != RIGHT);
         rectangle.move(direction*velocity, 0f);
     }
 
-
-    @Override
     public JsonObject toJson() {
         return super.toJson();
     };

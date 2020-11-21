@@ -6,7 +6,7 @@ import graphics.Rectangle;
 public class Character extends Entity {
     public int hp;                      /* SERIALIZED */
     protected CharacterState state;
-    protected boolean isRight = true;
+    protected int direction;
 
     public Character() {
     }

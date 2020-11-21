@@ -1,5 +1,6 @@
 package graphics;
 
+import logic.Mob;
 import logic.Platform;
 import logic.Player;
 import map.MapManager;
@@ -19,7 +20,7 @@ public class Engine implements Runnable {
 
     public static MapManager map;
     public static Player KORKOWY;
-    public static Rectangle BACKGROUND, KONIEC;
+    public static Rectangle BACKGROUND;
     public static LinkedList<Platform> PLATFORMS;
 
     @Override
@@ -48,16 +49,16 @@ public class Engine implements Runnable {
         Stage stage = new Stage();
         stage.addMapEntity(new Platform(-0.2f, -0.2f, 1.0f, 0.1f, "platforma.png"));
         stage.addMapEntity(new Platform(-1.0f, -1.0f / Config.RESOLUTION, 2.0f, 0.1f, "platforma.png"));
+        stage.addMapEntity(new Mob(0.5f, -0.1f, 0.13f, 0.21f, "koniec.png"));
         stage.buildHashMap();
         stage.buildStage();
         map.addStage(stage);
     }
 
     private void action() {
+        map.move();
         map.update();
         map.draw();
-
-        KONIEC.draw();
 
         KORKOWY.move();
         KORKOWY.update();
@@ -70,13 +71,8 @@ public class Engine implements Runnable {
 
         KORKOWY = new Player(-0.7f, -0.4f, 0.13f, 0.21f, "korkowa_postac.png");
 
-        KONIEC = new Rectangle(0.5f, -0.1f, 0.13f, 0.21f);
-        KONIEC.initGL("koniec.png","rectangle.vert.glsl", "rectangle.frag");
-
         PLATFORMS = new LinkedList<>();
         PLATFORMS.add(new Platform(-1.0f, -1.0f / Config.RESOLUTION, 2.0f, 0.1f, "platforma.png"));
-
-        // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
         // glowna petla programu
         while (!glfwWindowShouldClose(window.getWindowHandle())) {
@@ -84,8 +80,6 @@ public class Engine implements Runnable {
 
             action();
 
-            // wyliczasz czas
-            // sleep(czas);
 
             glfwSwapBuffers(window.getWindowHandle()); // swap the color buffers
 

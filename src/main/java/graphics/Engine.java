@@ -22,6 +22,7 @@ public class Engine implements Runnable {
     public static Player KORKOWY;
     public static Rectangle BACKGROUND;
     public static LinkedList<Platform> PLATFORMS;
+    public static Rectangle HEALTHBAR;
 
     @Override
     public void run() {
@@ -63,6 +64,8 @@ public class Engine implements Runnable {
         KORKOWY.move();
         KORKOWY.update();
 
+        HEALTHBAR.draw();
+
         Input.resetMouse();
     }
 
@@ -74,6 +77,8 @@ public class Engine implements Runnable {
         PLATFORMS = new LinkedList<>();
         PLATFORMS.add(new Platform(-1.0f, -1.0f / Config.RESOLUTION, 2.0f, 0.1f, "platforma.png"));
 
+        HEALTHBAR = new Rectangle(-1.0f, 0.48f, 0.24f, 0.08f);
+        HEALTHBAR.initGL("3hp.png", "rectangle.vert.glsl", "rectangle.frag");
         // glowna petla programu
         while (!glfwWindowShouldClose(window.getWindowHandle())) {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer

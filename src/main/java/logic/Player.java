@@ -13,6 +13,7 @@ public class Player extends Character {
         super(posX, posY, width, height, texture);
         this.hit = new Hit(posX + width / 2, posY + height / 2, 0.5f, 0.05f, "hit.png");
         state = JUMPING;
+        hp = 3;
 
         hit.setPlayer(this);
     }

@@ -20,12 +20,16 @@ public class Player extends Character {
     @Override
     public void move() {
         float offsetX = 0.0f, offsetY = 0.0f;
+        float speed = 1;
 
+        if (Input.L_CTRL) {
+            speed = 1.5f;
+        }
         if (Input.RIGHT) {
-            offsetX = 0.01f;
+            offsetX = 0.01f * speed;
             direction = RIGHT;
         } else if (Input.LEFT) {
-            offsetX = -0.01f;
+            offsetX = -0.01f * speed;
             direction = LEFT;
         }
 

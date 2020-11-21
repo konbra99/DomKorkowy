@@ -1,12 +1,15 @@
 package logic;
 import com.google.gson.JsonObject;
-import constants.EntityConstants;
 import graphics.Rectangle;
 import map.json.JsonSerializable;
 
-import static constants.JsonSerializationStatus.ENTITY_OK;
-
 public abstract class Entity implements JsonSerializable {
+
+	// STATIC CONSTANTS
+	// GROUPS
+	public final static int GROUP_DEFAULT  = 0b00000001;
+	public final static int GROUP_PLATFORMS = 0b00000010;
+	public final static int GROUP_MOBS      = 0b00000100;
 
 	protected Rectangle rectangle;      /* SERIALIZED */
 	protected boolean gravityFlag;      /* NOT SERIALIZED */
@@ -15,7 +18,7 @@ public abstract class Entity implements JsonSerializable {
 
 	public Entity() {
 		rectangle = new Rectangle();
-		groups |= EntityConstants.GROUP_DEFAULT;
+		groups |= GROUP_DEFAULT;
 	}
 
 	abstract public void move();

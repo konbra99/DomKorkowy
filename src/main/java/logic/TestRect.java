@@ -2,8 +2,6 @@ package logic;
 
 import com.google.gson.JsonObject;
 
-import static constants.JsonSerializationStatus.NONEXISTENT_PROPERTY;
-
 public class TestRect extends Entity {
 
 	public boolean boolTest;

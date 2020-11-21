@@ -7,6 +7,10 @@ public class Character extends Entity {
     public int hp;                      /* SERIALIZED */
     protected CharacterState state;
 
+    public Character() {
+
+    }
+
     public Character(float posX, float posY, float width, float height, String textureName) {
         gravityFlag = true;
         this.rectangle = new Rectangle(posX, posY, width, height);

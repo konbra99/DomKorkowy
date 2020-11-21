@@ -1,7 +1,6 @@
 package logic;
 
 import com.google.gson.JsonObject;
-import constants.EntityConstants;
 import graphics.Input;
 import graphics.Rectangle;
 
@@ -12,7 +11,7 @@ public class Platform extends Entity{
         this.rectangle.X_WRAP = true;
         this.rectangle.initGL(texture);
         this.textureName = texture;
-        this.groups |= EntityConstants.GROUP_PLATFORMS;
+        this.groups |= GROUP_PLATFORMS;
     }
 
     @Override

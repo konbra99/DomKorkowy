@@ -5,7 +5,6 @@ import logic.TestRect;
 import map.json.JsonUtils;
 import org.junit.Test;
 
-import static constants.JsonSerializationStatus.MAP_OK;
 import static org.junit.Assert.*;
 
 public class MapSerializationTest {

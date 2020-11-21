@@ -8,8 +8,6 @@ import map.json.JsonSerializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import static constants.JsonSerializationStatus.*;
-
 /** Przechowuje liste scen oraz numer aktualnej sceny. */
 public class MapManager implements JsonSerializable {
 

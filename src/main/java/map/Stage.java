@@ -12,12 +12,8 @@ import graphics.Main;
 import graphics.Rectangle;
 import logic.Entity;
 import logic.EntityFactory;
-import logic.Platform;
-import map.exceptions.NoexistentType;
 import map.json.JsonSerializable;
-
-import static constants.EntityConstants.*;
-import static constants.JsonSerializationStatus.*;
+import static logic.Entity.*;
 
 /**
  * Przechowuje wszystkie elementy danej sceny, udestepnia ujednolicony

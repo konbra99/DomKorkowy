@@ -1,5 +1,6 @@
 package graphics;
 
+import logic.Mob;
 import logic.Platform;
 import logic.Player;
 import map.MapManager;
@@ -46,6 +47,7 @@ public class Engine implements Runnable {
         Stage stage = new Stage();
         stage.addMapEntity(new Platform(-0.2f, -0.2f, 1.0f, 0.1f, "platforma.png"));
         stage.addMapEntity(new Platform(-1.0f, -1.0f / Main.RESOLUTION, 2.0f, 0.1f, "platforma.png"));
+        stage.addMapEntity(new Mob(0.5f, -0.1f, 0.13f, 0.21f, "koniec.png"));
         stage.buildHashMap();
         stage.buildStage();
         map.addStage(stage);
@@ -62,7 +64,7 @@ public class Engine implements Runnable {
         map.update();
         map.draw();
 
-        KONIEC.draw();
+        //KONIEC.draw();
 
         KORKOWY.move();
 

@@ -28,6 +28,7 @@ public class MapManager implements JsonSerializable {
 
 	/** Move bierzacej sceny. */
 	public void move() {
+		stages.get(currentStage).move();
 	}
 
 	/** Update bierzacej sceny. */
@@ -80,7 +81,6 @@ public class MapManager implements JsonSerializable {
 		JsonArray json_stages = obj.getAsJsonArray("stages");
 		for(JsonElement element: json_stages) {
 			JsonObject temp = (JsonObject) element;
-
 			Stage stage = new Stage();
 			stage.fromJson(temp);
 			addStage(stage);

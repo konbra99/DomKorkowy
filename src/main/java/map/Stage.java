@@ -42,7 +42,8 @@ public class Stage implements JsonSerializable {
 	}
 
 	public void move() {
-
+		for(Entity entity: all.values())
+			entity.move();
 	}
 
 	public void update() {

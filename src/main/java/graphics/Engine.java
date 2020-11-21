@@ -54,13 +54,7 @@ public class Engine implements Runnable {
     }
 
     private void action() {
-        //BACKGROUND.draw();
-
-//        for (Platform p : PLATFORMS) {
-//            p.update();
-//            p.draw();
-//        }
-
+        map.move();
         map.update();
         map.draw();
 

@@ -5,11 +5,14 @@ import map.json.JsonSerializable;
 
 public abstract class Entity implements JsonSerializable {
 
-	// STATIC CONSTANTS
 	// GROUPS
 	public final static int GROUP_DEFAULT  = 0b00000001;
 	public final static int GROUP_PLATFORMS = 0b00000010;
 	public final static int GROUP_MOBS      = 0b00000100;
+
+	// DIRECTIONS
+	public final static int LEFT = -1;
+	public final static int RIGHT = 1;
 
 	protected Rectangle rectangle;      /* SERIALIZED */
 	protected boolean gravityFlag;      /* NOT SERIALIZED */

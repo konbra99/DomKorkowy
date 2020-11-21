@@ -8,7 +8,6 @@ public class Character extends Entity {
     protected CharacterState state;
 
     public Character() {
-
     }
 
     public Character(float posX, float posY, float width, float height, String textureName) {

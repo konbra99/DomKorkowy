@@ -1,19 +1,27 @@
 package logic;
 import com.google.gson.JsonObject;
-import constants.EntityConstants;
 import graphics.Rectangle;
 import map.json.JsonSerializable;
 
-import static constants.JsonSerializationStatus.ENTITY_OK;
-
 public abstract class Entity implements JsonSerializable {
 
-	protected Rectangle rectangle;
-	protected boolean gravityFlag;
-	public static int groups;
+	// GROUPS
+	public final static int GROUP_DEFAULT  = 0b00000001;
+	public final static int GROUP_PLATFORMS = 0b00000010;
+	public final static int GROUP_MOBS      = 0b00000100;
+
+	// DIRECTIONS
+	public final static int LEFT = -1;
+	public final static int RIGHT = 1;
+
+	protected Rectangle rectangle;      /* SERIALIZED */
+	protected boolean gravityFlag;      /* NOT SERIALIZED */
+	protected String textureName;       /* SERIALIZED */
+	protected int groups;               /* NOT SERIALIZED */
 
 	public Entity() {
-		groups |= EntityConstants.GROUP_DEFAULT;
+		rectangle = new Rectangle();
+		groups |= GROUP_DEFAULT;
 	}
 
 	abstract public void move();
@@ -24,14 +32,15 @@ public abstract class Entity implements JsonSerializable {
 		return rectangle;
 	}
 
-	/** Poczatek procesu serializacji. */
 	public JsonObject toJson() {
-		return new JsonObject();
+		JsonObject obj = rectangle.toJson();
+		obj.addProperty("textureName", textureName);
+		return obj;
 	};
 
-	/** Koniec procesu deserializacji. */
-	public int fromJson(JsonObject obj) {
-		return ENTITY_OK;
+	public void fromJson(JsonObject obj) {
+		textureName = obj.get("textureName").getAsString();
+		rectangle.fromJson(obj);
 	};
 
 	/** Sprawdza, czy encja znajduje sie w podanej grupie. */

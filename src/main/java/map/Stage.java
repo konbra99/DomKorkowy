@@ -13,9 +13,7 @@ import graphics.Rectangle;
 import logic.Entity;
 import logic.EntityFactory;
 import map.json.JsonSerializable;
-
-import static constants.EntityConstants.*;
-import static constants.JsonSerializationStatus.*;
+import static logic.Entity.*;
 
 /**
  * Przechowuje wszystkie elementy danej sceny, udestepnia ujednolicony
@@ -44,7 +42,8 @@ public class Stage implements JsonSerializable {
 	}
 
 	public void move() {
-
+		for(Entity entity: all.values())
+			entity.move();
 	}
 
 	public void update() {
@@ -132,30 +131,18 @@ public class Stage implements JsonSerializable {
 		return obj;
 	}
 
-	public int fromJson(JsonObject obj) {
-		try {
-			backgroundId = obj.get("backgroundId").getAsInt();
-			JsonArray entities = obj.getAsJsonArray("entities");
+	public void fromJson(JsonObject obj) {
+		backgroundId = obj.get("backgroundId").getAsInt();
+		JsonArray entities = obj.getAsJsonArray("entities");
 
-			for(JsonElement element : entities) {
-				JsonObject temp = element.getAsJsonObject();
-				int id = temp.get("id").getAsInt();
-				String type = temp.get("type").getAsString();
-				Entity entity = EntityFactory.fromName(type);
+		for(JsonElement element : entities) {
+			JsonObject temp = element.getAsJsonObject();
+			int id = temp.get("id").getAsInt();
+			String type = temp.get("type").getAsString();
 
-				if (entity == null)
-					return NONEXISTENT_NAME;
-				int status = entity.fromJson(temp);
-				if (status != ENTITY_OK)
-					return status;
-				addEntity(id, entity);
-			}
-			return STAGE_OK;
-
-		} catch (NullPointerException e) {
-			return NONEXISTENT_PROPERTY;
-		} catch (UnsupportedOperationException e) {
-			return INVALID_PROPERTY;
+			Entity entity = EntityFactory.fromName(type);
+			entity.fromJson(temp);
+			addEntity(id, entity);
 		}
 	}
 }

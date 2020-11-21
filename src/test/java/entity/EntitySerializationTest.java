@@ -3,9 +3,9 @@ package entity;
 import com.google.gson.JsonObject;
 import logic.TestRect;
 import map.json.JsonUtils;
+import org.junit.Test;
 
-import static constants.JsonSerializationStatus.*;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class EntitySerializationTest {
 
@@ -26,32 +26,44 @@ public class EntitySerializationTest {
 
 	//@Test
 	public void EntityFromJsonTest() {
-		boolean b = false;
-		int i = 10;
-		float f = 99.99f;
-		String s = "abc";
-		String str = """
-                {"type":"TestRect","intTest":10,"floatTest":99.99,"boolTest":false,"stringTest":"abc","id":20}""";
-		JsonObject obj = JsonUtils.fromString(str);
-		TestRect rect = new TestRect();
-		int status = rect.fromJson(obj);
+		try {
+			boolean b = false;
+			int i = 10;
+			float f = 99.99f;
+			String s = "abc";
+			String str = """
+	                {"type":"TestRect","intTest":10,"floatTest":99.99,"boolTest":false,"stringTest":"abc","id":20}""";
+			JsonObject obj = JsonUtils.fromString(str);
+			TestRect rect = new TestRect();
+			rect.fromJson(obj);
 
-		assertEquals(status, ENTITY_OK);
-		assertEquals(rect.boolTest, b);
-		assertEquals(rect.intTest, i);
-		assertEquals(rect.floatTest, f, Float.MIN_VALUE);
-		assertEquals(rect.stringTest, s);
+			assertEquals(rect.boolTest, b);
+			assertEquals(rect.intTest, i);
+			assertEquals(rect.floatTest, f, Float.MIN_VALUE);
+			assertEquals(rect.stringTest, s);
+			assertTrue(true);
+
+		} catch (Exception e) {
+			fail();
+		}
 	}
 
 	//@Test
 	public void EntityFromJsonNonexistentPropertyTest() {
-		String str = """
+		try {
+			String str = """
                 {"type":"TestRect","intTest":10,"floatTest":99.99, "stringTest":"abc","id":20}""";
-		JsonObject obj = JsonUtils.fromString(str);
-		TestRect rect = new TestRect();
-		int status = rect.fromJson(obj);
+			JsonObject obj = JsonUtils.fromString(str);
+			TestRect rect = new TestRect();
+			rect.fromJson(obj);
+			fail();
 
-		assertEquals(status, NONEXISTENT_PROPERTY);
+		} catch (NullPointerException e) {
+			assertTrue(true);
+		} catch (Exception e) {
+			fail();
+		}
+
 	}
 
 	//@Test

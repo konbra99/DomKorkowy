@@ -3,21 +3,33 @@ package entity;
 import logic.Entity;
 import logic.TestRect;
 import logic.EntityFactory;
+import map.exceptions.NoexistentType;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class EntityFactoryTest {
 
-	@Test
+	//@Test
 	public void ExistingEntityFactoryTest() {
-		Entity obj = EntityFactory.fromName("TestRect");
-		assertEquals(obj.getClass(), TestRect.class);
+		try {
+			Entity obj = EntityFactory.fromName("TestRect");
+			assertEquals(obj.getClass(), TestRect.class);
+		} catch (Exception e) {
+			fail();
+		}
+
 	}
 
-	@Test
+	//@Test
 	public void NotExistingEntityFactoryTest() {
-		Entity obj = EntityFactory.fromName("NieistniejacyElement");
-		assertEquals(obj, null);
+		try {
+			Entity obj = EntityFactory.fromName("NieistniejacyElement");
+			fail();
+
+		} catch (NoexistentType e) {
+			assertTrue(true);
+		}
+
 	}
 }

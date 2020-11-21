@@ -1,7 +1,6 @@
 package logic;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
+import map.exceptions.NoexistentType;
 
 /**
  * Tworzy obiekt, ktorego typ podano w formie stringa. Zwraca
@@ -15,25 +14,8 @@ public class EntityFactory {
 	public static Entity fromName(String type) {
 
 		switch(type) {
-			case "TestRect" :   return new TestRect();
+			case "TestRect" : return new TestRect();
+			default: throw new NoexistentType(type);
 		}
-
-		return null;
-	}
-
-	// TODO delete getFromJson
-	public static Entity getFromJson(Gson gson, JsonElement element) {
-		String name = element.getAsJsonObject().getAsJsonPrimitive("type").getAsString();
-
-		switch(name) {
-			case "TestRect" : return (TestRect)gson.fromJson(element, TestRect.class);
-			// TODO more
-
-			default:
-				System.err.println("GameItemFactory.getFromJson(): Nierozpoznana nazwa " + name);
-				System.exit(-1);
-		}
-
-		return null;
 	}
 }

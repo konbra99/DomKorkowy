@@ -1,7 +1,6 @@
 package logic;
 
 import com.google.gson.JsonObject;
-import constants.EntityConstants;
 import graphics.Input;
 import graphics.Rectangle;
 
@@ -13,7 +12,7 @@ public class Platform extends Entity{
         this.rectangle.X_WRAP = true;
         this.rectangle.initGL(texture, "rectangle.vert.glsl", "rectangle.frag");
         this.textureName = texture;
-        groups |= EntityConstants.GROUP_PLATFORMS;
+        groups |= GROUP_PLATFORMS;
     }
 
     @Override
@@ -39,13 +38,11 @@ public class Platform extends Entity{
 
     @Override
     public JsonObject toJson() {
-        // TODO
-        return null;
+        return super.toJson();
     }
 
     @Override
-    public int fromJson(JsonObject obj) {
-        // TODO
-        return -1;
+    public void fromJson(JsonObject obj) {
+        super.fromJson(obj);
     }
 }

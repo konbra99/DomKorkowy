@@ -23,14 +23,14 @@ public class Texture {
 
         // skaluje wierzcholki po x
         if (X_WRAP) {
-            float scale_x = (Main.WIDTH * width / 2.0f) / dims[0];
+            float scale_x = (Config.WIDTH * width / 2.0f) / dims[0];
             texCoords[4] = scale_x;
             texCoords[6] = scale_x;
         }
 
         // skaluje po y
         if (Y_WRAP) {
-            float scale_y = (Main.HEIGHT * height * Main.RESOLUTION / 2.0f) / dims[1];
+            float scale_y = (Config.HEIGHT * height * Config.RESOLUTION / 2.0f) / dims[1];
             texCoords[1] = scale_y;
             texCoords[7] = scale_y;
         }

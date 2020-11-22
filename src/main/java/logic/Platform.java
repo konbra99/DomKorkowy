@@ -5,13 +5,14 @@ import graphics.Input;
 import graphics.Rectangle;
 
 public class Platform extends Entity{
+    private String textureName;
 
     public Platform(float posX, float posY, float width, float height, String texture) {
         this.rectangle = new Rectangle(posX, posY, width, height);
         this.rectangle.X_WRAP = true;
-        this.rectangle.initGL(texture);
+        this.rectangle.initGL(texture, "rectangle.vert.glsl", "rectangle.frag");
         this.textureName = texture;
-        this.groups |= GROUP_PLATFORMS;
+        groups |= GROUP_PLATFORMS;
     }
 
     @Override

@@ -8,7 +8,7 @@ import java.util.Map;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import graphics.Main;
+import graphics.Config;
 import graphics.Rectangle;
 import logic.Entity;
 import logic.EntityFactory;
@@ -97,9 +97,9 @@ public class Stage implements JsonSerializable {
 				mobs.put(id, entity);
 		}
 
-		background = new Rectangle(-1.0f, -1.0f / Main.RESOLUTION, 2.0f, 2.0f / Main.RESOLUTION);
+		background = new Rectangle(-1.0f, -1.0f / Config.RESOLUTION, 2.0f, 2.0f / Config.RESOLUTION);
 		background.X_WRAP = true;
-		background.initGL("bg.jpg");
+		background.initGL("bg.jpg", "rectangle.vert.glsl", "rectangle.frag");
 	}
 
 	/** Zamienia ArrayList na HashMap, dodaje indeksy do elementow mapy.
@@ -129,7 +129,7 @@ public class Stage implements JsonSerializable {
 		}
 		obj.add("entities", entities);
 		return obj;
-	};
+	}
 
 	public void fromJson(JsonObject obj) {
 		backgroundId = obj.get("backgroundId").getAsInt();

@@ -6,6 +6,7 @@ import graphics.Rectangle;
 public class Character extends Entity {
     public int hp;                      /* SERIALIZED */
     protected CharacterState state;
+    protected int direction;
 
     public Character() {
     }
@@ -14,7 +15,7 @@ public class Character extends Entity {
         gravityFlag = true;
         this.rectangle = new Rectangle(posX, posY, width, height);
         this.textureName = textureName;
-        this.rectangle.initGL(this.textureName);
+        this.rectangle.initGL(this.textureName, "rectangle.vert.glsl", "rectangle.frag");
     }
 
     @Override

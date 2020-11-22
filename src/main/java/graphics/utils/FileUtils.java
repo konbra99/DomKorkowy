@@ -1,6 +1,6 @@
 package graphics.utils;
 
-import graphics.Main;
+import graphics.Config;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,7 +11,7 @@ public class FileUtils {
     }
 
     public static String loadFile(String filename) {
-        File file = new File(Main.SHADERS_PATH + filename);
+        File file = new File(Config.SHADERS_PATH + filename);
         StringBuilder builder = new StringBuilder();
 
         try {

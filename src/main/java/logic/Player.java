@@ -6,30 +6,30 @@ import graphics.Input;
 import static logic.CharacterState.*;
 
 public class Player extends Character {
-    private float vel_y = 0.0f;
     private Hit hit;
+    private int immune;
 
     public Player(float posX, float posY, float width, float height, String texture) {
         super(posX, posY, width, height, texture);
         this.hit = new Hit(posX + width / 2, posY + height / 2, 0.5f, 0.025f, "hit2.png");
         state = JUMPING;
-
+        hp = 3;
+        immune = 0;
         hit.setPlayer(this);
     }
 
     @Override
     public void move() {
-        float offsetX = 0.0f, offsetY = 0.0f;
         float speed = 1;
 
         if (Input.L_CTRL) {
             speed = 1.5f;
         }
         if (Input.RIGHT) {
-            offsetX = 0.01f * speed;
+            vel_x = 0.01f * speed;
             direction = RIGHT;
         } else if (Input.LEFT) {
-            offsetX = -0.01f * speed;
+            vel_x = -0.01f * speed;
             direction = LEFT;
         }
 
@@ -38,19 +38,21 @@ public class Player extends Character {
             state = JUMPING;
         }
 
-        offsetY = vel_y;
+        this.gravity();
 
-        // kolizja z platformami
-        for (Entity p : Engine.getPlatforms()) {
-            if (this.rectangle.willCollide(p.getRectangle(), offsetX, offsetY) && offsetY < 0.0f) {
-                // zignoruj jesli nie jest wyzej
-                if (!(this.rectangle.posY + 0.01f > p.rectangle.posY + p.rectangle.height))
-                    continue;
-
-                offsetY -= this.rectangle.posY + offsetY - (p.rectangle.posY + p.rectangle.height);
-                vel_y = 0.0f;
-                state = STANDING;
-                break;
+        if (state != STANDING && vel_y == 0) {
+            state = STANDING;
+        }
+        if (immune < 1) {
+            for (Entity mob : Engine.map.getCurrentStage().mobs.values()) {
+                if (this.rectangle.collidesWith(mob.rectangle)) {
+                    hp--;
+                    immune = 30;
+                    Engine.HEALTHBAR.initGL(hp + "hp.png", "rectangle.vert.glsl", "rectangle.frag");
+                    if (hp == 0) {
+                        hp = 3;
+                    }
+                }
             }
         }
 
@@ -69,10 +71,12 @@ public class Player extends Character {
         }
 
         this.rectangle.setOrientation(direction == RIGHT);
-        this.rectangle.move(offsetX, offsetY);
+        this.rectangle.move(vel_x, vel_y);
         this.rectangle.draw();
 
-        vel_y -= 0.002f;
+        immune--;
+        gravity_vel_dec();
+        vel_x = 0.0f;
     }
 
     @Override

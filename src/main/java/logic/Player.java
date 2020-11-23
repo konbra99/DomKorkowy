@@ -11,7 +11,7 @@ public class Player extends Character {
 
     public Player(float posX, float posY, float width, float height, String texture) {
         super(posX, posY, width, height, texture);
-        this.hit = new Hit(posX + width / 2, posY + height / 2, 0.5f, 0.05f, "hit.png");
+        this.hit = new Hit(posX + width / 2, posY + height / 2, 0.5f, 0.025f, "hit2.png");
         state = JUMPING;
 
         hit.setPlayer(this);
@@ -40,7 +40,8 @@ public class Player extends Character {
 
         offsetY = vel_y;
 
-        for (Entity p : Engine.map.getCurrentStage().platforms.values()) {
+        // kolizja z platformami
+        for (Entity p : Engine.getPlatforms()) {
             if (this.rectangle.willCollide(p.getRectangle(), offsetX, offsetY) && offsetY < 0.0f) {
                 // zignoruj jesli nie jest wyzej
                 if (!(this.rectangle.posY + 0.01f > p.rectangle.posY + p.rectangle.height))
@@ -51,6 +52,18 @@ public class Player extends Character {
                 state = STANDING;
                 break;
             }
+        }
+
+        // kolizja z przeszkodami
+        for (Entity p: Engine.getObstacles()) {
+            if (this.rectangle.collidesWith(p.getRectangle()))
+                System.out.println("Kolizja z przeszkoda");
+        }
+        
+        // kolizja z mobami
+        for (Entity p: Engine.getMobs()) {
+            if (this.rectangle.collidesWith(p.getRectangle()))
+                System.out.println("Kolizja z mobem");
         }
 
         this.rectangle.setOrientation(direction == RIGHT);

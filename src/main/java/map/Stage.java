@@ -30,6 +30,7 @@ public class Stage implements JsonSerializable {
 	public Map<Integer, Entity> all;
 	public Map<Integer, Entity> platforms;
 	public Map<Integer, Entity> mobs;
+	public Map<Integer, Entity> obstacles;
 
 	// listy
 	public List<Entity> allMap;
@@ -38,6 +39,7 @@ public class Stage implements JsonSerializable {
 		all = new HashMap<>();
 		platforms = new HashMap<>();
 		mobs = new HashMap<>();
+		obstacles = new HashMap<>();
 		allMap = new ArrayList<>();
 	}
 
@@ -77,6 +79,8 @@ public class Stage implements JsonSerializable {
 			platforms.remove(id);
 		if (entity.isInGroup(GROUP_MOBS))
 			mobs.remove(id);
+		if (entity.isInGroup(GROUP_OBSTACLES))
+			obstacles.remove(id);
 		all.remove(id);
 		return true;
 	}
@@ -95,6 +99,8 @@ public class Stage implements JsonSerializable {
 				platforms.put(id, entity);
 			if (entity.isInGroup(GROUP_MOBS))
 				mobs.put(id, entity);
+			if (entity.isInGroup(GROUP_OBSTACLES))
+				obstacles.put(id, entity);
 		}
 
 		background = new Rectangle(-1.0f, -1.0f / Config.RESOLUTION, 2.0f, 2.0f / Config.RESOLUTION);

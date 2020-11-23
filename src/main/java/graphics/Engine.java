@@ -1,14 +1,13 @@
 package graphics;
 
-import logic.Mob;
-import logic.Obstacle;
-import logic.Platform;
-import logic.Player;
+import logic.*;
 import map.MapManager;
 import map.Stage;
 import org.lwjgl.Version;
 import org.lwjgl.opengl.GL;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Objects;
 
@@ -88,5 +87,17 @@ public class Engine implements Runnable {
             // sprawdza czy zaszly jakies eventy
             glfwPollEvents();
         }
+    }
+
+    public static Collection<Entity> getPlatforms() {
+        return map.getCurrentStage().platforms.values();
+    }
+
+    public static Collection<Entity> getMobs() {
+        return map.getCurrentStage().mobs.values();
+    }
+
+    public static Collection<Entity> getObstacles() {
+        return map.getCurrentStage().obstacles.values();
     }
 }

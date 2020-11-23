@@ -11,7 +11,7 @@ public class Player extends Character {
 
     public Player(float posX, float posY, float width, float height, String texture) {
         super(posX, posY, width, height, texture);
-        this.hit = new Hit(posX + width / 2, posY + height / 2, 0.5f, 0.05f, "hit.png");
+        this.hit = new Hit(posX + width / 2, posY + height / 2, 0.5f, 0.025f, "hit2.png");
         state = JUMPING;
         hp = 3;
         immune = 0;
@@ -54,6 +54,20 @@ public class Player extends Character {
                     }
                 }
             }
+        }
+
+        // kolizja z przeszkodami
+        for (Entity p: Engine.getObstacles()) {
+            if (this.rectangle.collidesWith(p.getRectangle()))
+                if (p.isCollideable())
+                    System.out.println("Kolizja z przeszkoda");
+        }
+        
+        // kolizja z mobami
+        for (Entity p: Engine.getMobs()) {
+            if (this.rectangle.collidesWith(p.getRectangle()))
+                if (p.isCollideable())
+                    System.out.println("Kolizja z mobem");
         }
 
         this.rectangle.setOrientation(direction == RIGHT);

@@ -19,19 +19,6 @@ public class Character extends Entity {
     }
 
     @Override
-    public void move() {}
-
-    @Override
-    public void draw() {
-        rectangle.draw();
-    }
-
-    @Override
-    public void update(){
-        this.draw();
-    }
-
-    @Override
     public JsonObject toJson() {
         JsonObject obj = super.toJson();
         obj.addProperty("hp", hp);

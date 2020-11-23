@@ -1,13 +1,13 @@
 package graphics;
 
-import logic.Mob;
-import logic.Platform;
-import logic.Player;
+import logic.*;
 import map.MapManager;
 import map.Stage;
 import org.lwjgl.Version;
 import org.lwjgl.opengl.GL;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Objects;
 
@@ -51,6 +51,7 @@ public class Engine implements Runnable {
         stage.addMapEntity(new Platform(-0.2f, -0.2f, 1.0f, 0.1f, "platforma.png"));
         stage.addMapEntity(new Platform(-1.0f, -1.0f / Config.RESOLUTION, 2.0f, 0.1f, "platforma.png"));
         stage.addMapEntity(new Mob(0.5f, -0.1f, 0.13f, 0.21f, "koniec.png"));
+        stage.addMapEntity(new Obstacle(0.1f, -0.1f, 0.13f, 0.21f, "kaktus.png"));
         stage.buildHashMap();
         stage.buildStage();
         map.addStage(stage);
@@ -91,5 +92,17 @@ public class Engine implements Runnable {
             // sprawdza czy zaszly jakies eventy
             glfwPollEvents();
         }
+    }
+
+    public static Collection<Entity> getPlatforms() {
+        return map.getCurrentStage().platforms.values();
+    }
+
+    public static Collection<Entity> getMobs() {
+        return map.getCurrentStage().mobs.values();
+    }
+
+    public static Collection<Entity> getObstacles() {
+        return map.getCurrentStage().obstacles.values();
     }
 }

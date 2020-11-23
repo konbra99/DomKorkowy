@@ -22,10 +22,6 @@ public class Mob extends Character {
     }
 
     @Override
-    public void update() {
-    }
-
-    @Override
     public void move() {
         if (rectangle.posX > endX) {
             direction = LEFT;

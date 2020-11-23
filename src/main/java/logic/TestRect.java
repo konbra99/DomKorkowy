@@ -20,15 +20,6 @@ public class TestRect extends Entity {
 	}
 
 	@Override
-	public void move() {}
-
-	@Override
-	public void draw() {}
-
-	@Override
-	public void update() {}
-
-	@Override
 	public JsonObject toJson() {
 		JsonObject obj = super.toJson();
 		obj.addProperty("boolTest", boolTest);

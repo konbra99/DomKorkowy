@@ -10,18 +10,4 @@ public class Obstacle extends Entity {
 		this.rectangle.initGL(this.textureName, "rectangle.vert.glsl", "rectangle.frag");
 		this.groups |= GROUP_OBSTACLES;
 	}
-
-	@Override
-	public void move() {
-	}
-
-	@Override
-	public void draw() {
-		rectangle.draw();
-	}
-
-	@Override
-	public void update() {
-	}
-
 }

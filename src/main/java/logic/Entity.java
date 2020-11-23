@@ -11,7 +11,6 @@ public abstract class Entity implements JsonSerializable {
 	public final static int GROUP_MOBS      = 0b00000100;
 	public final static int GROUP_OBSTACLES = 0b00001000;
 
-
 	// DIRECTIONS
 	public final static int LEFT = -1;
 	public final static int RIGHT = 1;
@@ -20,15 +19,33 @@ public abstract class Entity implements JsonSerializable {
 	protected boolean gravityFlag;      /* NOT SERIALIZED */
 	protected String textureName;       /* SERIALIZED */
 	protected int groups;               /* NOT SERIALIZED */
+	private int collision_counter = 0;  /* NOT SERIALIZED */
 
 	public Entity() {
 		rectangle = new Rectangle();
 		groups |= GROUP_DEFAULT;
 	}
 
-	abstract public void move();
-	abstract public void draw();
-	abstract public void update();
+	public void move() {
+	};
+
+	public void draw() {
+		rectangle.draw();
+	};
+
+	public void update() {
+		if (collision_counter > 0)
+			collision_counter--;
+	};
+
+	public boolean isCollideable() {
+		if (collision_counter > 0)
+			return false;
+		else {
+			collision_counter = 20;
+			return true;
+		}
+	}
 
 	public Rectangle getRectangle() {
 		return rectangle;

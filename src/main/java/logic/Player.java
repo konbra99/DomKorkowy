@@ -57,13 +57,15 @@ public class Player extends Character {
         // kolizja z przeszkodami
         for (Entity p: Engine.getObstacles()) {
             if (this.rectangle.collidesWith(p.getRectangle()))
-                System.out.println("Kolizja z przeszkoda");
+                if (p.isCollideable())
+                    System.out.println("Kolizja z przeszkoda");
         }
         
         // kolizja z mobami
         for (Entity p: Engine.getMobs()) {
             if (this.rectangle.collidesWith(p.getRectangle()))
-                System.out.println("Kolizja z mobem");
+                if (p.isCollideable())
+                    System.out.println("Kolizja z mobem");
         }
 
         this.rectangle.setOrientation(direction == RIGHT);

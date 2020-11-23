@@ -16,14 +16,6 @@ public class Platform extends Entity{
     }
 
     @Override
-    public void move() {}
-
-    @Override
-    public void draw() {
-        this.rectangle.draw();
-    }
-
-    @Override
     public void update() {
         if (this.rectangle.hasPoint(Input.MOUSE_X, Input.MOUSE_Y)) {
             if (this.textureName.equals("platforma.png")) {

@@ -75,7 +75,6 @@ public class Player extends Character {
                 if (p.isCollideable())
                     System.out.println("Kolizja z mobem");
         */
-        }
 
         this.rectangle.setOrientation(direction == RIGHT);
         this.rectangle.move(vel_x, vel_y);
@@ -112,5 +111,7 @@ public class Player extends Character {
         Engine.HEALTHBAR.initGL(hp + "hp.png", "rectangle.vert.glsl", "rectangle.frag");
         state = JUMPING;
         immune = 0;
+        vel_x = 0.0f;
+        vel_y = 0.0f;
     }
 }

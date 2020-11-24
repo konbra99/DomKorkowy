@@ -7,7 +7,7 @@ import map.json.JsonSerializable;
 public abstract class Entity implements JsonSerializable {
 
 	// GROUPS
-	public final static int GROUP_DEFAULT  = 0b00000001;
+	public final static int GROUP_DEFAULT   = 0b00000001;
 	public final static int GROUP_PLATFORMS = 0b00000010;
 	public final static int GROUP_MOBS      = 0b00000100;
 	public final static int GROUP_OBSTACLES = 0b00001000;

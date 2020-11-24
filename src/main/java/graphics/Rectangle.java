@@ -12,8 +12,8 @@ public class Rectangle implements JsonSerializable {
     private Texture texture;
     private Program program;
     public float org_posX, org_posY, posX, posY, width, height;
+    public float centreX, centreY;
     public float angle;
-    public float centre;
 
     // konfiguracje
     // musza byc ustawione przed initGL
@@ -26,6 +26,8 @@ public class Rectangle implements JsonSerializable {
     public Rectangle(float posX, float posY, float width, float height) {
         this.org_posX = posX;
         this.org_posY = posY;
+        this.centreX = posX + width/2;
+        this.centreY = posY + height/2;
         this.posX = posX;
         this.posY = posY;
         this.width = width;
@@ -62,7 +64,7 @@ public class Rectangle implements JsonSerializable {
         glUseProgram(program.programID);
         if (ROTATEABLE) {
             program.setFloat("angle", this.angle);
-            program.setFloat3("centre", this.org_posX + width / 2, this.org_posY + height / 2, 0.0f);
+            program.setFloat3("centre", this.centreX, this.centreY, 0.0f);
         }
         program.setFloat("resolution", Config.RESOLUTION);
         texture.bind();

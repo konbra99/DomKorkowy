@@ -18,7 +18,6 @@ public class Hit extends Entity {
         this.textureName = texture;
         this.angle_index = 0;
         this.time = 3.0f;
-        this.angle = 0.0f;
     }
 
     // trzeba ustawic po stworzeniu
@@ -46,10 +45,7 @@ public class Hit extends Entity {
     }
 
     public void start() {
-//        this.rectangle.rotate(Config.HIT_ANGLES[angle_index]);
-        this.angle += 45f;
-        System.out.println(angle);
-        this.rectangle.rotate(angle);
+        this.rectangle.rotate(Config.HIT_ANGLES[angle_index]);
         this.time = 0.0f;
         this.direction = this.player.direction;
         move();
@@ -72,7 +68,7 @@ public class Hit extends Entity {
 
             if (time >= 1.0f) {
                 // sprawdzamy kolizj
-                for (Entity mob : Engine.getMobs()) {
+                for (Entity mob : Engine.map.getCurrentStage().mobs.values()) {
                     if (this.rectangle.collidesWith(mob.rectangle)) {
                         System.out.println("trafiony");
                     }

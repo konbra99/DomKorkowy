@@ -54,7 +54,7 @@ public class Engine implements Runnable {
         stage.addMapEntity(new Obstacle(-0.8f, -0.52f, 0.13f, 0.08f, "obstacles/spikes_2.png"));
         stage.addMapEntity(new Obstacle(0.5f, -0.52f, 0.13f, 0.08f, "obstacles/spikes_2.png"));
         stage.addMapEntity(new Obstacle(-0.4f, -0.10f, 0.11f, 0.17f, "obstacles/swinging_spike_block.png"));
-        stage.addMapEntity(new WheelObstacle(0.8f, 0.8f, 0.11f, 0.11f*Config.RESOLUTION, "obstacles/blade_2.png"));
+        stage.addMapEntity(new WheelObstacle(0.4f, 0.4f, 0.11f, 0.11f*Config.RESOLUTION, "obstacles/blade_2.png"));
 
         // planformy
         stage.addMapEntity(new Platform(-0.2f, -0.6f, 1.0f, 0.1f, "platforma.png"));

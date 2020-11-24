@@ -8,20 +8,20 @@ uniform float resolution;
 uniform vec2 offset;
 out vec2 texCoord;
 
-vec3 rotate(vec3 point, float angle, vec3 centre) {
-    vec3 rotated = point;
+vec3 rotate(vec3 point) {
+    vec3 rotated;
 
     float rad = radians(angle);
     float co = cos(rad);
     float si = sin(rad);
 
     // shift
-    rotated.x -= centre.x;
-    rotated.y -= centre.y;
+    point.x -= centre.x;
+    point.y -= centre.y;
 
     // rotate
-    rotated.x = rotated.x * co - rotated.y * si;
-    rotated.y = rotated.x * si + rotated.y * co;
+    rotated.x = point.x * co - point.y * si;
+    rotated.y = point.x * si + point.y * co;
 
     // shift back
     rotated.x += centre.x;
@@ -31,7 +31,7 @@ vec3 rotate(vec3 point, float angle, vec3 centre) {
 }
 
 void main() {
-    vec3 position = rotate(aPos, angle, centre);
+    vec3 position = rotate(aPos);
     gl_Position = vec4(position.x + offset.x, (position.y + offset.y) * resolution, position.z, 1.0);
     texCoord = aTexCoord;
 }

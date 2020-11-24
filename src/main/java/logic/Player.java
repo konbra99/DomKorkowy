@@ -44,7 +44,7 @@ public class Player extends Character {
             state = STANDING;
         }
         if (immune < 1) {
-            for (Entity mob : Engine.map.getCurrentStage().mobs.values()) {
+            for (Entity mob : Engine.getMobs()) {
                 if (this.rectangle.collidesWith(mob.rectangle)) {
                     hp--;
                     immune = 30;
@@ -59,8 +59,15 @@ public class Player extends Character {
         // kolizja z przeszkodami
         for (Entity p: Engine.getObstacles()) {
             if (this.rectangle.collidesWith(p.getRectangle()))
-                if (p.isCollideable())
+                if (p.isCollideable()) {
                     System.out.println("Kolizja z przeszkoda");
+                    hp--;
+                    Engine.HEALTHBAR.initGL(hp + "hp.png", "rectangle.vert.glsl", "rectangle.frag");
+                    if (hp == 0) {
+                        hp = 3;
+                    }
+                }
+
         }
         
         // kolizja z mobami

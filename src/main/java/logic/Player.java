@@ -46,6 +46,7 @@ public class Player extends Character {
         if (immune < 1) {
             for (Entity mob : Engine.getMobs()) {
                 if (this.rectangle.collidesWith(mob.rectangle)) {
+                    System.out.println("Kolizja z mobem");
                     hp--;
                     immune = 30;
                     Engine.HEALTHBAR.initGL(hp + "hp.png", "rectangle.vert.glsl", "rectangle.frag");
@@ -54,28 +55,21 @@ public class Player extends Character {
                     }
                 }
             }
-        }
 
-        // kolizja z przeszkodami
-        for (Entity p: Engine.getObstacles()) {
-            if (this.rectangle.collidesWith(p.getRectangle()))
-                if (p.isCollideable()) {
-                    System.out.println("Kolizja z przeszkoda");
-                    hp--;
-                    Engine.HEALTHBAR.initGL(hp + "hp.png", "rectangle.vert.glsl", "rectangle.frag");
-                    if (hp == 0) {
-                        hp = 3;
+            for (Entity p: Engine.getObstacles()) {
+                if (this.rectangle.collidesWith(p.getRectangle()))
+                    if (p.isCollideable()) {
+                        System.out.println("Kolizja z przeszkoda");
+                        hp--;
+                        immune = 30;
+                        Engine.HEALTHBAR.initGL(hp + "hp.png", "rectangle.vert.glsl", "rectangle.frag");
+                        if (hp == 0) {
+                            hp = 3;
+                        }
                     }
-                }
+            }
+        }
 
-        }
-        
-        // kolizja z mobami
-        for (Entity p: Engine.getMobs()) {
-            if (this.rectangle.collidesWith(p.getRectangle()))
-                if (p.isCollideable())
-                    System.out.println("Kolizja z mobem");
-        }
 
         this.rectangle.setOrientation(direction == RIGHT);
         this.rectangle.move(vel_x, vel_y);

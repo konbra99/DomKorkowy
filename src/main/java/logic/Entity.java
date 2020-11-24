@@ -64,6 +64,7 @@ public abstract class Entity implements JsonSerializable {
 			}
 		}
 	}
+
 	protected void gravity_vel_dec() {
 		vel_y -= 0.002f;
 	}

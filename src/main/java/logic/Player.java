@@ -55,25 +55,6 @@ public class Player extends Character {
                 }
             }
         }
-        // kolizja z przeszkodami
-        /*for (Entity p: Engine.getObstacles()) {
-            if (this.rectangle.collidesWith(p.getRectangle()))
-                if (p.isCollideable()) {
-                    System.out.println("Kolizja z przeszkoda");
-                    hp--;
-                    Engine.HEALTHBAR.initGL(hp + "hp.png", "rectangle.vert.glsl", "rectangle.frag");
-                    if (hp == 0) {
-                        hp = 3;
-                    }
-            }
-        }
-        
-        // kolizja z mobami
-        for (Entity p: Engine.getMobs()) {
-            if (this.rectangle.collidesWith(p.getRectangle()))
-                if (p.isCollideable())
-                    System.out.println("Kolizja z mobem");
-        */
 
         this.rectangle.setOrientation(direction == RIGHT);
         this.rectangle.move(vel_x, vel_y);
@@ -82,6 +63,11 @@ public class Player extends Character {
         immune--;
         gravity_vel_dec();
         vel_x = 0.0f;
+
+        if (rectangle.posX <= -1f -rectangle.width)
+            reset();
+        if (rectangle.posX >= 1f)
+            reset();
     }
 
     @Override
@@ -106,7 +92,7 @@ public class Player extends Character {
 
     private void reset() {
         hp = 3;
-        rectangle.move(start_posX - rectangle.posX, start_posY - rectangle.posY);
+        rectangle.move(rectangle.org_posX - rectangle.posX, rectangle.org_posY - rectangle.posY);
         Engine.HEALTHBAR.initGL(hp + "hp.png", "rectangle.vert.glsl", "rectangle.frag");
         state = JUMPING;
         immune = 0;

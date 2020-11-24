@@ -7,14 +7,12 @@ public class Character extends Entity {
     public int hp;                      /* SERIALIZED */
     protected CharacterState state;
     protected int direction;
-    protected float start_posX, start_posY, start_width, start_height;
+    protected float start_width, start_height;
 
     public Character() {
     }
 
     public Character(float posX, float posY, float width, float height, String textureName) {
-        start_posX = posX;
-        start_posY = posY;
         start_width = width;
         start_height = height;
         gravityFlag = true;

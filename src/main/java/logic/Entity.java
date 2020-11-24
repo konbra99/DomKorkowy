@@ -20,8 +20,8 @@ public abstract class Entity implements JsonSerializable {
 	protected boolean gravityFlag;      /* NOT SERIALIZED */
 	protected String textureName;       /* SERIALIZED */
 	protected int groups;               /* NOT SERIALIZED */
+	protected float angle;
 	private int collision_counter = 0;  /* NOT SERIALIZED */
-
 	protected float vel_y = 0.0f;
 	protected float vel_x = 0.0f;
 

@@ -18,6 +18,7 @@ public class Hit extends Entity {
         this.textureName = texture;
         this.angle_index = 0;
         this.time = 3.0f;
+        this.angle = 0.0f;
     }
 
     // trzeba ustawic po stworzeniu
@@ -45,7 +46,10 @@ public class Hit extends Entity {
     }
 
     public void start() {
-        this.rectangle.rotate(Config.HIT_ANGLES[angle_index]);
+//        this.rectangle.rotate(Config.HIT_ANGLES[angle_index]);
+        this.angle += 45f;
+        System.out.println(angle);
+        this.rectangle.rotate(angle);
         this.time = 0.0f;
         this.direction = this.player.direction;
         move();

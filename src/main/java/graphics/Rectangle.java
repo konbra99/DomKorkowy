@@ -24,14 +24,14 @@ public class Rectangle implements JsonSerializable {
     }
 
     public Rectangle(float posX, float posY, float width, float height) {
-        this.org_posX = posX;
-        this.org_posY = posY;
-        this.centreX = posX + width/2;
-        this.centreY = posY + height/2;
         this.posX = posX;
-        this.posY = posY;
+        this.posY = posY/Config.RESOLUTION;;
+        this.org_posX = posX;
+        this.org_posY = this.posY;
+        this.centreX = posX + width/2;
+        this.centreY = (posY + height/2)/Config.RESOLUTION;
         this.width = width;
-        this.height = height;
+        this.height = height/Config.RESOLUTION;
         this.angle = 0.0f;
     }
 

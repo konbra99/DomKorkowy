@@ -103,9 +103,9 @@ public class Stage implements JsonSerializable {
 				obstacles.put(id, entity);
 		}
 
-		background = new Rectangle(-1.0f, -1.0f / Config.RESOLUTION, 2.0f, 2.0f / Config.RESOLUTION);
+		background = new Rectangle(-1.0f, -1.0f, 2.0f, 2.0f);
 		background.X_WRAP = true;
-		background.initGL("bg.jpg", "rectangle.vert.glsl", "rectangle.frag");
+		background.initGL("background/sky.png", "rectangle.vert.glsl", "rectangle.frag");
 	}
 
 	/** Zamienia ArrayList na HashMap, dodaje indeksy do elementow mapy.

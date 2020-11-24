@@ -75,7 +75,6 @@ public class Player extends Character {
                 if (p.isCollideable())
                     System.out.println("Kolizja z mobem");
         */
-        }
 
         this.rectangle.setOrientation(direction == RIGHT);
         this.rectangle.move(vel_x, vel_y);

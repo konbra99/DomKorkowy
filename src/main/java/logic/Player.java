@@ -44,30 +44,16 @@ public class Player extends Character {
             state = STANDING;
         }
         if (immune < 1) {
-            for (Entity mob : Engine.map.getCurrentStage().mobs.values()) {
+            for (Entity mob : Engine.getMobs()) {
                 if (this.rectangle.collidesWith(mob.rectangle)) {
-                    hp--;
-                    immune = 30;
-                    Engine.HEALTHBAR.initGL(hp + "hp.png", "rectangle.vert.glsl", "rectangle.frag");
-                    if (hp == 0) {
-                        hp = 3;
-                    }
+                    getDamage();
                 }
             }
-        }
-
-        // kolizja z przeszkodami
-        for (Entity p: Engine.getObstacles()) {
-            if (this.rectangle.collidesWith(p.getRectangle()))
-                if (p.isCollideable())
-                    System.out.println("Kolizja z przeszkoda");
-        }
-        
-        // kolizja z mobami
-        for (Entity p: Engine.getMobs()) {
-            if (this.rectangle.collidesWith(p.getRectangle()))
-                if (p.isCollideable())
-                    System.out.println("Kolizja z mobem");
+            for (Entity mob : Engine.getObstacles()) {
+                if (this.rectangle.collidesWith(mob.rectangle)) {
+                    getDamage();
+                }
+            }
         }
 
         this.rectangle.setOrientation(direction == RIGHT);
@@ -87,5 +73,23 @@ public class Player extends Character {
         }
 
         hit.update();
+    }
+
+    private void getDamage() {
+        hp--;
+        immune = 30;
+        if (hp == 0) {
+            reset();
+            return;
+        }
+        Engine.HEALTHBAR.initGL(hp + "hp.png", "rectangle.vert.glsl", "rectangle.frag");
+    }
+
+    private void reset() {
+        hp = 3;
+        rectangle.move(start_posX - rectangle.posX, start_posY - rectangle.posY);
+        Engine.HEALTHBAR.initGL(hp + "hp.png", "rectangle.vert.glsl", "rectangle.frag");
+        state = JUMPING;
+        immune = 0;
     }
 }

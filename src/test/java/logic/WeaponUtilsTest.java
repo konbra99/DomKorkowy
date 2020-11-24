@@ -2,8 +2,6 @@ package logic;
 
 import org.junit.Test;
 
-import java.time.temporal.WeekFields;
-
 public class WeaponUtilsTest {
 
 	//@Test

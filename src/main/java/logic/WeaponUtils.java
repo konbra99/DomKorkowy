@@ -1,6 +1,5 @@
 package logic;
 
-
 public class WeaponUtils {
 
 	// funkcja uderzenia
@@ -17,7 +16,7 @@ public class WeaponUtils {
 	public final static float RAD_TO_DEG = 57.2957795131f;      /*  360/2pi  */
 
 	/**
-	 * Oblicza kat odchylenia miecza w radianach. Wszystkie funkcje sa znormalizowan
+	 * Oblicza kat odchylenia miecza w radianach. Wszystkie funkcje sa znormalizowane
 	 * do [0,1]x[0,1], manipulujac parametrami zwiekszamy ten zakres
 	 * @param function   wybrana funkcja uderzenia
 	 * @param direction  kierunek uderzenia        (zgodnie/przeciwnie do ruchu wskazowek zegara)
@@ -33,7 +32,7 @@ public class WeaponUtils {
 			case FUNC1 -> func1(x);
 			case FUNC2 -> func2(x);
 			case FUNC3 -> func3(x);
-			default -> 0.0f;
+			default    -> 0.0f;
 		};
 
 		return DEG_TO_RAD * angle * direction * y;
@@ -41,7 +40,7 @@ public class WeaponUtils {
 
 	/**
 	 * Zwraca tablice wszystkich katow odchylen.
-	 * @return tablica katow odchylen
+	 * @return   tablica katow odchylen
 	 */
 	public static float[] anglesArray(int function, int direction, float angle, int time) {
 		float [] angles = new float[time];
@@ -55,7 +54,7 @@ public class WeaponUtils {
 		return 4*x - 4*x*x;
 	}
 
-	// -0.000+7.583⋅x+-16.750⋅x2+9.167⋅x3
+	// 7.583*x-16.750*x^2+9.167*x^3
 	private static float func2(float x) {
 		return 7*x - 16*x*x + 9*x*x*x;
 	}

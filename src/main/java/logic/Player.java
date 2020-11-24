@@ -91,5 +91,7 @@ public class Player extends Character {
         Engine.HEALTHBAR.initGL(hp + "hp.png", "rectangle.vert.glsl", "rectangle.frag");
         state = JUMPING;
         immune = 0;
+        vel_x = 0.0f;
+        vel_y = 0.0f;
     }
 }

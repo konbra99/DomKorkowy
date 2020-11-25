@@ -42,19 +42,26 @@ public class Engine implements Runnable {
     }
 
     private void initTempMap() {
-        Stage stage = new Stage();
+        Stage stage;
+
+        /////////////////////////
+        // STAGE 1
+        stage = new Stage("background/sky.png", -0.7f, -0.45f);
+
         // obiekty statyczne
         stage.addMapEntity(new StaticObject(0.1f, -0.96f, 0.13f, 0.6f, "trees/tree4.png"));
         stage.addMapEntity(new StaticObject(0.7f, -0.95f, 0.06f, 0.3f, "trees/tree4.png"));
         stage.addMapEntity(new StaticObject(-0.65f, -0.11f, 0.12f, 0.2f, "trees/tree1.png"));
-        stage.addMapEntity(new StaticObject(0.8f, 0.3f, 0.10f, 0.25f, "door.png"));
-        stage.addMapEntity(new StaticObject(-0.7f, -0.9f, 0.10f, 0.25f, "door.png"));
+
+        // drzwi
+        stage.addMapEntity(new Door(-0.7f, -0.9f, 0.10f, 0.25f, "door.png", false));
+        stage.addMapEntity(new Door(0.8f, 0.3f, 0.10f, 0.25f, "door.png", true));
 
         // przeszkody
         stage.addMapEntity(new Obstacle(-0.8f, -0.52f, 0.13f, 0.08f, "obstacles/spikes_2.png"));
         stage.addMapEntity(new Obstacle(0.5f, -0.52f, 0.13f, 0.08f, "obstacles/spikes_2.png"));
         stage.addMapEntity(new Obstacle(-0.4f, -0.10f, 0.11f, 0.17f, "obstacles/swinging_spike_block.png"));
-        stage.addMapEntity(new WheelObstacle(0.4f, 0.4f, 0.11f, 0.11f*Config.RESOLUTION, "obstacles/blade_2.png"));
+        stage.addMapEntity(new WheelObstacle(0.4f, 0.4f, 0.11f, 0.11f*Config.RESOLUTION, 1.0f, "obstacles/blade_2.png"));
 
         // planformy
         stage.addMapEntity(new Platform(-0.2f, -0.6f, 1.0f, 0.1f, "platforma.png"));
@@ -68,7 +75,46 @@ public class Engine implements Runnable {
 
         stage.buildHashMap();
         stage.buildStage();
+        map.addStage(stage);
 
+
+        /////////////////////////
+        // STAGE 2
+        stage = new Stage("background/back.png", 0.8f, -0.45f);
+
+        // drzwi
+        stage.addMapEntity(new Door(0.8f, -0.9f, 0.10f, 0.25f, "door.png", false));
+        stage.addMapEntity(new Door(0.8f, 0.6f, 0.10f, 0.25f, "door.png", true));
+
+        // przeszkody
+        stage.addMapEntity(new WheelObstacle(-1.0f, -0.6f, 0.20f, 0.20f*Config.RESOLUTION, -3.0f, "obstacles/blade_2.png"));
+        stage.addMapEntity(new WheelObstacle(-0.8f, -0.6f, 0.20f, 0.20f*Config.RESOLUTION, -1.0f, "obstacles/blade_2.png"));
+        stage.addMapEntity(new WheelObstacle(-0.6f, -0.6f, 0.20f, 0.20f*Config.RESOLUTION, -3.0f, "obstacles/blade_2.png"));
+        stage.addMapEntity(new WheelObstacle(-0.4f, -0.6f, 0.20f, 0.20f*Config.RESOLUTION, -1.0f, "obstacles/blade_2.png"));
+        stage.addMapEntity(new WheelObstacle(0.0f, -0.6f, 0.20f, 0.20f*Config.RESOLUTION, -3.0f, "obstacles/blade_2.png"));
+        stage.addMapEntity(new WheelObstacle(0.2f, -0.6f, 0.20f, 0.20f*Config.RESOLUTION, -1.0f, "obstacles/blade_2.png"));
+        stage.addMapEntity(new WheelObstacle(0.4f, -0.6f, 0.20f, 0.20f*Config.RESOLUTION, -3.0f, "obstacles/blade_2.png"));
+        stage.addMapEntity(new WheelObstacle(0.6f, -0.6f, 0.20f, 0.20f*Config.RESOLUTION, -1.0f, "obstacles/blade_2.png"));
+        stage.addMapEntity(new WheelObstacle(0.8f, -0.6f, 0.20f, 0.20f*Config.RESOLUTION, -3.0f, "obstacles/blade_2.png"));
+
+        stage.addMapEntity(new WheelObstacle(-0.8f, 0.15f, 0.20f, 0.20f*Config.RESOLUTION, 3.0f, "obstacles/blade_2.png"));
+        stage.addMapEntity(new WheelObstacle(-0.6f, 0.15f, 0.20f, 0.20f*Config.RESOLUTION, 1.0f, "obstacles/blade_2.png"));
+        stage.addMapEntity(new WheelObstacle(-0.4f, 0.15f, 0.20f, 0.20f*Config.RESOLUTION, 3.0f, "obstacles/blade_2.png"));
+        stage.addMapEntity(new WheelObstacle(-0.2f, 0.15f, 0.20f, 0.20f*Config.RESOLUTION, 1.0f, "obstacles/blade_2.png"));
+        stage.addMapEntity(new WheelObstacle(0.0f, 0.15f, 0.20f, 0.20f*Config.RESOLUTION, 3.0f, "obstacles/blade_2.png"));
+        stage.addMapEntity(new WheelObstacle(0.2f, 0.15f, 0.20f, 0.20f*Config.RESOLUTION, 1.0f, "obstacles/blade_2.png"));
+        stage.addMapEntity(new WheelObstacle(0.4f, 0.15f, 0.20f, 0.20f*Config.RESOLUTION, 3.0f, "obstacles/blade_2.png"));
+        stage.addMapEntity(new WheelObstacle(0.6f, 0.15f, 0.20f, 0.20f*Config.RESOLUTION, 1.0f, "obstacles/blade_2.png"));
+        stage.addMapEntity(new WheelObstacle(0.8f, 0.15f, 0.20f, 0.20f*Config.RESOLUTION, 3.0f, "obstacles/blade_2.png"));
+
+        // platformy
+        stage.addMapEntity(new Platform(-1.0f, -1.0f, 2.0f, 0.1f, "platforma.png"));
+        stage.addMapEntity(new Platform(-1.0f, -0.25f, 0.8f, 0.1f, "platforma.png"));
+        stage.addMapEntity(new Platform(0.0f, -0.25f, 1.0f, 0.1f, "platforma.png"));
+        stage.addMapEntity(new Platform(-0.8f, 0.5f, 2.0f, 0.1f, "platforma.png"));
+
+        stage.buildHashMap();
+        stage.buildStage();
         map.addStage(stage);
     }
 
@@ -87,9 +133,9 @@ public class Engine implements Runnable {
     private void loop() {
         glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
 
-        KORKOWY = new Player(-0.7f, -0.8f, 0.08f, 0.18f, "korkowa_postac.png");
         HEALTHBAR = new Rectangle(-1.0f, 0.9f, 0.18f, 0.08f);
         HEALTHBAR.initGL("3hp.png", "rectangle.vert.glsl", "rectangle.frag");
+        KORKOWY = new Player(-0.7f, -0.8f, 0.08f, 0.18f, "korkowa_postac.png");
 
         // glowna petla programu
         while (!glfwWindowShouldClose(window.getWindowHandle())) {
@@ -115,4 +161,10 @@ public class Engine implements Runnable {
     public static Collection<Entity> getObstacles() {
         return map.getCurrentStage().obstacles.values();
     }
+
+    public static Collection<Entity> getDoors() {
+        return map.getCurrentStage().doors.values();
+    }
+
+    public static float[] getStart() { return map.getCurrentStage().start; }
 }

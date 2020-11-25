@@ -25,22 +25,35 @@ public class Stage implements JsonSerializable {
 	// zmienne
 	public int backgroundId;
 	private Rectangle background;
+	private String backgroundName;
+	public float[] start;
 
 	// mapy
 	public Map<Integer, Entity> all;
 	public Map<Integer, Entity> platforms;
 	public Map<Integer, Entity> mobs;
 	public Map<Integer, Entity> obstacles;
+	public Map<Integer, Entity> doors;
 
 	// listy
 	public List<Entity> allMap;
 
 	public Stage() {
+		this(null, 0.0f, 0.0f);
+	}
+
+	public Stage(String backgroundName, float startX, float startY) {
 		all = new HashMap<>();
 		platforms = new HashMap<>();
 		mobs = new HashMap<>();
 		obstacles = new HashMap<>();
+		doors = new HashMap<>();
 		allMap = new ArrayList<>();
+
+		start = new float[2];
+		this.backgroundName = backgroundName;
+		this.start[0] = startX;
+		this.start[1] = startY;
 	}
 
 	public void move() {
@@ -81,6 +94,8 @@ public class Stage implements JsonSerializable {
 			mobs.remove(id);
 		if (entity.isInGroup(GROUP_OBSTACLES))
 			obstacles.remove(id);
+		if (entity.isInGroup(GROUP_DOORS))
+			doors.remove(id);
 		all.remove(id);
 		return true;
 	}
@@ -101,11 +116,13 @@ public class Stage implements JsonSerializable {
 				mobs.put(id, entity);
 			if (entity.isInGroup(GROUP_OBSTACLES))
 				obstacles.put(id, entity);
+			if (entity.isInGroup(GROUP_DOORS))
+				doors.put(id, entity);
 		}
 
 		background = new Rectangle(-1.0f, -1.0f, 2.0f, 2.0f);
 		background.X_WRAP = true;
-		background.initGL("background/sky.png", "rectangle.vert.glsl", "rectangle.frag");
+		background.initGL(backgroundName, "rectangle.vert.glsl", "rectangle.frag");
 	}
 
 	/** Zamienia ArrayList na HashMap, dodaje indeksy do elementow mapy.

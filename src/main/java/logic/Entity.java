@@ -6,24 +6,30 @@ import map.json.JsonSerializable;
 
 public abstract class Entity implements JsonSerializable {
 
-	// GROUPS
+	// grupy
 	public final static int GROUP_DEFAULT   = 0b00000001;
 	public final static int GROUP_PLATFORMS = 0b00000010;
 	public final static int GROUP_MOBS      = 0b00000100;
 	public final static int GROUP_OBSTACLES = 0b00001000;
+	public final static int GROUP_DOORS     = 0b00010000;
 
-	// DIRECTIONS
+	// kierunku
 	public final static int LEFT = -1;
 	public final static int RIGHT = 1;
 
-	protected Rectangle rectangle;      /* SERIALIZED */
+	// flagi
 	protected boolean gravityFlag;      /* NOT SERIALIZED */
-	protected String textureName;       /* SERIALIZED */
-	protected int groups;               /* NOT SERIALIZED */
+	protected boolean activeFlag;
+
+	// polozenie / predkosc
 	protected float angle;
-	private int collision_counter = 0;  /* NOT SERIALIZED */
+	protected float vel_angle = 1.0f;
 	protected float vel_y = 0.0f;
 	protected float vel_x = 0.0f;
+
+	protected Rectangle rectangle;      /* SERIALIZED */
+	protected String textureName;       /* SERIALIZED */
+	protected int groups;               /* NOT SERIALIZED */
 
 	public Entity() {
 		rectangle = new Rectangle();
@@ -38,18 +44,7 @@ public abstract class Entity implements JsonSerializable {
 	};
 
 	public void update() {
-		if (collision_counter > 0)
-			collision_counter--;
 	};
-
-	public boolean isCollideable() {
-		if (collision_counter > 0)
-			return false;
-		else {
-			collision_counter = 20;
-			return true;
-		}
-	}
 
 	protected void gravity() {
 		for (Entity p : Engine.map.getCurrentStage().platforms.values()) {
@@ -87,5 +82,10 @@ public abstract class Entity implements JsonSerializable {
 	/** Sprawdza, czy encja znajduje sie w podanej grupie. */
 	public boolean isInGroup(int group) {
 		return (groups & group) != 0;
+	}
+
+	/** Sprawdza, czy encja jest aktywna. */
+	public boolean isActive() {
+		return this.activeFlag;
 	}
 }

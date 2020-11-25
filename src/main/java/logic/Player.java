@@ -12,10 +12,11 @@ public class Player extends Character {
     public Player(float posX, float posY, float width, float height, String texture) {
         super(posX, posY, width, height, texture);
         this.hit = new Hit(posX + width / 2, posY + height / 2, 0.5f, 0.025f, "hit2.png");
-        state = JUMPING;
-        hp = 3;
-        immune = 0;
+//        state = JUMPING;
+//        hp = 3;
+//        immune = 0;
         hit.setPlayer(this);
+        reset();
     }
 
     @Override
@@ -56,6 +57,14 @@ public class Player extends Character {
             }
         }
 
+        for(Entity door: Engine.getDoors())
+            if(door.isActive() && this.rectangle.collidesWith(door.rectangle)) {
+                Engine.map.nextStage();
+                reset();
+            }
+
+
+
         this.rectangle.setOrientation(direction == RIGHT);
         this.rectangle.move(vel_x, vel_y);
         this.rectangle.draw();
@@ -92,7 +101,8 @@ public class Player extends Character {
 
     private void reset() {
         hp = 3;
-        rectangle.move(rectangle.org_posX - rectangle.posX, rectangle.org_posY - rectangle.posY);
+        float start[] = Engine.getStart();
+        rectangle.move(start[0] - rectangle.posX, start[1] - rectangle.posY);
         Engine.HEALTHBAR.initGL(hp + "hp.png", "rectangle.vert.glsl", "rectangle.frag");
         state = JUMPING;
         immune = 0;

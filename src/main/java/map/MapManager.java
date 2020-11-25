@@ -53,7 +53,12 @@ public class MapManager implements JsonSerializable {
 
 	/** Przechodzi do nastepnej sceny, zwraca false, jesli nastepna scena nie istnieje. */
 	public boolean nextStage() {
-		return false;
+		if (currentStage == stages.size()-1)
+			return false;
+		else {
+			currentStage++;
+			return true;
+		}
 	}
 
 	public JsonObject toJson() {

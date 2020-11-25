@@ -12,9 +12,6 @@ public class Player extends Character {
     public Player(float posX, float posY, float width, float height, String texture) {
         super(posX, posY, width, height, texture);
         this.hit = new Hit(posX + width / 2, posY + height / 2, 0.5f, 0.025f, "hit2.png");
-//        state = JUMPING;
-//        hp = 3;
-//        immune = 0;
         hit.setPlayer(this);
         reset();
     }
@@ -35,7 +32,10 @@ public class Player extends Character {
         }
 
         if (Input.SPACE && state == STANDING) {
-            vel_y = 0.04f;
+            vel_y = 0.03f;
+            if (Input.L_SHIFT) {
+                vel_y *= 1.33f;
+            }
             state = JUMPING;
         }
 
@@ -97,6 +97,8 @@ public class Player extends Character {
             return;
         }
         Engine.HEALTHBAR.initGL(hp + "hp.png", "rectangle.vert.glsl", "rectangle.frag");
+        vel_y *= 0.9f;
+        vel_x *= 0.9f;
     }
 
     private void reset() {

@@ -9,8 +9,8 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
 
 public class Input {
     public static boolean LEFT = false, RIGHT = false, UP = false, DOWN = false;
-    public static boolean SPACE = false, L_CTRL = false;
-    public static boolean HIT = false;
+    public static boolean SPACE = false, L_CTRL = false, ONE_KEY = false, TWO_KEY = false;
+    public static boolean ATTACK = false;
     public static float MOUSE_X = -2.0f, MOUSE_Y = -2.0f;
 
     public static void handleKeyboard(int key, int action) {
@@ -21,7 +21,9 @@ public class Input {
             case GLFW_KEY_UP, GLFW_KEY_W -> UP = isPressed;
             case GLFW_KEY_DOWN, GLFW_KEY_S -> DOWN = isPressed;
             case GLFW_KEY_SPACE -> SPACE = isPressed;
-            case GLFW_KEY_F -> HIT = isPressed;
+            case GLFW_KEY_F -> ATTACK = isPressed;
+            case GLFW_KEY_1 -> ONE_KEY = isPressed;
+            case GLFW_KEY_2 -> TWO_KEY = isPressed;
             case GLFW_KEY_LEFT_CONTROL -> L_CTRL = isPressed;
         }
     }

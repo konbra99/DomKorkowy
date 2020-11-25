@@ -36,7 +36,7 @@ public class WeaponUtils {
 			default -> 0.0f;
 		};
 
-		return DEG_TO_RAD * angle * direction * y;
+		return angle * direction * y;
 	}
 
 	/**

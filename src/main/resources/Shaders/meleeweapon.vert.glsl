@@ -1,34 +1,41 @@
 #version 330 core
-
 layout (location = 0) in vec3 aPos;
 layout (location = 1) in vec2 aTexCoord;
 
 uniform bool isRight;
 uniform float angle;
+uniform vec3 centre;
 uniform float resolution;
 uniform vec2 offset;
-uniform vec3 centre;
-
 out vec2 texCoord;
 
 vec3 rotate(vec3 point) {
     vec3 rotated;
 
+    float shift_offset_x;
+    float shift_offset_y;
     float rad = radians(angle);
     float co = cos(rad);
     float si = sin(rad);
 
+    if(isRight) {
+        shift_offset_x = -0.1;
+        shift_offset_y = -0.1;
+    } else {
+        shift_offset_x = 0.1;
+        shift_offset_y = -0.1;
+    }
     // shift
-    point.x -= centre.x;
-    point.y -= centre.y;
+    point.x -= (centre.x + shift_offset_x);
+    point.y -= (centre.y + shift_offset_y);
 
     // rotate
     rotated.x = point.x * co - point.y * si;
     rotated.y = point.x * si + point.y * co;
 
     // shift back
-    rotated.x += centre.x;
-    rotated.y += centre.y;
+    rotated.x += (centre.x + shift_offset_x);
+    rotated.y += (centre.y + shift_offset_y);
 
     return rotated;
 }

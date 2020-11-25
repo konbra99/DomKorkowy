@@ -10,7 +10,7 @@ public class MeleeWeapon extends Weapon {
     public MeleeWeapon(Player player, int id, float posX, float posY, float width, float height, float shift_x,
                        String textureName, int damage, int attackSpeed) {
         super(player, id, posX, posY, width, height, shift_x, textureName, damage, attackSpeed);
-        hit = new Hit(this, posX + width / 2, posY + height / 2, 0.3f, 0.025f, "hit2.png");
+        hit = new Hit(this, posX + width / 2, posY + height / 2, 0.15f, 0.025f, "hit2.png");
         this.rectangle.ROTATEABLE = true;
         this.rectangle.initGL(this.textureName, "meleeweapon.vert.glsl", "meleeweapon.frag");
         this.direction = this.player.direction;

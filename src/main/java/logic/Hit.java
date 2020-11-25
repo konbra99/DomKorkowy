@@ -27,7 +27,7 @@ public class Hit extends Entity {
         float off_x = this.weapon.rectangle.posX + this.weapon.rectangle.width / 2
                 - this.rectangle.posX - this.rectangle.width / 2;
 
-        off_x += direction * 0.1f;
+        off_x += direction * 0.075f;
 
         float off_y = this.weapon.rectangle.posY + this.weapon.rectangle.height / 2
                 - this.rectangle.posY - this.rectangle.height / 2;

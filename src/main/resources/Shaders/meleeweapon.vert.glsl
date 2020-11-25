@@ -18,22 +18,17 @@ vec3 rotate(vec3 point) {
     float co = cos(rad);
     float si = sin(rad);
 
-    if(isRight) {
-        shift_offset_x = 0.0;
-    } else {
-        shift_offset_x = 0.0;
-    }
     // shift
-    point.x -= (centre.x + shift_offset_x);
-    point.y -= (centre.y + shift_offset_y);
+    point.x -= centre.x;
+    point.y -= centre.y;
 
     // rotate
     rotated.x = point.x * co - point.y * si;
     rotated.y = point.x * si + point.y * co;
 
     // shift back
-    rotated.x += (centre.x + shift_offset_x);
-    rotated.y += (centre.y + shift_offset_y);
+    rotated.x += centre.x;
+    rotated.y += centre.y;
 
     return rotated;
 }

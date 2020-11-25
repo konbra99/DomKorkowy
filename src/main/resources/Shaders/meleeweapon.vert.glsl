@@ -13,17 +13,15 @@ vec3 rotate(vec3 point) {
     vec3 rotated;
 
     float shift_offset_x;
-    float shift_offset_y;
+    float shift_offset_y = 0;
     float rad = radians(angle);
     float co = cos(rad);
     float si = sin(rad);
 
     if(isRight) {
-        shift_offset_x = -0.1;
-        shift_offset_y = -0.1;
+        shift_offset_x = 0.0;
     } else {
-        shift_offset_x = 0.1;
-        shift_offset_y = -0.1;
+        shift_offset_x = 0.0;
     }
     // shift
     point.x -= (centre.x + shift_offset_x);

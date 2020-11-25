@@ -13,8 +13,9 @@ public class MeleeWeapon extends Weapon {
         hit = new Hit(this, posX + width / 2, posY + height / 2, 0.3f, 0.025f, "hit2.png");
         this.rectangle.ROTATEABLE = true;
         this.rectangle.initGL(this.textureName, "meleeweapon.vert.glsl", "meleeweapon.frag");
-        this.rectangle.centreX = rectangle.org_posX;
-        this.rectangle.centreY = rectangle.org_posY;
+        this.direction = this.player.direction;
+        this.rectangle.centreX -= 0.05f * this.player.direction;
+        this.rectangle.centreY -= 0.03f;
     }
 
 
@@ -27,7 +28,8 @@ public class MeleeWeapon extends Weapon {
 
         float off_y = this.player.rectangle.posY + this.player.rectangle.height / 2
                 - this.rectangle.posY - this.rectangle.height / 2;
-        off_y += 0.05f;
+        off_y += 0.03f;
+
         this.rectangle.move(off_x, off_y);
     }
 
@@ -40,12 +42,11 @@ public class MeleeWeapon extends Weapon {
 
     @Override
     public void update() {
-        if(this.player.direction == RIGHT) {
-            this.direction = RIGHT;
-        } else {
-            this.direction = LEFT;
+        if (this.direction != this.player.direction) {
+            this.direction = this.player.direction;
+            this.rectangle.centreX -= this.direction * 0.1;
+            System.out.println(this.rectangle.centreX);
         }
-        this.rectangle.setOrientation(direction == RIGHT);
 
         if(this.attackFrame <= this.duration) {
             this.rectangle.rotate(WeaponUtils.angle((this.id % 3), -this.direction, Config.ATTACK_MAX_ANGLES[id],
@@ -55,8 +56,9 @@ public class MeleeWeapon extends Weapon {
             this.rectangle.rotate(0);
         }
 
-        hit.update();
         move();
+        this.rectangle.setOrientation(direction == RIGHT);
+        hit.update();
         draw();
 
     }

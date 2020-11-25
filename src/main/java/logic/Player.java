@@ -14,14 +14,11 @@ public class Player extends Character {
         super(posX, posY, width, height, texture);
         // Trzy sloty na bronie, dwie przykładowe dodane od początku
         this.weapons = new MeleeWeapon[3];
-        this.weapons[0] = new MeleeWeapon(this, 0, posX - width, posY - height / 2, 0.16f,
-                0.17f, 0.1f, "sword1.png", 5, 4);
-        this.weapons[1] = new MeleeWeapon(this, 1, posX - width, posY - height / 2, 0.1f,
-                0.2f, 0.07f, "mace.png", 1, 2);
+        this.weapons[0] = new MeleeWeapon(this, 0, posX - width, posY - height / 2, 0.12f,
+                0.12f, 0.065f, "sword1.png", 5, 4);
+        this.weapons[1] = new MeleeWeapon(this, 1, posX - width, posY - height / 2, 0.075f,
+                0.15f, 0.07f, "mace.png", 1, 2);
         this.activeWeapon = 0;
-//        state = JUMPING;
-//        hp = 3;
-//        immune = 0;
         reset();
     }
 

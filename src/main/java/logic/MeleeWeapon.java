@@ -13,6 +13,8 @@ public class MeleeWeapon extends Weapon {
         hit = new Hit(this, posX + width / 2, posY + height / 2, 0.3f, 0.025f, "hit2.png");
         this.rectangle.ROTATEABLE = true;
         this.rectangle.initGL(this.textureName, "meleeweapon.vert.glsl", "meleeweapon.frag");
+        this.rectangle.centreX = rectangle.org_posX;
+        this.rectangle.centreY = rectangle.org_posY;
     }
 
 

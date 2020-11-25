@@ -116,6 +116,44 @@ public class Engine implements Runnable {
         stage.buildHashMap();
         stage.buildStage();
         map.addStage(stage);
+
+        /////////////////////////
+        // STAGE 3
+        stage = new Stage("background/back.png", 0.8f, 0.34f);
+
+        // drzwi
+        stage.addMapEntity(new Door(0.8f, 0.6f, 0.10f, 0.25f, "door.png", false));
+        stage.addMapEntity(new Door(0.8f, -0.9f, 0.10f, 0.25f, "door.png", true));
+
+        // przeszkody
+        stage.addMapEntity(new WheelObstacle(-1f, -1.1f, 0.20f, 0.20f*Config.RESOLUTION, -1.0f, "obstacles/blade_2.png"));
+        stage.addMapEntity(new WheelObstacle(-0.7f, -0.38f, 0.20f, 0.20f*Config.RESOLUTION, -3.0f, "obstacles/blade_2.png"));
+        stage.addMapEntity(new WheelObstacle(-0.4f, -1.1f, 0.20f, 0.20f*Config.RESOLUTION, -1.0f, "obstacles/blade_2.png"));
+        stage.addMapEntity(new WheelObstacle(0.0f, -0.38f, 0.20f, 0.20f*Config.RESOLUTION, -3.0f, "obstacles/blade_2.png"));
+        stage.addMapEntity(new WheelObstacle(0.3f, -1.1f, 0.20f, 0.20f*Config.RESOLUTION, -1.0f, "obstacles/blade_2.png"));
+        stage.addMapEntity(new WheelObstacle(0.6f, -0.38f, 0.20f, 0.20f*Config.RESOLUTION, -3.0f, "obstacles/blade_2.png"));
+
+        stage.addMapEntity(new WheelObstacle(-0.35f, 0.37f, 0.20f, 0.20f*Config.RESOLUTION, 2.0f, "obstacles/blade_2.png"));
+        stage.addMapEntity(new WheelObstacle(0.3f, 0.37f, 0.20f, 0.20f*Config.RESOLUTION, 2.0f, "obstacles/blade_2.png"));
+
+        // platformy
+        stage.addMapEntity(new Platform(-1.0f, -1.0f, 2.0f, 0.1f, "platforma.png"));
+        stage.addMapEntity(new Platform(-1.0f, -0.25f, 0.8f, 0.1f, "platforma.png"));
+        stage.addMapEntity(new Platform(0.0f, -0.25f, 1.0f, 0.1f, "platforma.png"));
+        stage.addMapEntity(new Platform(-0.8f, 0.5f, 2.0f, 0.1f, "platforma.png"));
+
+        stage.buildHashMap();
+        stage.buildStage();
+        map.addStage(stage);
+
+        /////////////////////////
+        // Credits
+        stage = new Stage("background/finalStage.png", 0.0f, -0.5f);
+        stage.addMapEntity(new Platform(-1.0f, -1.0f, 2.0f, 0.1f, "plank_platform_brick1.png"));
+
+        stage.buildHashMap();
+        stage.buildStage();
+        map.addStage(stage);
     }
 
     private void action() {

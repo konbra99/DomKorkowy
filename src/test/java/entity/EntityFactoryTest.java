@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 
 public class EntityFactoryTest {
 
-	//@Test
+	@Test
 	public void ExistingEntityFactoryTest() {
 		try {
 			Entity obj = EntityFactory.fromName("TestRect");
@@ -21,7 +21,7 @@ public class EntityFactoryTest {
 
 	}
 
-	//@Test
+	@Test
 	public void NotExistingEntityFactoryTest() {
 		try {
 			Entity obj = EntityFactory.fromName("NieistniejacyElement");

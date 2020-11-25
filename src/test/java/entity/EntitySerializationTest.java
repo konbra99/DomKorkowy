@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 
 public class EntitySerializationTest {
 
-	//@Test
+	@Test
 	public void EntityToJsonTest() {
 		boolean b = false;
 		int i = 10;
@@ -24,7 +24,7 @@ public class EntitySerializationTest {
 		assertEquals(obj.get("stringTest").getAsString(), s);
 	}
 
-	//@Test
+	@Test
 	public void EntityFromJsonTest() {
 		try {
 			boolean b = false;
@@ -48,7 +48,7 @@ public class EntitySerializationTest {
 		}
 	}
 
-	//@Test
+	@Test
 	public void EntityFromJsonNonexistentPropertyTest() {
 		try {
 			String str = """

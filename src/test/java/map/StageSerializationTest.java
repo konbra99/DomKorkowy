@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 
 public class StageSerializationTest {
 
-	//@Test
+	@Test
 	public void EmptyStageToJsonTest() {
 		String str = """
 				{"backgroundId":0,"entities":[]}""";
@@ -19,15 +19,15 @@ public class StageSerializationTest {
 		assertEquals(str, obj.toString());
 	}
 
-	//@Test
+	@Test
 	public void StageToJsonTest() {
 		boolean b = false;
 		int i = 10;
 		float f = 99.99f;
 		String s = "abc";
 		String str = """
-				{"backgroundId":0,"entities":[{"boolTest":false,"intTest":10,"floatTest":99.99,"stringTest":"abc",\
-				"id":0,"type":"TestRect"}]}""";
+				{"backgroundId":0,"entities":[{"posX":0.0,"posY":0.0,"width":0.0,"height":0.0,"textureName":null,\
+				"boolTest":false,"intTest":10,"floatTest":99.99,"stringTest":"abc","id":0,"type":"TestRect"}]}""";
 		Stage stage = new Stage();
 		stage.addEntity(0, new TestRect(b, i, f, s));
 		JsonObject obj = stage.toJson();
@@ -35,7 +35,7 @@ public class StageSerializationTest {
 		assertEquals(str, obj.toString());
 	}
 
-	//@Test
+	@Test
 	public void EmptyStageFromJsonTest() {
 		try {
 			String str = """
@@ -63,7 +63,7 @@ public class StageSerializationTest {
 			float f = 99.99f;
 			String s = "abc";
 			String str = """
-				{"backgroundId":10,"entities":[{"boolTest":false,"intTest":10,"floatTest":99.99,"stringTest":"abc",\
+				{"backgroundId":10,"entities":[{"textureName":"test", "boolTest":false,"intTest":10,"floatTest":99.99,"stringTest":"abc",\
 				"id":20,"type":"TestRect"}]}""";
 
 			JsonObject obj = JsonUtils.fromString(str);
@@ -85,7 +85,7 @@ public class StageSerializationTest {
 		}
 	}
 
-	//@Test
+	@Test
 	public void NoexistentStagePropertyTest() {
 		try {
 			String str = """

@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 
 public class MapSerializationTest {
 
-	//@Test
+	@Test
 	public void EmptyMapToJsonTest() {
 		MapManager map = new MapManager();
 
@@ -17,7 +17,7 @@ public class MapSerializationTest {
 		System.out.println(obj);
 	}
 
-	//@Test
+	@Test
 	public void NonemptyMapSingleStageToJsonTest() {
 		MapManager map = new MapManager();
 		Stage stage = new Stage();

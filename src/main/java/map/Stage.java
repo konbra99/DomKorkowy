@@ -121,7 +121,7 @@ public class Stage implements JsonSerializable {
 		}
 
 		background = new Rectangle(-1.0f, -1.0f, 2.0f, 2.0f);
-		background.X_WRAP = true;
+		//background.X_WRAP = true;
 		background.initGL(backgroundName, "rectangle.vert.glsl", "rectangle.frag");
 	}
 

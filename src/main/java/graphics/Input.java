@@ -9,7 +9,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
 
 public class Input {
     public static boolean LEFT = false, RIGHT = false, UP = false, DOWN = false;
-    public static boolean SPACE = false, L_CTRL = false;
+    public static boolean SPACE = false, L_CTRL = false, L_SHIFT = false;
     public static boolean HIT = false;
     public static float MOUSE_X = -2.0f, MOUSE_Y = -2.0f;
 
@@ -23,6 +23,7 @@ public class Input {
             case GLFW_KEY_SPACE -> SPACE = isPressed;
             case GLFW_KEY_F -> HIT = isPressed;
             case GLFW_KEY_LEFT_CONTROL -> L_CTRL = isPressed;
+            case GLFW_KEY_LEFT_SHIFT -> L_SHIFT = isPressed;
         }
     }
 

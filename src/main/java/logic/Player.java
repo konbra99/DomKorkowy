@@ -6,13 +6,22 @@ import graphics.Input;
 import static logic.CharacterState.*;
 
 public class Player extends Character {
-    private Hit hit;
+    private Weapon weapons[];
+    private int activeWeapon;
     private int immune;
 
     public Player(float posX, float posY, float width, float height, String texture) {
         super(posX, posY, width, height, texture);
-        this.hit = new Hit(posX + width / 2, posY + height / 2, 0.5f, 0.025f, "hit2.png");
-        hit.setPlayer(this);
+        // Trzy sloty na bronie, dwie przykładowe dodane od początku
+        this.weapons = new MeleeWeapon[3];
+        this.weapons[0] = new MeleeWeapon(this, 0, posX - width, posY - height / 2, 0.16f,
+                0.17f, 0.1f, "sword1.png", 5, 4);
+        this.weapons[1] = new MeleeWeapon(this, 1, posX - width, posY - height / 2, 0.1f,
+                0.2f, 0.07f, "mace.png", 1, 2);
+        this.activeWeapon = 0;
+//        state = JUMPING;
+//        hp = 3;
+//        immune = 0;
         reset();
     }
 
@@ -81,13 +90,25 @@ public class Player extends Character {
 
     @Override
     public void update() {
-        if (Input.HIT) {
-            hit.start();
-            Input.HIT = false;
+        weapons[activeWeapon].update();
+        if (Input.ATTACK) {
+            weapons[activeWeapon].start();
+            Input.ATTACK = false;
+        }
+        if(Input.ONE_KEY) {
+            this.setActiveWeapon(0);
+            Input.ONE_KEY = false;
+        } else if(Input.TWO_KEY) {
+            this.setActiveWeapon(1);
+            Input.TWO_KEY = false;
         }
 
-        hit.update();
+        weapons[activeWeapon].update();
     }
+    public void setActiveWeapon(int index) {
+        this.activeWeapon = index;
+    }
+
 
     private void getDamage() {
         hp--;

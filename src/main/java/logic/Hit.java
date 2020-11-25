@@ -7,33 +7,29 @@ import graphics.Rectangle;
 public class Hit extends Entity {
     int direction;
     String textureName;
-    Player player;
+    MeleeWeapon weapon;
     private float time, start, end;
     int angle_index;
 
-    public Hit(float posX, float posY, float width, float height, String texture) {
+    public Hit(MeleeWeapon weapon, float posX, float posY, float width, float height, String texture) {
+        this.weapon = weapon;
         this.rectangle = new Rectangle(posX, posY, width, height);
+        this.textureName = texture;
         this.rectangle.ROTATEABLE = true;
         this.rectangle.initGL(texture, "hit.vert.glsl", "hit.frag");
-        this.textureName = texture;
         this.angle_index = 0;
         this.time = 3.0f;
     }
 
-    // trzeba ustawic po stworzeniu
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
-    // ustawia pozycje obok gracza
+    // ustawia pozycje obok broni
     @Override
     public void move() {
-        float off_x = this.player.rectangle.posX + this.player.rectangle.width / 2
+        float off_x = this.weapon.rectangle.posX + this.weapon.rectangle.width / 2
                 - this.rectangle.posX - this.rectangle.width / 2;
 
-        off_x += direction * 0.15f;
+        off_x += direction * 0.1f;
 
-        float off_y = this.player.rectangle.posY + this.player.rectangle.height / 2
+        float off_y = this.weapon.rectangle.posY + this.weapon.rectangle.height / 2
                 - this.rectangle.posY - this.rectangle.height / 2;
         this.rectangle.move(off_x, off_y);
     }
@@ -47,7 +43,7 @@ public class Hit extends Entity {
     public void start() {
         this.rectangle.rotate(Config.HIT_ANGLES[angle_index]);
         this.time = 0.0f;
-        this.direction = this.player.direction;
+        this.direction = this.weapon.direction;
         move();
 
         start = direction == RIGHT ? this.rectangle.posX: this.rectangle.posX + this.rectangle.width;

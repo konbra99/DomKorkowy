@@ -8,4 +8,6 @@ public class Config {
     public static String TEX_PATH = "src/main/resources/Textures/";
 
     public static float[] HIT_ANGLES = {-5.0f, 10.0f, -10.0f, 5.0f};
+    public  static float[] ATTACK_MAX_ANGLES = {90.0f, 70.0f};
+    public static int ATTACK_SPEED_FACTOR = 120;
 }

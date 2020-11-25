@@ -148,10 +148,8 @@ public class Engine implements Runnable {
 
         /////////////////////////
         // Credits
-//        stage = new Stage("background/finalStage.png", 0.0f, -0.5f);
-        stage = new Stage("platforma.png", 0.0f, -0.5f);
-//        stage.addMapEntity(new Platform(-1.0f, -1.0f, 2.0f, 0.1f, "plank_platform_brick1.png"));
-        stage.addMapEntity(new Platform(-1.0f, -1.0f, 2.0f, 0.1f, "platforma.png"));
+        stage = new Stage("background/finalStage.png", 0.0f, -0.5f);
+        stage.addMapEntity(new Platform(-1.0f, -1.0f, 2.0f, 0.1f, "plank_platform_brick1.png"));
 
         stage.buildHashMap();
         stage.buildStage();

@@ -1,0 +1,2 @@
+1) poobrac i zainstalowac mySQL (Developer Defaults, port 3306)
+   https://dev.mysql.com/downloads/installer/

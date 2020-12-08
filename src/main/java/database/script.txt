@@ -1,0 +1,29 @@
+# nowa baza
+CREATE DATABASE 'korkowy';
+USE 'korkowy';
+
+# nowy uzytkownik
+CREATE USER 'user'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON * . * TO 'newuser'@'localhost';
+FLUSH PRIVILEGES;
+
+# tabela map
+CREATE TABLE `maps` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(30) NOT NULL,
+	`author` VARCHAR(30),
+	`description` VARCHAR(200),
+	`rating` DECIMAL(2,2) DEFAULT 0.5,
+	`time` INT NOT NULL DEFAULT 120,
+	`difficulty_level` DECIMAL(2,2) NOT NULL DEFAULT 0.5,
+	`creation_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`edition_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`num_of_plays` INT NOT NULL,
+	`num_of_stages` INT NOT NULL,
+	`src` VARCHAR(2000) NOT NULL,
+	`img` LONGBLOB,
+	PRIMARY KEY (`id`)
+);
+
+# inne przydatne
+# mysql -h host -u user -ppassword          # logowanie (bez spacji po p)

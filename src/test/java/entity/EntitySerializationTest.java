@@ -63,7 +63,6 @@ public class EntitySerializationTest {
 		} catch (Exception e) {
 			fail();
 		}
-
 	}
 
 	//@Test

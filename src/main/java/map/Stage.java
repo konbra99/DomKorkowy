@@ -118,11 +118,17 @@ public class Stage implements JsonSerializable {
 				obstacles.put(id, entity);
 			if (entity.isInGroup(GROUP_DOORS))
 				doors.put(id, entity);
+				
 		}
 
 		background = new Rectangle(-1.0f, -1.0f, 2.0f, 2.0f);
 		//background.X_WRAP = true;
 		background.initGL(backgroundName, "rectangle.vert.glsl", "rectangle.frag");
+	}
+
+	public void initStage() {
+		for(Entity entity: all.values())
+			entity.init();
 	}
 
 	/** Zamienia ArrayList na HashMap, dodaje indeksy do elementow mapy.

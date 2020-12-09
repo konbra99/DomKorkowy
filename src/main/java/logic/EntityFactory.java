@@ -13,11 +13,16 @@ public class EntityFactory {
 
 	public static Entity fromName(String type) {
 
-		switch(type) {
-			case "TestRect"  : return new TestRect();
-			case "Character" : return new Character();
-			case "Door"      : return new Door();
-			default: throw new NoexistentType(type);
-		}
+		return switch (type) {
+			case "Character"        -> new Character();
+			case "Door"             -> new Door();
+			case "Mob"              -> new Mob();
+			case "Obstacle"         -> new Obstacle();
+			case "Platform"         -> new Platform();
+			case "StaticObject"     -> new StaticObject();
+			case "TestRect"         -> new TestRect();
+			case "WheelObstacle"    -> new WheelObstacle();
+			default                 -> throw new NoexistentType(type);
+		};
 	}
 }

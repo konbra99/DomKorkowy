@@ -1,8 +1,7 @@
 package map.json;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
+
 import java.io.*;
 
 public class JsonUtils {
@@ -25,6 +24,12 @@ public class JsonUtils {
 	/** Konwertuje obiekt klsay JsonObject na String. */
 	public static String toString(JsonObject obj) {
 		return obj.toString();
+	}
+
+	/** Konwertuje obiekt klsay JsonObject na ladnie wygladajacy String. */
+	public static String toStringPretty(JsonObject obj) {
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		return gson.toJson(obj);
 	}
 
 	/** Konwertuje obiekt klsay JsonObject do podanego pliku. */

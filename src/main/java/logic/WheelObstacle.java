@@ -1,14 +1,16 @@
 package logic;
 
+import com.google.gson.JsonObject;
+
 public class WheelObstacle extends Obstacle {
 
 	public WheelObstacle() {
 		super();
 	}
 
-	public WheelObstacle(float posX, float posY, float width, float height, float vel_angle, String textureName) {
+	public WheelObstacle(float posX, float posY, float width, float height, String textureName, float vel_angle) {
 		super(posX, posY, width, height, textureName);
-		init();
+		this.vel_angle = vel_angle;
 	}
 
 	@Override
@@ -20,9 +22,20 @@ public class WheelObstacle extends Obstacle {
 
 	@Override
 	public void init() {
-		this.groups |= GROUP_OBSTACLES;
-		this.vel_angle = vel_angle;
 		this.rectangle.ROTATEABLE = true;
 		this.rectangle.initGL(this.textureName, "wheel.vert.glsl", "wheel.frag");
 	}
+
+	@Override
+	public JsonObject toJson() {
+		JsonObject obj = super.toJson();
+		obj.addProperty("vel_angle", vel_angle);
+		return obj;
+	};
+
+	@Override
+	public void fromJson(JsonObject obj) {
+		this.vel_angle = obj.get("vel_angle").getAsFloat();
+		super.fromJson(obj);
+	};
 }

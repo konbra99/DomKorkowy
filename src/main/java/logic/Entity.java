@@ -18,27 +18,29 @@ public abstract class Entity implements JsonSerializable {
 	public final static int RIGHT = 1;
 
 	// flagi
-	protected boolean gravityFlag = true;      /* SERIALIZED */
-	protected boolean activeFlag = false;      /* SERIALIZED */
+	protected boolean gravityFlag = true;   /* NOT SERIALIZED */
+	protected boolean activeFlag = false;   /* SERIALIZED BY OTHERS */
 
 	// polozenie / predkosc
-	protected float angle = 0.0f;
-	protected float vel_angle = 1.0f;
-	protected float vel_y = 0.0f;
-	protected float vel_x = 0.0f;
+	protected int direction = RIGHT;        /* SERIALIZED BY OTHERS */
+	protected float angle = 0.0f;           /* SERIALIZED BY OTHERS */
+	protected float vel_angle = 1.0f;       /* SERIALIZED BY OTHERS */
+	protected float vel_y = 0.0f;           /* SERIALIZED BY OTHERS */
+	protected float vel_x = 0.0f;           /* SERIALIZED BY OTHERS */
 
-	protected Rectangle rectangle;      /* SERIALIZED */
-	protected String textureName;       /* SERIALIZED */
-	protected int groups;               /* NOT SERIALIZED */
+	protected Rectangle rectangle;          /* SERIALIZED */
+	protected String textureName;           /* SERIALIZED */
+	protected int groups;                   /* NOT SERIALIZED */
 
 	public Entity() {
 		rectangle = new Rectangle();
+		groups |= GROUP_DEFAULT;
 	}
 
 	public Entity(float posX, float posY, float width, float height, String textureName) {
 		this.rectangle = new Rectangle(posX, posY, width, height);
 		this.textureName = textureName;
-		init();
+		groups |= GROUP_DEFAULT;
 	}
 
 	public void move() {}
@@ -47,7 +49,7 @@ public abstract class Entity implements JsonSerializable {
 
 	public void update() {}
 
-	public void init() { groups |= GROUP_DEFAULT; }
+	public void init() {}
 
 	protected void gravity() {
 		for (Entity p : Engine.map.getCurrentStage().platforms.values()) {
@@ -74,15 +76,11 @@ public abstract class Entity implements JsonSerializable {
 	public JsonObject toJson() {
 		JsonObject obj = rectangle.toJson();
 		obj.addProperty("textureName", textureName);
-		obj.addProperty("gravityFlag", gravityFlag);
-		obj.addProperty("activeFlag", activeFlag);
 		return obj;
 	}
 
 	public void fromJson(JsonObject obj) {
 		textureName = obj.get("textureName").getAsString();
-		gravityFlag = obj.get("gravityFlag").getAsBoolean();
-		activeFlag = obj.get("activeFlag").getAsBoolean();
 		rectangle.fromJson(obj);
 	}
 

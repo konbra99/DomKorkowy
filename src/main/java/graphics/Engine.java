@@ -61,7 +61,7 @@ public class Engine implements Runnable {
         stage.addMapEntity(new Obstacle(-0.8f, -0.52f, 0.13f, 0.08f, "obstacles/spikes_2.png"));
         stage.addMapEntity(new Obstacle(0.5f, -0.52f, 0.13f, 0.08f, "obstacles/spikes_2.png"));
         stage.addMapEntity(new Obstacle(-0.4f, -0.10f, 0.11f, 0.17f, "obstacles/swinging_spike_block.png"));
-        stage.addMapEntity(new WheelObstacle(0.4f, 0.4f, 0.11f, 0.11f*Config.RESOLUTION, 1.0f, "obstacles/blade_2.png"));
+        stage.addMapEntity(new WheelObstacle(0.4f, 0.4f, 0.11f, 0.11f*Config.RESOLUTION, "obstacles/blade_2.png", 1.0f));
 
         // planformy
         stage.addMapEntity(new Platform(-0.2f, -0.6f, 1.0f, 0.1f, "platforma.png"));
@@ -75,6 +75,7 @@ public class Engine implements Runnable {
 
         stage.buildHashMap();
         stage.buildStage();
+        stage.initStage();
         map.addStage(stage);
 
 
@@ -87,25 +88,25 @@ public class Engine implements Runnable {
         stage.addMapEntity(new Door(0.8f, 0.6f, 0.10f, 0.25f, "door.png", true));
 
         // przeszkody
-        stage.addMapEntity(new WheelObstacle(-1.0f, -0.6f, 0.20f, 0.20f*Config.RESOLUTION, -3.0f, "obstacles/blade_2.png"));
-        stage.addMapEntity(new WheelObstacle(-0.8f, -0.6f, 0.20f, 0.20f*Config.RESOLUTION, -1.0f, "obstacles/blade_2.png"));
-        stage.addMapEntity(new WheelObstacle(-0.6f, -0.6f, 0.20f, 0.20f*Config.RESOLUTION, -3.0f, "obstacles/blade_2.png"));
-        stage.addMapEntity(new WheelObstacle(-0.4f, -0.6f, 0.20f, 0.20f*Config.RESOLUTION, -1.0f, "obstacles/blade_2.png"));
-        stage.addMapEntity(new WheelObstacle(0.0f, -0.6f, 0.20f, 0.20f*Config.RESOLUTION, -3.0f, "obstacles/blade_2.png"));
-        stage.addMapEntity(new WheelObstacle(0.2f, -0.6f, 0.20f, 0.20f*Config.RESOLUTION, -1.0f, "obstacles/blade_2.png"));
-        stage.addMapEntity(new WheelObstacle(0.4f, -0.6f, 0.20f, 0.20f*Config.RESOLUTION, -3.0f, "obstacles/blade_2.png"));
-        stage.addMapEntity(new WheelObstacle(0.6f, -0.6f, 0.20f, 0.20f*Config.RESOLUTION, -1.0f, "obstacles/blade_2.png"));
-        stage.addMapEntity(new WheelObstacle(0.8f, -0.6f, 0.20f, 0.20f*Config.RESOLUTION, -3.0f, "obstacles/blade_2.png"));
+        stage.addMapEntity(new WheelObstacle(-1.0f, -0.6f, 0.20f, 0.20f*Config.RESOLUTION,  "obstacles/blade_2.png", -3.0f));
+        stage.addMapEntity(new WheelObstacle(-0.8f, -0.6f, 0.20f, 0.20f*Config.RESOLUTION,  "obstacles/blade_2.png", -1.0f));
+        stage.addMapEntity(new WheelObstacle(-0.6f, -0.6f, 0.20f, 0.20f*Config.RESOLUTION,  "obstacles/blade_2.png", -3.0f));
+        stage.addMapEntity(new WheelObstacle(-0.4f, -0.6f, 0.20f, 0.20f*Config.RESOLUTION,  "obstacles/blade_2.png", -1.0f));
+        stage.addMapEntity(new WheelObstacle(0.0f, -0.6f, 0.20f, 0.20f*Config.RESOLUTION,  "obstacles/blade_2.png", -3.0f));
+        stage.addMapEntity(new WheelObstacle(0.2f, -0.6f, 0.20f, 0.20f*Config.RESOLUTION,  "obstacles/blade_2.png", -1.0f));
+        stage.addMapEntity(new WheelObstacle(0.4f, -0.6f, 0.20f, 0.20f*Config.RESOLUTION,  "obstacles/blade_2.png", -3.0f));
+        stage.addMapEntity(new WheelObstacle(0.6f, -0.6f, 0.20f, 0.20f*Config.RESOLUTION,  "obstacles/blade_2.png", -1.0f));
+        stage.addMapEntity(new WheelObstacle(0.8f, -0.6f, 0.20f, 0.20f*Config.RESOLUTION,  "obstacles/blade_2.png", -3.0f));
 
-        stage.addMapEntity(new WheelObstacle(-0.8f, 0.15f, 0.20f, 0.20f*Config.RESOLUTION, 3.0f, "obstacles/blade_2.png"));
-        stage.addMapEntity(new WheelObstacle(-0.6f, 0.15f, 0.20f, 0.20f*Config.RESOLUTION, 1.0f, "obstacles/blade_2.png"));
-        stage.addMapEntity(new WheelObstacle(-0.4f, 0.15f, 0.20f, 0.20f*Config.RESOLUTION, 3.0f, "obstacles/blade_2.png"));
-        stage.addMapEntity(new WheelObstacle(-0.2f, 0.15f, 0.20f, 0.20f*Config.RESOLUTION, 1.0f, "obstacles/blade_2.png"));
-        stage.addMapEntity(new WheelObstacle(0.0f, 0.15f, 0.20f, 0.20f*Config.RESOLUTION, 3.0f, "obstacles/blade_2.png"));
-        stage.addMapEntity(new WheelObstacle(0.2f, 0.15f, 0.20f, 0.20f*Config.RESOLUTION, 1.0f, "obstacles/blade_2.png"));
-        stage.addMapEntity(new WheelObstacle(0.4f, 0.15f, 0.20f, 0.20f*Config.RESOLUTION, 3.0f, "obstacles/blade_2.png"));
-        stage.addMapEntity(new WheelObstacle(0.6f, 0.15f, 0.20f, 0.20f*Config.RESOLUTION, 1.0f, "obstacles/blade_2.png"));
-        stage.addMapEntity(new WheelObstacle(0.8f, 0.15f, 0.20f, 0.20f*Config.RESOLUTION, 3.0f, "obstacles/blade_2.png"));
+        stage.addMapEntity(new WheelObstacle(-0.8f, 0.15f, 0.20f, 0.20f*Config.RESOLUTION,  "obstacles/blade_2.png", 3.0f));
+        stage.addMapEntity(new WheelObstacle(-0.6f, 0.15f, 0.20f, 0.20f*Config.RESOLUTION, "obstacles/blade_2.png", 1.0f));
+        stage.addMapEntity(new WheelObstacle(-0.4f, 0.15f, 0.20f, 0.20f*Config.RESOLUTION,  "obstacles/blade_2.png", 3.0f));
+        stage.addMapEntity(new WheelObstacle(-0.2f, 0.15f, 0.20f, 0.20f*Config.RESOLUTION,  "obstacles/blade_2.png", 1.0f));
+        stage.addMapEntity(new WheelObstacle(0.0f, 0.15f, 0.20f, 0.20f*Config.RESOLUTION,  "obstacles/blade_2.png", 3.0f));
+        stage.addMapEntity(new WheelObstacle(0.2f, 0.15f, 0.20f, 0.20f*Config.RESOLUTION,  "obstacles/blade_2.png", 1.0f));
+        stage.addMapEntity(new WheelObstacle(0.4f, 0.15f, 0.20f, 0.20f*Config.RESOLUTION,  "obstacles/blade_2.png", 3.0f));
+        stage.addMapEntity(new WheelObstacle(0.6f, 0.15f, 0.20f, 0.20f*Config.RESOLUTION,  "obstacles/blade_2.png", 1.0f));
+        stage.addMapEntity(new WheelObstacle(0.8f, 0.15f, 0.20f, 0.20f*Config.RESOLUTION,  "obstacles/blade_2.png", 3.0f));
 
         // platformy
         stage.addMapEntity(new Platform(-1.0f, -1.0f, 2.0f, 0.1f, "platforma.png"));
@@ -115,6 +116,7 @@ public class Engine implements Runnable {
 
         stage.buildHashMap();
         stage.buildStage();
+        stage.initStage();
         map.addStage(stage);
 
         /////////////////////////
@@ -126,15 +128,15 @@ public class Engine implements Runnable {
         stage.addMapEntity(new Door(0.8f, -0.9f, 0.10f, 0.25f, "door.png", true));
 
         // przeszkody
-        stage.addMapEntity(new WheelObstacle(-1f, -1.1f, 0.20f, 0.20f*Config.RESOLUTION, -1.0f, "obstacles/blade_2.png"));
-        stage.addMapEntity(new WheelObstacle(-0.7f, -0.38f, 0.20f, 0.20f*Config.RESOLUTION, -3.0f, "obstacles/blade_2.png"));
-        stage.addMapEntity(new WheelObstacle(-0.4f, -1.1f, 0.20f, 0.20f*Config.RESOLUTION, -1.0f, "obstacles/blade_2.png"));
-        stage.addMapEntity(new WheelObstacle(0.0f, -0.38f, 0.20f, 0.20f*Config.RESOLUTION, -3.0f, "obstacles/blade_2.png"));
-        stage.addMapEntity(new WheelObstacle(0.3f, -1.1f, 0.20f, 0.20f*Config.RESOLUTION, -1.0f, "obstacles/blade_2.png"));
-        stage.addMapEntity(new WheelObstacle(0.6f, -0.38f, 0.20f, 0.20f*Config.RESOLUTION, -3.0f, "obstacles/blade_2.png"));
+        stage.addMapEntity(new WheelObstacle(-1f, -1.1f, 0.20f, 0.20f*Config.RESOLUTION, "obstacles/blade_2.png", -1.0f));
+        stage.addMapEntity(new WheelObstacle(-0.7f, -0.38f, 0.20f, 0.20f*Config.RESOLUTION,  "obstacles/blade_2.png", -3.0f));
+        stage.addMapEntity(new WheelObstacle(-0.4f, -1.1f, 0.20f, 0.20f*Config.RESOLUTION,  "obstacles/blade_2.png", -1.0f));
+        stage.addMapEntity(new WheelObstacle(0.0f, -0.38f, 0.20f, 0.20f*Config.RESOLUTION,  "obstacles/blade_2.png", -3.0f));
+        stage.addMapEntity(new WheelObstacle(0.3f, -1.1f, 0.20f, 0.20f*Config.RESOLUTION,  "obstacles/blade_2.png", -1.0f));
+        stage.addMapEntity(new WheelObstacle(0.6f, -0.38f, 0.20f, 0.20f*Config.RESOLUTION, "obstacles/blade_2.png", -3.0f));
 
-        stage.addMapEntity(new WheelObstacle(-0.35f, 0.37f, 0.20f, 0.20f*Config.RESOLUTION, 2.0f, "obstacles/blade_2.png"));
-        stage.addMapEntity(new WheelObstacle(0.3f, 0.37f, 0.20f, 0.20f*Config.RESOLUTION, 2.0f, "obstacles/blade_2.png"));
+        stage.addMapEntity(new WheelObstacle(-0.35f, 0.37f, 0.20f, 0.20f*Config.RESOLUTION,  "obstacles/blade_2.png", 2.0f));
+        stage.addMapEntity(new WheelObstacle(0.3f, 0.37f, 0.20f, 0.20f*Config.RESOLUTION, "obstacles/blade_2.png", 2.0f));
 
         // platformy
         stage.addMapEntity(new Platform(-1.0f, -1.0f, 2.0f, 0.1f, "platforma.png"));
@@ -153,6 +155,7 @@ public class Engine implements Runnable {
 
         stage.buildHashMap();
         stage.buildStage();
+        stage.initStage();
         map.addStage(stage);
     }
 

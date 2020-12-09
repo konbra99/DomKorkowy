@@ -9,21 +9,21 @@ public class Mob extends Character {
 
     public Mob() {
         super();
+        groups |= GROUP_MOBS;
     }
 
     public Mob (float posX, float posY, float width, float height, String texture,
                 float beginX, float endX, float velocityX, int direction){
-        super(posX, posY, width, height, texture);
+        super(posX, posY, width, height, texture, direction);
         this.vel_x = velocityX;
         this.beginX = beginX;
         this.endX = endX;
-        this.direction = direction;
-        init();
+        groups |= GROUP_MOBS;
     }
 
     @Override
     public void init() {
-        groups |= GROUP_MOBS;
+        super.init();
         this.rectangle.initGL(this.textureName, "rectangle.vert.glsl", "rectangle.frag");
     }
 
@@ -45,6 +45,7 @@ public class Mob extends Character {
         JsonObject obj = super.toJson();
         obj.addProperty("beginX", beginX);
         obj.addProperty("endX", endX);
+        obj.addProperty("vel_x", vel_x);
         return obj;
     };
 
@@ -52,6 +53,7 @@ public class Mob extends Character {
     public void fromJson(JsonObject obj) {
         this.beginX = obj.get("beginX").getAsFloat();
         this.endX = obj.get("endX").getAsFloat();
+        this.vel_x = obj.get("vel_x").getAsFloat();
         super.fromJson(obj);
     };
 }

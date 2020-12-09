@@ -2,7 +2,6 @@ package logic;
 
 import graphics.Engine;
 import graphics.Input;
-
 import static logic.CharacterState.*;
 
 public class Player extends Character {
@@ -11,7 +10,7 @@ public class Player extends Character {
     private int immune;
 
     public Player(float posX, float posY, float width, float height, String texture) {
-        super(posX, posY, width, height, texture);
+        super(posX, posY, width, height, texture, RIGHT);
         // Trzy sloty na bronie, dwie przykładowe dodane od początku
         this.weapons = new MeleeWeapon[3];
         this.weapons[0] = new MeleeWeapon(this, 0, posX - width, posY - height / 2, 0.12f,
@@ -19,6 +18,7 @@ public class Player extends Character {
         this.weapons[1] = new MeleeWeapon(this, 1, posX - width, posY - height / 2, 0.075f,
                 0.15f, 0.05f, "mace.png", 1, 4);
         this.activeWeapon = 0;
+        init();
         reset();
     }
 

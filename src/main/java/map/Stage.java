@@ -8,7 +8,6 @@ import java.util.Map;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import graphics.Config;
 import graphics.Rectangle;
 import logic.Entity;
 import logic.EntityFactory;
@@ -23,7 +22,6 @@ import static logic.Entity.*;
 public class Stage implements JsonSerializable {
 
 	// zmienne
-	public int backgroundId;
 	private Rectangle background;
 	private String backgroundName;
 	public float[] start;
@@ -145,7 +143,9 @@ public class Stage implements JsonSerializable {
 	public JsonObject toJson() {
 		JsonObject obj = new JsonObject();
 		JsonArray entities = new JsonArray();
-		obj.addProperty("backgroundId", backgroundId);
+		obj.addProperty("backgroundName", backgroundName);
+		obj.addProperty("startX", start[0]);
+		obj.addProperty("startY", start[1]);
 
 		for (Map.Entry<Integer,Entity> element : all.entrySet()) {
 			JsonObject temp = element.getValue().toJson();
@@ -161,7 +161,9 @@ public class Stage implements JsonSerializable {
 	}
 
 	public void fromJson(JsonObject obj) {
-		backgroundId = obj.get("backgroundId").getAsInt();
+		backgroundName = obj.get("backgroundName").getAsString();
+		start[0] = obj.get("startX").getAsFloat();
+		start[1] = obj.get("startY").getAsFloat();
 		JsonArray entities = obj.getAsJsonArray("entities");
 
 		for(JsonElement element : entities) {

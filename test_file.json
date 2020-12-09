@@ -1,0 +1,158 @@
+{
+  "mapName": "default",
+  "maxPlayers": 10,
+  "author": "default",
+  "time": 120,
+  "stages": [
+    {
+      "backgroundName": "background/sky.png",
+      "startX": -0.7,
+      "startY": -0.45,
+      "entities": [
+        {
+          "posX": 0.1,
+          "posY": -0.53999996,
+          "width": 0.13,
+          "height": 0.3375,
+          "textureName": "trees/tree4.png",
+          "id": 0,
+          "type": "StaticObject"
+        },
+        {
+          "posX": 0.7,
+          "posY": -0.534375,
+          "width": 0.06,
+          "height": 0.16875,
+          "textureName": "trees/tree4.png",
+          "id": 1,
+          "type": "StaticObject"
+        },
+        {
+          "posX": -0.65,
+          "posY": -0.061875,
+          "width": 0.12,
+          "height": 0.112500004,
+          "textureName": "trees/tree1.png",
+          "id": 2,
+          "type": "StaticObject"
+        },
+        {
+          "posX": -0.7,
+          "posY": -0.50624996,
+          "width": 0.1,
+          "height": 0.140625,
+          "textureName": "door.png",
+          "activeFlag": false,
+          "id": 3,
+          "type": "Door"
+        },
+        {
+          "posX": 0.8,
+          "posY": 0.16875,
+          "width": 0.1,
+          "height": 0.140625,
+          "textureName": "door.png",
+          "activeFlag": true,
+          "id": 4,
+          "type": "Door"
+        },
+        {
+          "posX": -0.8,
+          "posY": -0.2925,
+          "width": 0.13,
+          "height": 0.044999998,
+          "textureName": "obstacles/spikes_2.png",
+          "id": 5,
+          "type": "Obstacle"
+        },
+        {
+          "posX": 0.5,
+          "posY": -0.2925,
+          "width": 0.13,
+          "height": 0.044999998,
+          "textureName": "obstacles/spikes_2.png",
+          "id": 6,
+          "type": "Obstacle"
+        },
+        {
+          "posX": -0.4,
+          "posY": -0.056250002,
+          "width": 0.11,
+          "height": 0.095625,
+          "textureName": "obstacles/swinging_spike_block.png",
+          "id": 7,
+          "type": "Obstacle"
+        },
+        {
+          "posX": 0.4,
+          "posY": 0.22500001,
+          "width": 0.11,
+          "height": 0.11,
+          "textureName": "obstacles/blade_2.png",
+          "vel_angle": 1.0,
+          "id": 8,
+          "type": "WheelObstacle"
+        },
+        {
+          "posX": -0.2,
+          "posY": -0.3375,
+          "width": 1.0,
+          "height": 0.056250002,
+          "textureName": "platforma.png",
+          "id": 9,
+          "type": "Platform"
+        },
+        {
+          "posX": 0.0,
+          "posY": 0.112500004,
+          "width": 1.0,
+          "height": 0.056250002,
+          "textureName": "platforma.png",
+          "id": 10,
+          "type": "Platform"
+        },
+        {
+          "posX": -1.0,
+          "posY": -0.3375,
+          "width": 0.5,
+          "height": 0.056250002,
+          "textureName": "platforma.png",
+          "id": 11,
+          "type": "Platform"
+        },
+        {
+          "posX": -0.75,
+          "posY": -0.112500004,
+          "width": 0.8,
+          "height": 0.056250002,
+          "textureName": "platforma.png",
+          "id": 12,
+          "type": "Platform"
+        },
+        {
+          "posX": -1.0,
+          "posY": -0.5625,
+          "width": 2.0,
+          "height": 0.056250002,
+          "textureName": "platforma.png",
+          "id": 13,
+          "type": "Platform"
+        },
+        {
+          "posX": 0.5,
+          "posY": -0.28125,
+          "width": 0.08,
+          "height": 0.10125,
+          "textureName": "koniec.png",
+          "hp": 0,
+          "direction": 1,
+          "beginX": -0.2,
+          "endX": 0.7,
+          "vel_x": 0.01,
+          "id": 14,
+          "type": "Mob"
+        }
+      ]
+    }
+  ]
+}

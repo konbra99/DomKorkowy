@@ -1,8 +1,10 @@
 package graphics;
 
+import com.google.gson.JsonObject;
 import logic.*;
 import map.MapManager;
 import map.Stage;
+import map.json.JsonUtils;
 import org.lwjgl.Version;
 import org.lwjgl.opengl.GL;
 import java.util.Collection;
@@ -42,6 +44,16 @@ public class Engine implements Runnable {
     }
 
     private void initTempMap() {
+        try {
+            JsonObject obj = JsonUtils.fromFile("test_file.json");
+            map.fromJson(obj);
+            map.nextStage();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if(true)
+            return;
+
         Stage stage;
 
         /////////////////////////
@@ -73,9 +85,9 @@ public class Engine implements Runnable {
         // moby
         stage.addMapEntity(new Mob(0.5f, -0.5f, 0.08f, 0.18f,"koniec.png",-0.2f,0.7f,0.01f, Entity.RIGHT));
 
-        stage.buildHashMap();
-        stage.buildStage();
-        stage.initStage();
+//        stage.buildHashMap();
+//        stage.buildStage();
+//        stage.initStage();
         map.addStage(stage);
 
 
@@ -114,9 +126,9 @@ public class Engine implements Runnable {
         stage.addMapEntity(new Platform(0.0f, -0.25f, 1.0f, 0.1f, "platforma.png"));
         stage.addMapEntity(new Platform(-0.8f, 0.5f, 2.0f, 0.1f, "platforma.png"));
 
-        stage.buildHashMap();
-        stage.buildStage();
-        stage.initStage();
+//        stage.buildHashMap();
+//        stage.buildStage();
+//        stage.initStage();
         map.addStage(stage);
 
         /////////////////////////
@@ -144,8 +156,8 @@ public class Engine implements Runnable {
         stage.addMapEntity(new Platform(0.0f, -0.25f, 1.0f, 0.1f, "platforma.png"));
         stage.addMapEntity(new Platform(-0.8f, 0.5f, 2.0f, 0.1f, "platforma.png"));
 
-        stage.buildHashMap();
-        stage.buildStage();
+//        stage.buildHashMap();
+//        stage.buildStage();
         map.addStage(stage);
 
         /////////////////////////
@@ -153,10 +165,12 @@ public class Engine implements Runnable {
         stage = new Stage("background/finalStage.png", 0.0f, -0.5f);
         stage.addMapEntity(new Platform(-1.0f, -1.0f, 2.0f, 0.1f, "plank_platform_brick1.png"));
 
-        stage.buildHashMap();
-        stage.buildStage();
-        stage.initStage();
+//        stage.buildHashMap();
+//        stage.buildStage();
+//        stage.initStage();
         map.addStage(stage);
+        map.nextStage();
+
     }
 
     private void action() {

@@ -12,10 +12,10 @@ import java.util.List;
 public class MapManager implements JsonSerializable {
 
 	// zmienne
-	public String mapName;
-	public String author;
-	public int maxPlayers;
-	public int time;
+	public String mapName = "default";
+	public String author = "default";
+	public int maxPlayers = 10;
+	public int time = 120;
 
 	// sceny
 	private List<Stage> stages;
@@ -23,7 +23,7 @@ public class MapManager implements JsonSerializable {
 
 	public MapManager() {
 		stages = new ArrayList<>();
-		currentStage = 0;
+		currentStage = -1;
 	}
 
 	/** Move bierzacej sceny. */
@@ -57,6 +57,9 @@ public class MapManager implements JsonSerializable {
 			return false;
 		else {
 			currentStage++;
+			stages.get(currentStage).buildHashMap();
+			stages.get(currentStage).buildStage();
+			stages.get(currentStage).initStage();
 			return true;
 		}
 	}

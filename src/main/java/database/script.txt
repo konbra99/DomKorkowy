@@ -13,14 +13,14 @@ CREATE TABLE `maps` (
 	`name` VARCHAR(30) NOT NULL,
 	`author` VARCHAR(30),
 	`description` VARCHAR(200),
-	`rating` DECIMAL(2,2) DEFAULT 0.5,
+	`rating` DECIMAL(2,2) NOT NULL DEFAULT 0.5,
 	`time` INT NOT NULL DEFAULT 120,
 	`difficulty_level` DECIMAL(2,2) NOT NULL DEFAULT 0.5,
 	`creation_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`edition_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-	`num_of_plays` INT NOT NULL,
+	`num_of_plays` INT NOT NULL DEFAULT 0,
 	`num_of_stages` INT NOT NULL,
-	`src` VARCHAR(2000) NOT NULL,
+	`src` TEXT NOT NULL,
 	`img` LONGBLOB,
 	PRIMARY KEY (`id`)
 );

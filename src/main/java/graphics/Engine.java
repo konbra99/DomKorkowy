@@ -19,6 +19,7 @@ public class Engine implements Runnable {
     public static MapManager map;
     public static Player KORKOWY;
     public static Rectangle HEALTHBAR;
+    public static int FRAMES;
 
     @Override
     public void run() {
@@ -50,35 +51,48 @@ public class Engine implements Runnable {
         }
     }
 
-    private void action() {
-        map.move();
-        map.update();
-        map.draw();
-
-        KORKOWY.move();
-        KORKOWY.update();
-        HEALTHBAR.draw();
-
-        Input.resetMouse();
-    }
-
     private void loop() {
         glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
+        FRAMES = 0;
 
         HEALTHBAR = new Rectangle(-1.0f, 0.9f, 0.18f, 0.08f);
         HEALTHBAR.initGL("3hp.png", "rectangle.vert.glsl", "rectangle.frag");
         KORKOWY = new Player(-0.7f, -0.8f, 0.08f, 0.18f, "korkowa_postac.png");
+        FontLoader fontLoader = new FontLoader();
+        fontLoader.loadFont("msgothic.bmp");
+
+        double current = glfwGetTime();
+        double previous;
+        int avg = 0;
 
         // glowna petla programu
         while (!glfwWindowShouldClose(window.getWindowHandle())) {
+            previous = current;
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
 
-            action();
+            // input
+            glfwPollEvents();
+
+            // update
+            map.move();
+            map.update();
+            KORKOWY.move();
+            KORKOWY.update();
+
+            // draw
+            map.draw();
+            KORKOWY.draw();
+            HEALTHBAR.draw();
+            fontLoader.renderText("fps: " + avg, "msgothic.bmp",
+                    0.65f, 0.9f, 0.05f, 0.08f,
+                    0.0f, 1.0f, 0.0f, 1.0f);
+
+            Input.resetMouse();
 
             glfwSwapBuffers(window.getWindowHandle()); // swap the color buffers
-
-            // sprawdza czy zaszly jakies eventy
-            glfwPollEvents();
+            current = glfwGetTime();
+            avg = (int) Math.floor(1.0 / (current - previous));
+            ++FRAMES;
         }
     }
 
@@ -98,5 +112,7 @@ public class Engine implements Runnable {
         return map.getCurrentStage().doors.values();
     }
 
-    public static float[] getStart() { return map.getCurrentStage().start; }
+    public static float[] getStart() {
+        return map.getCurrentStage().start;
+    }
 }

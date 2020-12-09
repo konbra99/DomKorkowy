@@ -2,13 +2,18 @@ package logic;
 
 import graphics.Config;
 import graphics.Engine;
+import graphics.Main;
 import graphics.Rectangle;
 
 public class Hit extends Entity {
+    private int shift_time = 30;
+    private int fade_time = 30;
+    private int shift_end = 0, fade_end = 0;
+
     int direction;
     String textureName;
     MeleeWeapon weapon;
-    private float time, start, end;
+    private float start, end;
     int angle_index;
 
     public Hit(MeleeWeapon weapon, float posX, float posY, float width, float height, String texture) {
@@ -18,7 +23,6 @@ public class Hit extends Entity {
         this.rectangle.ROTATEABLE = true;
         this.rectangle.initGL(texture, "hit.vert.glsl", "hit.frag");
         this.angle_index = 0;
-        this.time = 3.0f;
     }
 
     // ustawia pozycje obok broni
@@ -36,17 +40,21 @@ public class Hit extends Entity {
 
     @Override
     public void draw() {
+        if (Engine.FRAMES > fade_end)
+            return;
+
         this.rectangle.setOrientation(direction == RIGHT);
         this.rectangle.draw();
     }
 
     public void start() {
         this.rectangle.rotate(Config.HIT_ANGLES[angle_index]);
-        this.time = 0.0f;
+        this.shift_end = Engine.FRAMES + shift_time;
+        this.fade_end = shift_end + shift_time;
         this.direction = this.weapon.direction;
         move();
 
-        start = direction == RIGHT ? this.rectangle.posX: this.rectangle.posX + this.rectangle.width;
+        start = direction == RIGHT ? this.rectangle.posX : this.rectangle.posX + this.rectangle.width;
         end = direction == RIGHT ? this.rectangle.posX + this.rectangle.width : this.rectangle.posX;
 
         angle_index++;
@@ -56,32 +64,28 @@ public class Hit extends Entity {
     @Override
     public void update() {
         float fade;
-        if (time < 1.0f) {
+        if (Engine.FRAMES <= shift_end) {
             this.rectangle.setAlpha(1.0f);
-            fade = (start + direction * time * this.rectangle.width + 1.0f) / 2;
+            fade = (start
+                    + direction * ((shift_time - shift_end + Engine.FRAMES) / (float) shift_time)
+                    * this.rectangle.width + 1.0f) / 2;
             this.rectangle.setFade(fade);
-            time += 0.05f;
 
-            if (time >= 1.0f) {
-                // sprawdzamy kolizj
+            if (Engine.FRAMES == shift_end) {
+                // sprawdzamy kolizje
                 for (Entity mob : Engine.map.getCurrentStage().mobs.values()) {
                     if (this.rectangle.collidesWith(mob.rectangle)) {
                         System.out.println("trafiony");
                     }
                 }
             }
-        } else if (time <= 2.0f) {
-            this.rectangle.setAlpha(2.0f - time);
+        } else if (Engine.FRAMES <= fade_end) {
+            this.rectangle.setAlpha((fade_end - Engine.FRAMES) / (float) fade_time);
             this.rectangle.setFade((end + 1.0f) / 2);
 
-            time += 0.04f;
-            if (time > 2.0f) {
+            if (Engine.FRAMES == fade_end) {
                 this.rectangle.rotate(0);
             }
-        } else {
-            return;
         }
-
-        draw();
     }
 }

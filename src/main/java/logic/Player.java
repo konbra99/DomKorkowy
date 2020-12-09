@@ -5,7 +5,7 @@ import graphics.Input;
 import static logic.CharacterState.*;
 
 public class Player extends Character {
-    private Weapon weapons[];
+    private Weapon[] weapons;
     private int activeWeapon;
     private int immune;
 
@@ -71,7 +71,6 @@ public class Player extends Character {
 
         this.rectangle.setOrientation(direction == RIGHT);
         this.rectangle.move(vel_x, vel_y);
-        this.rectangle.draw();
 
         immune--;
         gravity_vel_dec();
@@ -99,6 +98,13 @@ public class Player extends Character {
 
         weapons[activeWeapon].update();
     }
+
+    @Override
+    public void draw() {
+        super.draw();
+        weapons[activeWeapon].draw();
+    }
+
     public void setActiveWeapon(int index) {
         this.activeWeapon = index;
     }
@@ -118,7 +124,7 @@ public class Player extends Character {
 
     private void reset() {
         hp = 3;
-        float start[] = Engine.getStart();
+        float[] start = Engine.getStart();
         rectangle.move(start[0] - rectangle.posX, start[1] - rectangle.posY);
         Engine.HEALTHBAR.initGL(hp + "hp.png", "rectangle.vert.glsl", "rectangle.frag");
         state = JUMPING;

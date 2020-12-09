@@ -3,7 +3,7 @@ package logic;
 import graphics.Config;
 
 public class MeleeWeapon extends Weapon {
-    private Hit hit;
+    private final Hit hit;
     private int duration;
     private int attackFrame;
 
@@ -59,8 +59,12 @@ public class MeleeWeapon extends Weapon {
         move();
         this.rectangle.setOrientation(direction == RIGHT);
         hit.update();
-        draw();
+    }
 
+    @Override
+    public void draw() {
+        super.draw();
+        hit.draw();
     }
 }
 

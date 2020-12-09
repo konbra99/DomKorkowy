@@ -62,4 +62,8 @@ public class Program {
     public void setFloat3(String name, float v0, float v1, float v2) {
         glUniform3f(glGetUniformLocation(programID, name), v0, v1, v2);
     }
+
+    public void setFloat4(String name, float v0, float v1, float v2, float v3) {
+        glUniform4f(glGetUniformLocation(programID, name), v0, v1, v2, v3);
+    }
 }

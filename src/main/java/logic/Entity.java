@@ -13,16 +13,16 @@ public abstract class Entity implements JsonSerializable {
 	public final static int GROUP_OBSTACLES = 0b00001000;
 	public final static int GROUP_DOORS     = 0b00010000;
 
-	// kierunku
+	// kierunki
 	public final static int LEFT = -1;
 	public final static int RIGHT = 1;
 
 	// flagi
-	protected boolean gravityFlag;      /* NOT SERIALIZED */
-	protected boolean activeFlag;
+	protected boolean gravityFlag = true;      /* SERIALIZED */
+	protected boolean activeFlag = false;      /* SERIALIZED */
 
 	// polozenie / predkosc
-	protected float angle;
+	protected float angle = 0.0f;
 	protected float vel_angle = 1.0f;
 	protected float vel_y = 0.0f;
 	protected float vel_x = 0.0f;
@@ -33,18 +33,21 @@ public abstract class Entity implements JsonSerializable {
 
 	public Entity() {
 		rectangle = new Rectangle();
-		groups |= GROUP_DEFAULT;
 	}
 
-	public void move() {
-	};
+	public Entity(float posX, float posY, float width, float height, String textureName) {
+		this.rectangle = new Rectangle(posX, posY, width, height);
+		this.textureName = textureName;
+		init();
+	}
 
-	public void draw() {
-		rectangle.draw();
-	};
+	public void move() {}
 
-	public void update() {
-	};
+	public void draw() { rectangle.draw(); }
+
+	public void update() {}
+
+	public void init() { groups |= GROUP_DEFAULT; }
 
 	protected void gravity() {
 		for (Entity p : Engine.map.getCurrentStage().platforms.values()) {
@@ -71,11 +74,15 @@ public abstract class Entity implements JsonSerializable {
 	public JsonObject toJson() {
 		JsonObject obj = rectangle.toJson();
 		obj.addProperty("textureName", textureName);
+		obj.addProperty("gravityFlag", gravityFlag);
+		obj.addProperty("activeFlag", activeFlag);
 		return obj;
 	}
 
 	public void fromJson(JsonObject obj) {
 		textureName = obj.get("textureName").getAsString();
+		gravityFlag = obj.get("gravityFlag").getAsBoolean();
+		activeFlag = obj.get("activeFlag").getAsBoolean();
 		rectangle.fromJson(obj);
 	}
 

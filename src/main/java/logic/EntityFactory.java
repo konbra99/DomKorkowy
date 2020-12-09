@@ -14,7 +14,9 @@ public class EntityFactory {
 	public static Entity fromName(String type) {
 
 		switch(type) {
-			case "TestRect" : return new TestRect();
+			case "TestRect"  : return new TestRect();
+			case "Character" : return new Character();
+			case "Door"      : return new Door();
 			default: throw new NoexistentType(type);
 		}
 	}

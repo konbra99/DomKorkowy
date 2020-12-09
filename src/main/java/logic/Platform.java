@@ -1,18 +1,23 @@
 package logic;
 
-import com.google.gson.JsonObject;
 import graphics.Input;
-import graphics.Rectangle;
 
 public class Platform extends Entity{
-    private String textureName;
 
-    public Platform(float posX, float posY, float width, float height, String texture) {
-        this.rectangle = new Rectangle(posX, posY, width, height);
-        this.rectangle.X_WRAP = true;
-        this.rectangle.initGL(texture, "rectangle.vert.glsl", "rectangle.frag");
-        this.textureName = texture;
+    public Platform() {
+        super();
+    }
+
+    public Platform(float posX, float posY, float width, float height, String textureName) {
+        super(posX, posY, width, height, textureName);
+        init();
+    }
+
+    @Override
+    public void init() {
         groups |= GROUP_PLATFORMS;
+        this.rectangle.X_WRAP = true;
+        this.rectangle.initGL(textureName, "rectangle.vert.glsl", "rectangle.frag");
     }
 
     @Override
@@ -26,15 +31,5 @@ public class Platform extends Entity{
                 this.textureName = "platforma.png";
             }
         }
-    }
-
-    @Override
-    public JsonObject toJson() {
-        return super.toJson();
-    }
-
-    @Override
-    public void fromJson(JsonObject obj) {
-        super.fromJson(obj);
     }
 }

@@ -9,13 +9,19 @@ public class Character extends Entity {
     protected int direction = RIGHT;
 
     public Character() {
+        super();
+    }
+
+    @Override
+    public void init() {
+        gravityFlag = true;
+        this.rectangle.initGL(this.textureName, "rectangle.vert.glsl", "rectangle.frag");
     }
 
     public Character(float posX, float posY, float width, float height, String textureName) {
-        gravityFlag = true;
         this.rectangle = new Rectangle(posX, posY, width, height);
         this.textureName = textureName;
-        this.rectangle.initGL(this.textureName, "rectangle.vert.glsl", "rectangle.frag");
+        init();
     }
 
     @Override

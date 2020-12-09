@@ -4,21 +4,27 @@ import com.google.gson.JsonObject;
 
 public class Mob extends Character {
 
-    // VARIABLES
-    protected float velocity;
     protected float beginX;
     protected float endX;
 
     public Mob() {
-        groups |= GROUP_MOBS;
+        super();
     }
-    public Mob (float posX, float posY, float width, float height, String texture){
+
+    public Mob (float posX, float posY, float width, float height, String texture,
+                float beginX, float endX, float velocityX, int direction){
         super(posX, posY, width, height, texture);
+        this.vel_x = velocityX;
+        this.beginX = beginX;
+        this.endX = endX;
+        this.direction = direction;
+        init();
+    }
+
+    @Override
+    public void init() {
         groups |= GROUP_MOBS;
-        velocity = 0.01f;
-        beginX = -0.2f;
-        endX = 0.7f;
-        direction = RIGHT;
+        this.rectangle.initGL(this.textureName, "rectangle.vert.glsl", "rectangle.frag");
     }
 
     @Override
@@ -31,15 +37,21 @@ public class Mob extends Character {
         }
 
         rectangle.setOrientation(direction != RIGHT);
-        rectangle.move(direction*velocity, 0f);
+        rectangle.move(direction*vel_x, 0f);
     }
 
+    @Override
     public JsonObject toJson() {
-        return super.toJson();
+        JsonObject obj = super.toJson();
+        obj.addProperty("beginX", beginX);
+        obj.addProperty("endX", endX);
+        return obj;
     };
 
     @Override
     public void fromJson(JsonObject obj) {
+        this.beginX = obj.get("beginX").getAsFloat();
+        this.endX = obj.get("endX").getAsFloat();
         super.fromJson(obj);
     };
 }

@@ -71,7 +71,7 @@ public class Engine implements Runnable {
         stage.addMapEntity(new Platform(-1.0f, -1.0f, 2.0f, 0.1f, "platforma.png"));
 
         // moby
-        stage.addMapEntity(new Mob(0.5f, -0.5f, 0.08f, 0.18f, "koniec.png"));
+        stage.addMapEntity(new Mob(0.5f, -0.5f, 0.08f, 0.18f,"koniec.png",-0.2f,0.7f,0.01f, Entity.RIGHT));
 
         stage.buildHashMap();
         stage.buildStage();

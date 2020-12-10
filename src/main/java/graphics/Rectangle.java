@@ -18,14 +18,14 @@ public class Rectangle implements JsonSerializable {
     // konfiguracje
     // musza byc ustawione przed initGL
     public boolean X_WRAP, Y_WRAP;
-    public boolean ROTATEABLE, ANIMATED;
+    public boolean ROTATEABLE;
 
     public Rectangle() {
     }
 
     public Rectangle(float posX, float posY, float width, float height) {
         this.posX = posX;
-        this.posY = posY/Config.RESOLUTION;;
+        this.posY = posY/Config.RESOLUTION;
         this.org_posX = posX;
         this.org_posY = this.posY;
         this.centreX = posX + width/2;
@@ -181,8 +181,8 @@ public class Rectangle implements JsonSerializable {
         posY   = obj.get("posY").getAsFloat();
         width  = obj.get("width").getAsFloat();
         height = obj.get("height").getAsFloat();
-        org_posX = obj.get("org_posX").getAsFloat();;
-        org_posY = obj.get("org_posY").getAsFloat();;
+        org_posX = obj.get("org_posX").getAsFloat();
+        org_posY = obj.get("org_posY").getAsFloat();
         centreX = obj.get("centreX").getAsFloat();
         centreY = obj.get("centreY").getAsFloat();
     }

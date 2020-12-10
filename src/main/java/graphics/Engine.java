@@ -14,12 +14,21 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
 public class Engine implements Runnable {
+    enum GAME_STATE {
+        MENU,
+        GAMEPLAY,
+        EDITOR,
+        TYPING
+    }
+
     private Window window;
 
     public static MapManager map;
     public static Player KORKOWY;
     public static Rectangle HEALTHBAR;
     public static int FRAMES;
+    public static GAME_STATE STATE;
+    public static FontLoader fontLoader;
 
     @Override
     public void run() {
@@ -41,6 +50,8 @@ public class Engine implements Runnable {
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+        STATE = GAME_STATE.GAMEPLAY;
+
         // init temp map
         try {
             JsonObject obj = JsonUtils.fromFile("test_file.json");
@@ -58,8 +69,10 @@ public class Engine implements Runnable {
         HEALTHBAR = new Rectangle(-1.0f, 0.9f, 0.18f, 0.08f);
         HEALTHBAR.initGL("3hp.png", "rectangle.vert.glsl", "rectangle.frag");
         KORKOWY = new Player(-0.7f, -0.8f, 0.08f, 0.18f, "korkowa_postac.png");
-        FontLoader fontLoader = new FontLoader();
+        fontLoader = new FontLoader();
         fontLoader.loadFont("msgothic.bmp");
+        TextArea textArea = new TextArea(0.5f, 0.5f, 0.4f, 0.1f, 0.04f, 0.1f,
+                "msgothic.bmp", 0.7f, 0.2f, 0.6f, 1.0f);
 
         double current = glfwGetTime();
         double previous;
@@ -78,16 +91,17 @@ public class Engine implements Runnable {
             map.update();
             KORKOWY.move();
             KORKOWY.update();
+            textArea.update();
+            Input.resetInputs();
 
             // draw
             map.draw();
+            textArea.draw();
             KORKOWY.draw();
             HEALTHBAR.draw();
             fontLoader.renderText("fps: " + avg, "msgothic.bmp",
                     0.65f, 0.9f, 0.05f, 0.08f,
                     0.0f, 1.0f, 0.0f, 1.0f);
-
-            Input.resetMouse();
 
             glfwSwapBuffers(window.getWindowHandle()); // swap the color buffers
             current = glfwGetTime();

@@ -3,19 +3,20 @@ package graphics;
 import org.lwjgl.BufferUtils;
 
 import java.nio.DoubleBuffer;
+import java.util.ArrayList;
 
 import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
 
 public class Input {
     public static boolean LEFT = false, RIGHT = false, UP = false, DOWN = false;
     public static boolean SPACE = false, L_CTRL = false, ONE_KEY = false, TWO_KEY = false;
     public static boolean ATTACK = false;
     public static boolean L_SHIFT = false;
-    public static boolean HIT = false;
     public static float MOUSE_X = -2.0f, MOUSE_Y = -2.0f;
+    public static ArrayList<Character> singlePressed = new ArrayList<>();
 
     public static void handleKeyboard(int key, int action) {
+        // przyciski specjalne
         boolean isPressed = action == GLFW_PRESS;
         switch (key) {
             case GLFW_KEY_LEFT, GLFW_KEY_A -> LEFT = isPressed;
@@ -29,6 +30,16 @@ public class Input {
             case GLFW_KEY_LEFT_CONTROL -> L_CTRL = isPressed;
             case GLFW_KEY_LEFT_SHIFT -> L_SHIFT = isPressed;
         }
+
+        if (key == GLFW_KEY_BACKSPACE && action == GLFW_PRESS) {
+            singlePressed.add('|');
+        }
+    }
+
+    public static void handleText(int codePoint) {
+        if (31 < codePoint && codePoint < 123 && codePoint != 96) {
+            singlePressed.add((char) codePoint);
+        }
     }
 
     public static void handleMouse(int button, int action, long window) {
@@ -41,8 +52,9 @@ public class Input {
         }
     }
 
-    public static void resetMouse() {
+    public static void resetInputs() {
         MOUSE_X = -2.0f;
         MOUSE_Y = -2.0f;
+        singlePressed.clear();
     }
 }

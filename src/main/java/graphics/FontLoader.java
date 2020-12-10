@@ -49,11 +49,9 @@ public class FontLoader {
     }
 
     // width i height to wymiary znaku nie tekstu
-    public  void renderText(String text, String font, float x, float y, float width, float height,
-                            float r, float g, float b, float a) {
+    public void renderText(String text, String font, float x, float y, float width, float height,
+                           float r, float g, float b, float a) {
         float offset = 0;
-        float tex_x, tex_y;
-        float[] tex_coords;
         text = text.toUpperCase();
         glUseProgram(program.programID);
         program.setFloat2("size", width, height);

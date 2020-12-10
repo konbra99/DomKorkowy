@@ -117,7 +117,7 @@ public class Player extends Character {
             reset();
             return;
         }
-        Engine.HEALTHBAR.initGL(hp + "hp.png", "rectangle.vert.glsl", "rectangle.frag");
+        Engine.HEALTHBAR.setTexture(hp + "hp.png");
         vel_y *= 0.9f;
         vel_x *= 0.9f;
     }
@@ -126,7 +126,7 @@ public class Player extends Character {
         hp = 3;
         float[] start = Engine.getStart();
         rectangle.move(start[0] - rectangle.posX, start[1] - rectangle.posY);
-        Engine.HEALTHBAR.initGL(hp + "hp.png", "rectangle.vert.glsl", "rectangle.frag");
+        Engine.HEALTHBAR.setTexture(hp + "hp.png");
         state = JUMPING;
         immune = 0;
         vel_x = 0.0f;

@@ -4,7 +4,6 @@ import logic.Entity;
 
 public class TextArea extends Entity {
     String text;
-    Rectangle rectangle;
     private float charwidth, charheight;
     private int capacity;
     private float r, g, b, a;

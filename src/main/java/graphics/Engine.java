@@ -73,6 +73,9 @@ public class Engine implements Runnable {
         fontLoader.loadFont("msgothic.bmp");
         TextArea textArea = new TextArea(0.5f, 0.5f, 0.4f, 0.1f, 0.04f, 0.1f,
                 "msgothic.bmp", 0.7f, 0.2f, 0.6f, 1.0f);
+        Button button = new Button(0.5f, 0.3f, 0.4f, 0.1f,
+                () -> System.out.println(textArea.Clear()));
+        button.setText("czysc", "msgothic.bmp", 0.04f, 0.1f);
 
         double current = glfwGetTime();
         double previous;
@@ -92,11 +95,13 @@ public class Engine implements Runnable {
             KORKOWY.move();
             KORKOWY.update();
             textArea.update();
+            button.update();
             Input.resetInputs();
 
             // draw
             map.draw();
             textArea.draw();
+            button.draw();
             KORKOWY.draw();
             HEALTHBAR.draw();
             fontLoader.renderText("fps: " + avg, "msgothic.bmp",

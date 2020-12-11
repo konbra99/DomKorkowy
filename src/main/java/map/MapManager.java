@@ -14,11 +14,12 @@ public class MapManager implements JsonSerializable {
 	// zmienne
 	public String mapName = "default";
 	public String author = "default";
+	public String description = "default";
 	public int maxPlayers = 10;
 	public int time = 120;
 
 	// sceny
-	private List<Stage> stages;
+	public List<Stage> stages;
 	int currentStage;
 
 	public MapManager() {

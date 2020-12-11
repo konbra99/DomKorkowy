@@ -1,12 +1,16 @@
 package database;
 
+import org.hibernate.annotations.DynamicInsert;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.Formatter;
 import java.util.Objects;
 
 @Entity
+@DynamicInsert
 @Table(name = "maps", schema = "korkowy", catalog = "")
 public class MapsEntity {
 	private int id;
@@ -18,7 +22,7 @@ public class MapsEntity {
 	private BigDecimal difficultyLevel;
 	private Timestamp creationDate;
 	private Timestamp editionDate;
-	private int numOfPlays;
+	private Integer numOfPlays;
 	private int numOfStages;
 	private String src;
 	private byte[] img;
@@ -115,7 +119,7 @@ public class MapsEntity {
 
 	@Basic
 	@Column(name = "num_of_plays")
-	public int getNumOfPlays() {
+	public Integer getNumOfPlays() {
 		return numOfPlays;
 	}
 
@@ -178,5 +182,10 @@ public class MapsEntity {
 		int result = Objects.hash(id, name, author, description, rating, time, difficultyLevel, creationDate, editionDate, numOfPlays, numOfStages, src);
 		result = 31 * result + Arrays.hashCode(img);
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		return new Formatter().format("MapsEntity [%d %s %s]", id, name, author).toString();
 	}
 }

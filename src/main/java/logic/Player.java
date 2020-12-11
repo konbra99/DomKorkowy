@@ -89,7 +89,7 @@ public class Player extends Character {
             weapons[activeWeapon].start();
             Input.ATTACK = false;
         }
-        if(Input.ONE_KEY) {
+        if (Input.ONE_KEY) {
             this.setActiveWeapon(0);
             Input.ONE_KEY = false;
         } else if(Input.TWO_KEY) {
@@ -102,7 +102,6 @@ public class Player extends Character {
     public void setActiveWeapon(int index) {
         this.activeWeapon = index;
     }
-
 
     private void getDamage() {
         hp--;

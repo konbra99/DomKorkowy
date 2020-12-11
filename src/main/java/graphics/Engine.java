@@ -70,25 +70,13 @@ public class Engine implements Runnable {
         browser = new MapBrowser();
 
         // init temp map
-        try {
-            JsonObject obj = JsonUtils.fromFile("test_file.json");
-            map.fromJson(obj);
-            map.nextStage();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void action() {
-        map.move();
-        map.update();
-        map.draw();
-
-        KORKOWY.move();
-        KORKOWY.update();
-        HEALTHBAR.draw();
-
-        Input.resetMouse();
+        //try {
+        //    JsonObject obj = JsonUtils.fromFile("test_file.json");
+        //    map.fromJson(obj);
+        //    map.nextStage();
+        //} catch (Exception e) {
+        //    e.printStackTrace();
+        //}
     }
 
     private void loop() {

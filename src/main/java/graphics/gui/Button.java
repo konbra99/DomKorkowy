@@ -1,10 +1,9 @@
-package graphics;
+package graphics.gui;
 
+import graphics.Config;
+import graphics.Engine;
+import graphics.Input;
 import logic.Entity;
-
-interface Action {
-    void action();
-}
 
 public class Button extends Entity {
     String text, font;
@@ -41,6 +40,6 @@ public class Button extends Entity {
         this.charwidth = width;
         this.charheight = height;
         this.text_x = this.rectangle.posX + (this.rectangle.width / 2) - (width * text.length() / 2);
-        this.text_y = (this.rectangle.posY + (this.rectangle.height / 2) - (height / 2))*Config.RESOLUTION;
+        this.text_y = (this.rectangle.posY + (this.rectangle.height / 2) - (height / 2))* Config.RESOLUTION;
     }
 }

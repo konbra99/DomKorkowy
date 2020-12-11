@@ -19,7 +19,7 @@ public class Player extends Character {
                 0.15f, 0.05f, "mace.png", 1, 4);
         this.activeWeapon = 0;
         init();
-        reset();
+        //reset();
     }
 
     @Override

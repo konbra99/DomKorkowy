@@ -1,5 +1,9 @@
-package graphics;
+package graphics.gui;
 
+import graphics.Config;
+import graphics.Engine;
+import graphics.Input;
+import graphics.Rectangle;
 import logic.Entity;
 
 public class TextArea extends Entity {
@@ -27,10 +31,13 @@ public class TextArea extends Entity {
     @Override
     public void update() {
         if (this.rectangle.hasPoint(Input.MOUSE_X, Input.MOUSE_Y)) {
-            Engine.STATE = Engine.GAME_STATE.TYPING;
+            Engine.active = this;
+        } else if (Engine.active == this) {
+            Engine.active = null;
+            return;
         }
 
-        if (Engine.STATE == Engine.GAME_STATE.TYPING) {
+        if (Engine.active == this) {
             if (Input.singlePressed.size() > 0) {
                 int len = text.length() - 1;
                 if (Input.singlePressed.get(0) == '|') {

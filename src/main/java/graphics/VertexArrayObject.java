@@ -35,4 +35,21 @@ public class VertexArrayObject {
 
         glBindVertexArray(0);
     }
+
+    public VertexArrayObject(float[] vertices, int[] indices) {
+        VAO = glGenVertexArrays();
+        glBindVertexArray(VAO);
+
+        int VBO = glGenBuffers();
+        glBindBuffer(GL_ARRAY_BUFFER, VBO);
+        glBufferData(GL_ARRAY_BUFFER, BufferUtils.createFloatBuffer(vertices), GL_STATIC_DRAW);
+        glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
+        glEnableVertexAttribArray(0);
+
+        int EBO = glGenBuffers();
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, BufferUtils.createIntBuffer(indices), GL_STATIC_DRAW);
+
+        glBindVertexArray(0);
+    }
 }

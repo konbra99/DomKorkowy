@@ -25,7 +25,7 @@ public class Rectangle implements JsonSerializable {
 
     public Rectangle(float posX, float posY, float width, float height) {
         this.posX = posX;
-        this.posY = posY/Config.RESOLUTION;;
+        this.posY = posY/Config.RESOLUTION;
         this.org_posX = posX;
         this.org_posY = this.posY;
         this.centreX = posX + width/2;
@@ -141,26 +141,6 @@ public class Rectangle implements JsonSerializable {
         this.texture.setImage(imageName);
     }
 
-//    /** Poczatek procesu serializacji. */
-//    public JsonObject toJson() {
-//        JsonObject obj = new JsonObject();
-//        obj.addProperty("posX", posX);
-//        obj.addProperty("posY", posY);
-//        obj.addProperty("width", width);
-//        obj.addProperty("height", height);
-//        return obj;
-//    }
-//
-//    /** Koniec procesu deserializacji. */
-//    public void fromJson(JsonObject obj) {
-//        posX   = obj.get("posX").getAsFloat();
-//        posY   = obj.get("posY").getAsFloat();
-//        width  = obj.get("width").getAsFloat();
-//        height = obj.get("height").getAsFloat();
-//        org_posX = posX;
-//        org_posY = posY;
-//    }
-
     /** Poczatek procesu serializacji. */
     public JsonObject toJson() {
         JsonObject obj = new JsonObject();
@@ -181,8 +161,8 @@ public class Rectangle implements JsonSerializable {
         posY   = obj.get("posY").getAsFloat();
         width  = obj.get("width").getAsFloat();
         height = obj.get("height").getAsFloat();
-        org_posX = obj.get("org_posX").getAsFloat();;
-        org_posY = obj.get("org_posY").getAsFloat();;
+        org_posX = obj.get("org_posX").getAsFloat();
+        org_posY = obj.get("org_posY").getAsFloat();
         centreX = obj.get("centreX").getAsFloat();
         centreY = obj.get("centreY").getAsFloat();
     }

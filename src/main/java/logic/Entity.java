@@ -52,7 +52,7 @@ public abstract class Entity implements JsonSerializable {
 	public void init() {}
 
 	protected void gravity() {
-		for (Entity p : Engine.map.getCurrentStage().platforms.values()) {
+		for (Entity p : Engine.getPlatforms()) {
 			if (this.rectangle.willCollide(p.getRectangle(), vel_x, vel_y) && vel_y < 0.0f) {
 				// zignoruj jesli nie jest wyzej
 				if (!(this.rectangle.posY + 0.01f > p.rectangle.posY + p.rectangle.height))

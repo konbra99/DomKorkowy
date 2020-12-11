@@ -46,6 +46,8 @@ public class Window {
             Input.handleKeyboard(key, action);
         });
 
+        glfwSetCharCallback(windowHandle, (window, codepoint) -> Input.handleText(codepoint));
+
         // Get the thread stack and push a new frame
         try (MemoryStack stack = stackPush()) {
             IntBuffer pWidth = stack.mallocInt(1); // int*
@@ -67,6 +69,7 @@ public class Window {
 
         // Make the OpenGL context current
         glfwMakeContextCurrent(windowHandle);
+
         // Enable v-sync
         glfwSwapInterval(1);
 

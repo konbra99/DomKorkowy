@@ -18,7 +18,7 @@ public class Rectangle implements JsonSerializable {
     // konfiguracje
     // musza byc ustawione przed initGL
     public boolean X_WRAP, Y_WRAP;
-    public boolean ROTATEABLE, ANIMATED;
+    public boolean ROTATEABLE;
 
     public Rectangle() {
     }
@@ -57,6 +57,23 @@ public class Rectangle implements JsonSerializable {
 
         texture = new Texture(textureName, texCoords, X_WRAP, Y_WRAP, width, height);
         VAO = new VertexArrayObject(vertices, indices, texCoords);
+        program = new Program(vertShader, fragShader);
+    }
+
+    public void initGL(String vertShader, String fragShader) {
+        float[] vertices = new float[]{
+                posX, posY, 0.0f,
+                posX, posY + height, 0.0f,
+                posX + width, posY + height, 0.0f,
+                posX + width, posY, 0.0f
+        };
+
+        int[] indices = new int[]{
+                0, 1, 2,
+                0, 3, 2
+        };
+
+        VAO = new VertexArrayObject(vertices, indices);
         program = new Program(vertShader, fragShader);
     }
 

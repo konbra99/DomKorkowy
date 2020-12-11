@@ -49,20 +49,7 @@ public class VertexArrayObject {
         int EBO = glGenBuffers();
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, BufferUtils.createIntBuffer(indices), GL_STATIC_DRAW);
-        glBindVertexArray(0);
-    }
 
-    // dynamiczne do czcionek
-    public VertexArrayObject(int size) {
-        VAO = glGenVertexArrays();
-        glBindVertexArray(VAO);
-
-        int VBO = glGenBuffers();
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(GL_ARRAY_BUFFER, 6 * 4 * 4, GL_DYNAMIC_DRAW);
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 4, GL_FLOAT, false, 4 * 4, 0);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
     }
 }

@@ -1,11 +1,11 @@
 {
-  "mapName": "Mapka1",
+  "mapName": "Mapka2",
   "maxPlayers": 10,
   "author": "default",
   "time": 120,
   "stages": [
     {
-      "backgroundName": "background/sky.png",
+      "backgroundName": "background/desert.png",
       "startX": -0.7,
       "startY": -0.45,
       "entities": [

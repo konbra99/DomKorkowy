@@ -17,7 +17,7 @@
         </property>
 
         <property name = "hibernate.connection.username">
-            user
+            newuser
         </property>
 
         <property name = "hibernate.connection.password">

@@ -17,7 +17,6 @@ public class GameplayContext extends Context {
         map = new MapManager();
         HEALTHBAR = new Rectangle(-1.0f, 0.9f, 0.18f, 0.08f);
         HEALTHBAR.initGL("3hp.png", "rectangle.vert.glsl", "rectangle.frag");
-        KORKOWY = new Player(-0.7f, -0.8f, 0.08f, 0.18f, "korkowa_postac.png");
     }
 
     @Override
@@ -28,6 +27,8 @@ public class GameplayContext extends Context {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        KORKOWY = new Player(-0.7f, -0.8f, 0.08f, 0.18f, "korkowa_postac.png");
     }
 
     @Override

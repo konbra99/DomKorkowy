@@ -1,20 +1,24 @@
-package graphics;
+package graphics.gui;
 
 import com.google.gson.JsonObject;
+import graphics.Engine;
 import graphics.gui.Action;
 import graphics.gui.Button;
 import map.json.JsonUtils;
 
-public class Menu {
+public class MenuContext extends Context {
     Button singleplayer, multiplayer, editor, settings, quit;
 
-    public Menu() {
-        Engine.background.setTexture("background/menubg.jpg");
+    public MenuContext(String background) {
+        super(background);
+        super.init();
 
         // przyciski
         this.singleplayer = new Button(-0.7f, 0.7f, 1.4f, 0.2f,
                 () -> {
-                    Engine.browser.createMapButtons();
+                    Engine.browser.refreshList();
+                    Engine.browser.addPlayButton();
+                    Engine.activeContext = Engine.browser;
                     Engine.STATE = Engine.GAME_STATE.BROWSER;
                 });
         this.singleplayer.setText("Singleplayer", "msgothic.bmp", 0.05f, 0.1f);
@@ -22,7 +26,10 @@ public class Menu {
                 () -> Engine.STATE = Engine.GAME_STATE.MULTIPLAYER);
         this.multiplayer.setText("Multiplayer", "msgothic.bmp", 0.05f, 0.1f);
         this.editor = new Button(-0.7f, 0.1f, 1.4f, 0.2f,
-                () -> Engine.STATE = Engine.GAME_STATE.EDITOR);
+                () -> {
+            Engine.activeContext = Engine.editor;
+            Engine.STATE = Engine.GAME_STATE.EDITOR;
+        });
         this.editor.setText("Edytor map", "msgothic.bmp", 0.05f, 0.1f);
         this.settings = new Button(-0.7f, -0.2f, 1.4f, 0.2f,
                 () -> Engine.STATE = Engine.GAME_STATE.EDITOR);
@@ -41,6 +48,7 @@ public class Menu {
     }
 
     public void draw() {
+        super.draw();
         this.singleplayer.draw();
         this.multiplayer.draw();
         this.editor.draw();

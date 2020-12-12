@@ -2,6 +2,8 @@ package logic;
 
 import graphics.Engine;
 import graphics.Input;
+import graphics.gui.GameplayContext;
+
 import static logic.CharacterState.*;
 
 public class Player extends Character {
@@ -51,21 +53,21 @@ public class Player extends Character {
             state = STANDING;
         }
         if (immune < 1) {
-            for (Entity mob : Engine.getMobs()) {
+            for (Entity mob : Engine.gameplay.getMobs()) {
                 if (this.rectangle.collidesWith(mob.rectangle)) {
                     getDamage();
                 }
             }
-            for (Entity mob : Engine.getObstacles()) {
+            for (Entity mob : Engine.gameplay.getObstacles()) {
                 if (this.rectangle.collidesWith(mob.rectangle)) {
                     getDamage();
                 }
             }
         }
 
-        for(Entity door: Engine.getDoors())
+        for(Entity door: Engine.gameplay.getDoors())
             if(door.isActive() && this.rectangle.collidesWith(door.rectangle)) {
-                Engine.map.nextStage();
+                Engine.gameplay.map.nextStage();
                 reset();
             }
 
@@ -116,16 +118,16 @@ public class Player extends Character {
             reset();
             return;
         }
-        Engine.HEALTHBAR.setTexture(hp + "hp.png");
+        Engine.gameplay.HEALTHBAR.setTexture(hp + "hp.png");
         vel_y *= 0.9f;
         vel_x *= 0.9f;
     }
 
     private void reset() {
         hp = 3;
-        float[] start = Engine.getStart();
+        float[] start = Engine.gameplay.getStart();
         rectangle.move(start[0] - rectangle.posX, start[1] - rectangle.posY);
-        Engine.HEALTHBAR.setTexture(hp + "hp.png");
+        Engine.gameplay.HEALTHBAR.setTexture(hp + "hp.png");
         state = JUMPING;
         immune = 0;
         vel_x = 0.0f;

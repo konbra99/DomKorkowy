@@ -2,6 +2,7 @@ package logic;
 import com.google.gson.JsonObject;
 import graphics.Engine;
 import graphics.Rectangle;
+import graphics.gui.GameplayContext;
 import map.json.JsonSerializable;
 
 public abstract class Entity implements JsonSerializable {
@@ -52,7 +53,7 @@ public abstract class Entity implements JsonSerializable {
 	public void init() {}
 
 	protected void gravity() {
-		for (Entity p : Engine.getPlatforms()) {
+		for (Entity p : Engine.gameplay.getPlatforms()) {
 			if (this.rectangle.willCollide(p.getRectangle(), vel_x, vel_y) && vel_y < 0.0f) {
 				// zignoruj jesli nie jest wyzej
 				if (!(this.rectangle.posY + 0.01f > p.rectangle.posY + p.rectangle.height))

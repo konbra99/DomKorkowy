@@ -1,5 +1,7 @@
-package graphics;
+package graphics.gui;
 
+import graphics.Config;
+import graphics.Rectangle;
 import graphics.gui.MapButton;
 import logic.Entity;
 
@@ -19,7 +21,6 @@ public class MapBrowser extends Entity {
         MapButton button;
         float y = Config.SEARCH_Y;
         if (mapFiles != null) {
-            System.out.println("tworze");
             mapButtons = new ArrayList<>();
             for (File mapFile : mapFiles) {
                 if (!mapFile.getName().endsWith("json")) {
@@ -30,7 +31,6 @@ public class MapBrowser extends Entity {
                 button.getRectangle().move(Config.SEARCH_X, y / Config.RESOLUTION);
                 button.setText(button.map.mapName, "msgothic.bmp", 0.05f, 0.08f);
                 mapButtons.add(button);
-                System.out.println("dodaje " + mapFile.getName() + " " + y);
                 y -= Config.MAP_BUTTON_HEIGHT + 0.1f;
             }
         }

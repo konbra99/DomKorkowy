@@ -1,10 +1,6 @@
 package graphics.gui;
 
-import com.google.gson.JsonObject;
 import graphics.Engine;
-import graphics.gui.Action;
-import graphics.gui.Button;
-import map.json.JsonUtils;
 
 public class MenuContext extends Context {
     Button singleplayer, multiplayer, editor, settings, quit;

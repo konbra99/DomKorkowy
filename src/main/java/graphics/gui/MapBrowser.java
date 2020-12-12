@@ -2,7 +2,6 @@ package graphics.gui;
 
 import graphics.Config;
 import graphics.Rectangle;
-import graphics.gui.MapButton;
 import logic.Entity;
 
 import java.io.File;

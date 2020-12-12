@@ -33,7 +33,7 @@ public class BrowserContext extends Context {
         button.setText("Graj", "msgothic.bmp", 0.05f, 0.08f);
         button.action = () -> {
             Engine.gameplay.map = browser.active.map;
-            Engine.gameplay.init();
+            Engine.gameplay.refreshContext();
             Engine.activeContext = Engine.gameplay;
             Engine.STATE = Engine.GAME_STATE.GAMEPLAY;
         };

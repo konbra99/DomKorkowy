@@ -1,14 +1,9 @@
 package graphics;
 
 import graphics.gui.*;
-import graphics.gui.TextArea;
-import logic.*;
-import map.MapManager;
 import org.lwjgl.Version;
 import org.lwjgl.opengl.GL;
 
-import java.awt.*;
-import java.util.Collection;
 import java.util.Objects;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
@@ -66,13 +61,6 @@ public class Engine implements Runnable {
         editor = new EditorContext();
         activeContext = menu;
         STATE = GAME_STATE.MENU;
-    }
-
-    private void renderFPS(double previous, double current) {
-        int avg = (int) Math.floor(1.0 / (current - previous));
-        fontLoader.renderText("fps: " + avg, "msgothic.bmp",
-                0.65f, 0.9f, 0.05f, 0.08f,
-                0.0f, 1.0f, 0.0f, 1.0f);
     }
 
     private void loop() {

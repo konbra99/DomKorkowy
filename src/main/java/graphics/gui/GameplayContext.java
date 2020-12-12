@@ -21,7 +21,7 @@ public class GameplayContext extends Context {
     }
 
     @Override
-    public void init() {
+    public void refreshContext() {
         // init temp map
         try {
             map.nextStage();

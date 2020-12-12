@@ -1,14 +1,9 @@
 package graphics;
 
-import com.google.gson.JsonObject;
-import graphics.gui.Button;
-import graphics.gui.TextArea;
-import logic.*;
-import map.MapManager;
-import map.json.JsonUtils;
+import graphics.gui.*;
 import org.lwjgl.Version;
 import org.lwjgl.opengl.GL;
-import java.util.Collection;
+
 import java.util.Objects;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
@@ -27,16 +22,15 @@ public class Engine implements Runnable {
 
     private Window window;
 
-    public static MapManager map;
-    public static Player KORKOWY;
-    public static Rectangle HEALTHBAR;
-    public static Rectangle background;
     public static int FRAMES;
     public static GAME_STATE STATE;
     public static FontLoader fontLoader;
     public static TextArea active;
-    public Menu menu;
-    public static MapBrowser browser;
+    public static MenuContext menu;
+    public static BrowserContext browser;
+    public static GameplayContext gameplay;
+    public static EditorContext editor;
+    public static Context activeContext;
 
     @Override
     public void run() {
@@ -53,43 +47,27 @@ public class Engine implements Runnable {
 
     private void init() {
         window = new Window();
-        map = new MapManager();
         GL.createCapabilities();
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); tryb debuggerski
-        background = new Rectangle(-1.0f, -1.0f, 2.0f, 2.0f);
-        background.initGL("background/menubg.jpg", "rectangle.vert.glsl", "rectangle.frag");
-        HEALTHBAR = new Rectangle(-1.0f, 0.9f, 0.18f, 0.08f);
-        HEALTHBAR.initGL("3hp.png", "rectangle.vert.glsl", "rectangle.frag");
+
         fontLoader = new FontLoader();
         fontLoader.loadFont("msgothic.bmp");
 
-        STATE = GAME_STATE.GAMEPLAY;
-        menu = new Menu();
-        browser = new MapBrowser();
-
-        // init temp map
-        try {
-            JsonObject obj = JsonUtils.fromFile("src/main/resources/Maps/test_file.json");
-            map.fromJson(obj);
-            map.nextStage();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        menu = new MenuContext("background/menubg.jpg");
+        browser = new BrowserContext("background/menubg.jpg");
+        gameplay = new GameplayContext();
+        editor = new EditorContext();
+        activeContext = menu;
+        STATE = GAME_STATE.MENU;
     }
 
     private void loop() {
         glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
         FRAMES = 0;
 
-        KORKOWY = new Player(-0.7f, -0.8f, 0.08f, 0.18f, "korkowa_postac.png");
-        active = new TextArea(0.5f, 0.5f, 0.4f, 0.1f, 0.04f, 0.1f,
-                "msgothic.bmp", 0.7f, 0.2f, 0.6f, 1.0f);
-        Button button = new Button(0.5f, 0.3f, 0.4f, 0.1f,
-                () -> System.out.println(active.Clear()));
-        button.setText("czysc", "msgothic.bmp", 0.04f, 0.1f);
-
+        //KORKOWY = new Player(-0.7f, -0.8f, 0.08f, 0.18f, "korkowa_postac.png");
         double current = glfwGetTime();
         double previous;
         int avg = 0;
@@ -102,26 +80,9 @@ public class Engine implements Runnable {
             // input
             glfwPollEvents();
 
-            background.draw();
-            if (STATE == GAME_STATE.MENU) {
-                menu.update();
-                menu.draw();
-            } else if (STATE == GAME_STATE.BROWSER) {
-                browser.update();
-                browser.draw();
-            } else if (STATE == GAME_STATE.GAMEPLAY) {
-                // update
-                map.move();
-                map.update();
-                KORKOWY.move();
-                KORKOWY.update();
-                Input.resetInputs();
-
-                // draw
-                map.draw();
-                KORKOWY.draw();
-                HEALTHBAR.draw();
-            }
+            activeContext.update();
+            Input.resetInputs();
+            activeContext.draw();
 
             fontLoader.renderText("fps: " + avg, "msgothic.bmp",
                     0.65f, 0.9f, 0.05f, 0.08f,
@@ -132,27 +93,5 @@ public class Engine implements Runnable {
             avg = (int) Math.floor(1.0 / (current - previous));
             ++FRAMES;
         }
-    }
-
-    public static Collection<Entity> getPlatforms() {
-        return map.getCurrentStage().platforms.values();
-    }
-
-    public static Collection<Entity> getMobs() {
-        return map.getCurrentStage().mobs.values();
-    }
-
-    public static Collection<Entity> getObstacles() {
-        return map.getCurrentStage().obstacles.values();
-    }
-
-    public static Collection<Entity> getDoors() {
-        return map.getCurrentStage().doors.values();
-    }
-
-    public static float[] getStart() { return map.getCurrentStage().start; }
-
-    public static Entity getMapEntity(float x, float y) {
-        return map.getCurrentStage().getMapEntity(x, y);
     }
 }

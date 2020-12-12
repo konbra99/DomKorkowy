@@ -73,7 +73,7 @@ public class Hit extends Entity {
 
             if (Engine.FRAMES == shift_end) {
                 // sprawdzamy kolizje
-                for (Entity mob : Engine.map.getCurrentStage().mobs.values()) {
+                for (Entity mob : Engine.gameplay.map.getCurrentStage().mobs.values()) {
                     if (this.rectangle.collidesWith(mob.rectangle)) {
                         System.out.println("trafiony");
                     }

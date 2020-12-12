@@ -59,6 +59,7 @@ public class MapManager implements JsonSerializable {
 			return false;
 		else {
 			currentStage++;
+			System.out.println(currentStage);
 			stages.get(currentStage).buildHashMap();
 			stages.get(currentStage).buildStage();
 			stages.get(currentStage).initStage();

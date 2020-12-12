@@ -2,10 +2,10 @@ package graphics.gui;
 
 import com.google.gson.JsonObject;
 import graphics.Config;
-import graphics.MapBrowser;
 import map.MapManager;
 import map.json.JsonUtils;
 
+// on powinien miec kilka stringow
 public class MapButton extends Button {
     public MapManager map;
     MapBrowser browser;
@@ -22,6 +22,9 @@ public class MapButton extends Button {
             e.printStackTrace();
         }
 
-        this.action = () -> this.browser.active = this;
+        this.action = () -> {
+            this.browser.active = this;
+            System.out.println("ustawiona mapka: " + map.mapName);
+        };
     }
 }

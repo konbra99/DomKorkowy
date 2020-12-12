@@ -64,9 +64,4 @@ public class EntitySerializationTest {
 			fail();
 		}
 	}
-
-	//@Test
-	public void EntityFromJsonInvalidPropertyTest() {
-		// TODO
-	}
 }

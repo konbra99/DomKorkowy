@@ -70,11 +70,6 @@ public class Stage implements JsonSerializable {
 			entity.draw();
 	}
 
-	/** Dodaje element do listy. W trybie edycji elementy nie posiadaja id */
-	public void addMapEntity(Entity entity) {
-		allMap.add(entity);
-	}
-
 	/** Dodaje element do mapy, kluczem jest podane id. */
 	public void addEntity(int id, Entity entity) {
 		all.put(id, entity);
@@ -96,6 +91,35 @@ public class Stage implements JsonSerializable {
 			doors.remove(id);
 		all.remove(id);
 		return true;
+	}
+
+	/** Dodaje element do listy.
+	 * W trybie edycji elementy nie posiadaja jeszcze id. */
+	public void addMapEntity(Entity entity) {
+		allMap.add(entity);
+	}
+
+	/** Usuwa element w trybie edycji mapy.
+	 * W trybie edycji elementy nie posiadaja jeszcze id. */
+	public boolean removeMapEntity(Entity entity) {
+		return allMap.remove(entity);
+	}
+
+	/** Zwraca element pod kursorem myszy w trybie edycji mapy.*/
+	public Entity getMapEntity(float x, float y) {
+		for (Entity entity: allMap) {
+			if (entity.getRectangle().hasPoint(x, y))
+				return entity;
+		}
+		return null;
+	}
+
+	/** Rysuje mape w trybie edycji mapy.
+	 * W trybie edycji elementy nie posiadaja jeszcze id. */
+	public void drawMap() {
+		background.draw();
+		for(Entity entity: allMap)
+			entity.draw();
 	}
 
 	/** Grupuje elementy z all do poszczegolnych map pomocnicznych.

@@ -65,18 +65,18 @@ public class Engine implements Runnable {
         fontLoader = new FontLoader();
         fontLoader.loadFont("msgothic.bmp");
 
-        STATE = GAME_STATE.MENU;
+        STATE = GAME_STATE.GAMEPLAY;
         menu = new Menu();
         browser = new MapBrowser();
 
         // init temp map
-        //try {
-        //    JsonObject obj = JsonUtils.fromFile("test_file.json");
-        //    map.fromJson(obj);
-        //    map.nextStage();
-        //} catch (Exception e) {
-        //    e.printStackTrace();
-        //}
+        try {
+            JsonObject obj = JsonUtils.fromFile("src/main/resources/Maps/test_file.json");
+            map.fromJson(obj);
+            map.nextStage();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void loop() {
@@ -151,4 +151,8 @@ public class Engine implements Runnable {
     }
 
     public static float[] getStart() { return map.getCurrentStage().start; }
+
+    public static Entity getMapEntity(float x, float y) {
+        return map.getCurrentStage().getMapEntity(x, y);
+    }
 }

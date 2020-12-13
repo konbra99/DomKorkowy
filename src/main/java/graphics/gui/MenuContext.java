@@ -17,7 +17,6 @@ public class MenuContext extends Context {
                     Engine.browser.addBackButton();
                     Engine.browser.addLocalMapsButton();
                     Engine.browser.addServerMapsButton();
-                    Engine.browser.addNewMapButton();
                     Engine.activeContext = Engine.browser;
                     Engine.STATE = Engine.GAME_STATE.BROWSER;
                 },
@@ -40,6 +39,7 @@ public class MenuContext extends Context {
                     Engine.browser.addBackButton();
                     Engine.browser.addLocalMapsButton();
                     Engine.browser.addServerMapsButton();
+                    Engine.browser.addNewMapButton();
                     Engine.activeContext = Engine.browser;
                     Engine.STATE = Engine.GAME_STATE.BROWSER;
                 },

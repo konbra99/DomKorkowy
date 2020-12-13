@@ -41,7 +41,6 @@ public class Input {
     public static void handleText(int codePoint) {
         if (31 < codePoint && codePoint < 123 && codePoint != 96) {
             singlePressed.add((char) codePoint);
-            System.out.println("new text" + singlePressed);
         }
     }
 

@@ -79,15 +79,6 @@ public class Engine implements Runnable {
 
             // input
             glfwPollEvents();
-
-            System.out.println(active);
-            if (active != null) {
-                System.out.println("update text area");
-                System.out.println(Input.singlePressed);
-
-                active.update();
-            }
-                
             activeContext.update();
 
             Input.resetInputs();

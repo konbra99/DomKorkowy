@@ -1,6 +1,7 @@
 package graphics.gui;
 
 import graphics.Engine;
+import map.MapManager;
 
 import java.util.ArrayList;
 
@@ -16,6 +17,7 @@ public class BrowserContext extends Context {
     }
 
     public void refreshList() {
+        buttonList = new ArrayList<>();
         this.browser.createMapButtons();
     }
 
@@ -32,10 +34,13 @@ public class BrowserContext extends Context {
         Button button = new Button(0.58f, -0.85f, 0.25f, 0.5f, null, Button.LEFT_ARROW);
         button.setText("PLAY", "msgothic.bmp", 0.05f, 0.12f);
         button.action = () -> {
-            Engine.gameplay.map = browser.active.map;
-            Engine.gameplay.refreshContext();
-            Engine.activeContext = Engine.gameplay;
-            Engine.STATE = Engine.GAME_STATE.GAMEPLAY;
+            if (browser.active != null) {
+                Engine.gameplay.map = browser.active.map;
+                Engine.gameplay.refreshContext();
+                Engine.activeContext = Engine.gameplay;
+                Engine.STATE = Engine.GAME_STATE.GAMEPLAY;
+            }
+
         };
         buttonList.add(button);
     }
@@ -54,8 +59,18 @@ public class BrowserContext extends Context {
         Button button = new Button(0.58f, -0.85f, 0.25f, 0.5f, null, Button.LEFT_ARROW);
         button.setText("EDIT", "msgothic.bmp", 0.05f, 0.1f);
         button.action = () -> {
-            Engine.activeContext = Engine.editor;
-            Engine.STATE = Engine.GAME_STATE.EDITOR;
+            if (browser.is_new_map) {
+                System.out.println("New map");
+                MapManager map = new MapManager();
+                for (Button but: browser.mapButtons)
+                    ((NewMapButton)but).getValue(map);
+            }
+            else {
+                System.out.println("NOT new map");
+//                Engine.activeContext = Engine.editor;
+//                Engine.STATE = Engine.GAME_STATE.EDITOR;
+            }
+
         };
         buttonList.add(button);
     }
@@ -104,7 +119,6 @@ public class BrowserContext extends Context {
         this.browser.draw();
         for (Button b : buttonList) {
             b.draw();
-            //System.out.println("rysuje " + b.text);
         }
     }
 }

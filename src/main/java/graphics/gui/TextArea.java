@@ -24,22 +24,20 @@ public class TextArea extends Entity {
         this.g = g;
         this.b = b;
         this.a = a;
-        this.rectangle.initGL("gui/textarea.png", "rectangle.vert.glsl", "rectangle.frag");
-        this.text = "asd";
+        this.rectangle.initGL("gui/cyan.png", "rectangle.vert.glsl", "rectangle.frag");
+        this.text = "";
     }
 
     @Override
     public void update() {
         if (this.rectangle.hasPoint(Input.MOUSE_X, Input.MOUSE_Y)) {
             Engine.active = this;
-        } else if (Engine.active == this) {
+        } else if (Engine.active == this && Input.MOUSE_X != -2.0f) {
             Engine.active = null;
             return;
         }
 
         if (Engine.active == this) {
-            System.out.println("text area ACTIVE");
-            System.out.println(Input.singlePressed);
             if (Input.singlePressed.size() > 0) {
                 int len = text.length() - 1;
                 if (Input.singlePressed.get(0) == '|') {
@@ -50,7 +48,6 @@ public class TextArea extends Entity {
                 }
 
                 text += Input.singlePressed.get(0);
-                System.out.println(text);
             }
         }
     }

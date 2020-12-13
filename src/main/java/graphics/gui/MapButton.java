@@ -21,6 +21,7 @@ public class MapButton extends Button {
             this.browser.active = this;
             browser.deselectAll();
             this.is_selected = true;
+            this.is_invalid = false;
             System.out.println("ustawiona mapka: " + map.mapName);
         };
     }

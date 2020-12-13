@@ -24,10 +24,12 @@ public class MapBrowser extends Entity {
     float y_min = Config.SEARCH_Y;
     float y_max = 0.0f;
     float y_curr = 0.0f;
+    boolean is_new_map = false;
 
     public void createMapButtons() {
         File mapDirectory = new File(Config.MAP_PATH);
         File[] mapFiles = mapDirectory.listFiles();
+        is_new_map = false;
         mapButtons = new ArrayList<>();
         y_min = Config.SEARCH_Y;
         y_curr = 0.0f;
@@ -54,6 +56,7 @@ public class MapBrowser extends Entity {
     public void createServerMapButtons() {
         List<String> maps = getMaps();
         mapButtons = new ArrayList<>();
+        is_new_map = false;
         y_min = Config.SEARCH_Y;
         y_curr = 0.0f;
 
@@ -69,9 +72,29 @@ public class MapBrowser extends Entity {
         mapButtons = new ArrayList<>();
         y_min = Config.SEARCH_Y;
         y_curr = 0.0f;
+        is_new_map = true;
 
-        NewMapButton button = new NewMapButton(Button.LONG_BUTTON);
-        button.setText("Przycisk 1", "msgothic.bmp", 0.05f, 0.08f);
+        NewMapButton button;
+
+        button = new NewMapButton(this, NewMapButton.Type.NAME, Button.LONG_BUTTON);
+        button.setText("nazwa:", "msgothic.bmp", 0.05f, 0.08f);
+        addButton(button);
+
+
+        button = new NewMapButton(this, NewMapButton.Type.AUTHOR, Button.LONG_BUTTON);
+        button.setText("autor:", "msgothic.bmp", 0.05f, 0.08f);
+        addButton(button);
+
+        button = new NewMapButton(this, NewMapButton.Type.DESCRIPTION, Button.LONG_BUTTON);
+        button.setText("opis:", "msgothic.bmp", 0.05f, 0.08f);
+        addButton(button);
+
+        button = new NewMapButton(this, NewMapButton.Type.TIME, Button.LONG_BUTTON);
+        button.setText("czas:", "msgothic.bmp", 0.05f, 0.08f);
+        addButton(button);
+
+        button = new NewMapButton(this, NewMapButton.Type.DIFFICULTY, Button.LONG_BUTTON);
+        button.setText("trudn.:", "msgothic.bmp", 0.05f, 0.08f);
         addButton(button);
     }
 
@@ -84,7 +107,7 @@ public class MapBrowser extends Entity {
     @Override
     public void update() {
         for (Button button : mapButtons) {
-            button.getRectangle().move(0.0f, -Input.MOUSE_SCROLL_Y*MOUSE_SCROLL_SPEED);
+            button.move(0.0f, -Input.MOUSE_SCROLL_Y*MOUSE_SCROLL_SPEED);
             if (searchRect.collidesWith(button.getRectangle())) {
                 button.update();
             }
@@ -117,7 +140,7 @@ public class MapBrowser extends Entity {
     }
 
     public void addButton(Button button) {
-        button.getRectangle().move(Config.SEARCH_X, y_min / Config.RESOLUTION);
+        button.move(Config.SEARCH_X, y_min / Config.RESOLUTION);
         mapButtons.add(button);
         y_min -= Config.MAP_BUTTON_HEIGHT + 0.1f;
     }

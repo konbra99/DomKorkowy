@@ -18,6 +18,7 @@ public class MapManager implements JsonSerializable {
 	public String description = "default";
 	public int maxPlayers = 10;
 	public int time = 120;
+	public float difficulty = 0.5f;
 
 	// sceny
 	public List<Stage> stages;

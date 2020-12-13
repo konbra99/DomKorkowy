@@ -13,6 +13,8 @@ public class Input {
     public static boolean ATTACK = false;
     public static boolean L_SHIFT = false;
     public static float MOUSE_X = -2.0f, MOUSE_Y = -2.0f;
+    public static float MOUSE_POS_X = 0.0f, MOUSE_POS_Y = 0.0f;
+    public static float MOUSE_SCROLL_X = 0.0f, MOUSE_SCROLL_Y = 0.0f;
     public static ArrayList<Character> singlePressed = new ArrayList<>();
 
     public static void handleKeyboard(int key, int action) {
@@ -52,9 +54,21 @@ public class Input {
         }
     }
 
+    public static void handleMouseScroll(double dx, double dy) {
+        MOUSE_SCROLL_X = (float)dx;
+        MOUSE_SCROLL_Y = (float)dy;
+    }
+
+    public static void handleMousePosition(double dx, double dy) {
+        MOUSE_POS_X = (float) ((2 * dx / Config.WIDTH) - 1.0);
+        MOUSE_POS_Y = (float) ((((2 * (Config.HEIGHT - dy)) / Config.HEIGHT) - 1.0) * (9.0 / 16.0));
+    }
+
     public static void resetInputs() {
         MOUSE_X = -2.0f;
         MOUSE_Y = -2.0f;
+        MOUSE_SCROLL_X = 0.0f;
+        MOUSE_SCROLL_Y = 0.0f;
         singlePressed.clear();
     }
 }

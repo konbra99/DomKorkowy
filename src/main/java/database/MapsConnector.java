@@ -8,17 +8,17 @@ import org.hibernate.Transaction;
 
 import java.util.List;
 
-public class MapcConnector {
+public class MapsConnector {
 
-	public static void getMaps() {
+	public static List<String> getMaps() {
 		Session session = HibernateUtils.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
 
-		List<MapsEntity> maps = session.createQuery("from MapsEntity").list();
-		System.out.println(maps);
-		System.out.println(maps.size());
+		List<String> maps = session.createQuery("SELECT src from MapsEntity", String.class).list();
+
 		transaction.commit();
 		session.close();
+		return maps;
 	}
 
 	public static MapsEntity getMap(int id) {
@@ -95,6 +95,8 @@ public class MapcConnector {
 //		addPlay(6);
 //		addPlay(6);
 //		addPlay(6);
+
+		// GET MAPS
 	}
 
 }

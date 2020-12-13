@@ -1,6 +1,8 @@
 package graphics;
 
+import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.glfw.GLFWScrollCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.system.MemoryStack;
 
@@ -46,7 +48,12 @@ public class Window {
             Input.handleKeyboard(key, action);
         });
 
+        glfwSetCursorPosCallback(windowHandle, (win, dx, dy) -> Input.handleMousePosition(dx, dy));
+
         glfwSetCharCallback(windowHandle, (window, codepoint) -> Input.handleText(codepoint));
+
+        glfwSetScrollCallback(windowHandle, (win, dx, dy) -> Input.handleMouseScroll(dx, dy));
+
 
         // Get the thread stack and push a new frame
         try (MemoryStack stack = stackPush()) {

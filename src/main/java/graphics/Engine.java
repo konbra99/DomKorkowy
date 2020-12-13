@@ -55,8 +55,8 @@ public class Engine implements Runnable {
         fontLoader = new FontLoader();
         fontLoader.loadFont("msgothic.bmp");
 
-        menu = new MenuContext("background/menubg.jpg");
-        browser = new BrowserContext("background/menubg.jpg");
+        menu = new MenuContext("gui/background0.png");
+        browser = new BrowserContext("gui/background0.png");
         gameplay = new GameplayContext();
         editor = new EditorContext();
         activeContext = menu;

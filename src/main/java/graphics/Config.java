@@ -11,7 +11,8 @@ public class Config {
     public static float[] HIT_ANGLES = {-5.0f, 10.0f, -10.0f, 5.0f};
     public  static float[] ATTACK_MAX_ANGLES = {90.0f, 70.0f};
     public static int ATTACK_SPEED_FACTOR = 120;
-    public static float MAP_BUTTON_WIDTH = 1.0f, MAP_BUTTON_HEIGHT = 0.2f;
+    public static float MAP_BUTTON_WIDTH = 1.0f, MAP_BUTTON_HEIGHT = 0.3f;
     public static float SEARCH_X = -0.9f, SEARCH_Y = 0.95f - MAP_BUTTON_HEIGHT;
     public static float SEARCH_RECT_ALPH = 0.7f;
+    public static float MOUSE_SCROLL_SPEED = 0.05f;
 }

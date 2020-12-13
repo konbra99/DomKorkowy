@@ -32,6 +32,12 @@ public class Button extends Entity {
             "gui/button_medium_highlighted.png",
             "gui/button_medium_selected.png" };
 
+    public final static String [] SHORT_BUTTON = {
+            "gui/button_short.png",
+            "gui/button_short_disabled.png",
+            "gui/button_short_highlighted.png",
+            "gui/button_short_selected.png" };
+
     public final static String [] RIGHT_ARROW = {
             "gui/rarrow.png",
             "gui/rarrow_disabled.png",

@@ -51,8 +51,8 @@ public class BrowserContext extends Context {
     }
 
     public void addEditButton() {
-        Button button = new Button(0.4f, 0.0f, 0.5f, 0.1f, null);
-        button.setText("Edytuj", "msgothic.bmp", 0.05f, 0.1f);
+        Button button = new Button(0.58f, -0.85f, 0.25f, 0.5f, null, Button.LEFT_ARROW);
+        button.setText("EDIT", "msgothic.bmp", 0.05f, 0.1f);
         button.action = () -> {
             Engine.activeContext = Engine.editor;
             Engine.STATE = Engine.GAME_STATE.EDITOR;
@@ -61,7 +61,7 @@ public class BrowserContext extends Context {
     }
 
     public void addLocalMapsButton() {
-        Button button = new Button(0.25f, 0.6f, 0.62f, 0.3f, null, Button.MEDIUM_BUTTON);
+        Button button = new Button(0.25f, 0.6f, 0.3f, 0.3f, null, Button.SHORT_BUTTON);
         button.setText("Local", "msgothic.bmp", 0.05f, 0.08f);
         button.action = () -> {
             System.out.println("Local");
@@ -71,11 +71,21 @@ public class BrowserContext extends Context {
     }
 
     public void addServerMapsButton() {
-        Button button = new Button(0.25f, 0.3f, 0.62f, 0.3f, null, Button.MEDIUM_BUTTON);
+        Button button = new Button(0.58f, 0.6f, 0.3f, 0.3f, null, Button.SHORT_BUTTON);
         button.setText("Server", "msgothic.bmp", 0.05f, 0.08f);
         button.action = () -> {
             System.out.println("Server");
             browser.createServerMapButtons();
+        };
+        buttonList.add(button);
+    }
+
+    public void addNewMapButton() {
+        Button button = new Button(0.25f, 0.27f, 0.62f, 0.3f, null, Button.MEDIUM_BUTTON);
+        button.setText("New", "msgothic.bmp", 0.05f, 0.08f);
+        button.action = () -> {
+            System.out.println("Server");
+            browser.createNewMapButtons();
         };
         buttonList.add(button);
     }

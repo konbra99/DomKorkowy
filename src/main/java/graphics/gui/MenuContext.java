@@ -9,7 +9,7 @@ public class MenuContext extends Context {
         super(background);
         super.init();
 
-        // przyciski
+        // SINGLEPLAYER
         this.singleplayer = new Button(-0.7f, 0.7f, 1.4f, 0.2f,
                 () -> {
                     Engine.browser.refreshList();
@@ -17,19 +17,32 @@ public class MenuContext extends Context {
                     Engine.browser.addBackButton();
                     Engine.browser.addLocalMapsButton();
                     Engine.browser.addServerMapsButton();
+                    Engine.browser.addNewMapButton();
                     Engine.activeContext = Engine.browser;
                     Engine.STATE = Engine.GAME_STATE.BROWSER;
                 },
                 Button.LONG_BUTTON);
         this.singleplayer.setText("Singleplayer", "msgothic.bmp", 0.05f, 0.1f);
+
+        // MULTIPLAYER
         this.multiplayer = new Button(-0.7f, 0.4f, 1.4f, 0.2f,
                 () -> Engine.STATE = Engine.GAME_STATE.MULTIPLAYER,
                 Button.LONG_BUTTON);
         this.multiplayer.setText("Multiplayer", "msgothic.bmp", 0.05f, 0.1f);
+
+        // MAP EDITOR
         this.editor = new Button(-0.7f, 0.1f, 1.4f, 0.2f,
-                () ->   {
-                    Engine.activeContext = Engine.editor;
-                    Engine.STATE = Engine.GAME_STATE.EDITOR; },
+                () -> {
+//                  Engine.activeContext = Engine.editor;
+//                  Engine.STATE = Engine.GAME_STATE.EDITOR; },
+                    Engine.browser.refreshList();
+                    Engine.browser.addEditButton();
+                    Engine.browser.addBackButton();
+                    Engine.browser.addLocalMapsButton();
+                    Engine.browser.addServerMapsButton();
+                    Engine.activeContext = Engine.browser;
+                    Engine.STATE = Engine.GAME_STATE.BROWSER;
+                },
                 Button.LONG_BUTTON);
         this.editor.setText("Edytor map", "msgothic.bmp", 0.05f, 0.1f);
         this.settings = new Button(-0.7f, -0.2f, 1.4f, 0.2f,

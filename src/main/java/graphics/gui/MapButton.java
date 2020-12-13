@@ -1,10 +1,8 @@
 package graphics.gui;
 
-import com.google.gson.JsonObject;
 import graphics.Config;
 import graphics.Engine;
 import map.MapManager;
-import map.json.JsonUtils;
 
 // on powinien miec kilka stringow
 public class MapButton extends Button {

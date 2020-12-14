@@ -45,6 +45,17 @@ public class BrowserContext extends Context {
         buttonList.add(button);
     }
 
+    public void addJoinButton() {
+        Button button = new Button(0.58f, -0.85f, 0.25f, 0.5f, null, Button.LEFT_ARROW);
+        button.setText("JOIN", "msgothic.bmp", 0.05f, 0.12f);
+        button.action = () -> {
+            if (browser.active != null) {
+                System.out.println("JOIN");
+            }
+        };
+        buttonList.add(button);
+    }
+
     public void addBackButton() {
         Button button = new Button(0.28f, -0.85f, 0.25f, 0.5f, null, Button.RIGHT_ARROW);
         button.setText("BACK", "msgothic.bmp", 0.05f, 0.12f);
@@ -62,8 +73,8 @@ public class BrowserContext extends Context {
             if (browser.is_new_map) {
                 System.out.println("New map");
                 MapManager map = new MapManager();
-                for (Button but: browser.mapButtons)
-                    ((NewMapButton)but).getValue(map);
+                for (DataField dataField: browser.dataFields)
+                    dataField.getValue(map);
             }
             else {
                 System.out.println("NOT new map");

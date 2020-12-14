@@ -6,14 +6,14 @@ import graphics.Input;
 import map.MapManager;
 
 
-public class NewMapButton extends Button {
+public class TextField extends DataField {
     public enum Type {NAME, AUTHOR, DESCRIPTION, TIME, DIFFICULTY}
     public MapManager map;
     MapBrowser browser;
     TextArea textArea;
     Type type;
 
-    public NewMapButton(MapBrowser browser, Type type, String [] textures) {
+    public TextField(MapBrowser browser, Type type, String [] textures) {
         super(0.0f, 0.0f, Config.MAP_BUTTON_WIDTH, Config.MAP_BUTTON_HEIGHT, null, textures);
         this.browser = browser;
         this.type = type;
@@ -36,10 +36,10 @@ public class NewMapButton extends Button {
         this.text_x = this.rectangle.posX + 0.1f;
         this.text_y = (this.rectangle.posY + (this.rectangle.height / 2) - (charheight / 2))* Config.RESOLUTION;
 
-        this.textArea.update();
         if (is_active && this.rectangle.hasPoint(Input.MOUSE_X, Input.MOUSE_Y)) {
             this.action.action();
         }
+        this.textArea.update();
     }
 
     @Override
@@ -52,6 +52,8 @@ public class NewMapButton extends Button {
     public void move(float dx, float dy) {
         super.move(dx, dy);
         textArea.getRectangle().move(dx, dy);
+        this.text_x = this.rectangle.posX + 0.1f;
+        this.text_y = (this.rectangle.posY + (this.rectangle.height / 2) - (charheight / 2))* Config.RESOLUTION;
     }
 
     public boolean getValue(MapManager map) {

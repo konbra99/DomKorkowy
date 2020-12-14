@@ -5,14 +5,14 @@ import graphics.Engine;
 import map.MapManager;
 
 // on powinien miec kilka stringow
-public class MapButton extends Button {
+public class MapField extends DataField {
     public MapManager map;
     MapBrowser browser;
     String author = "user";
     String rating = "2/10";
     String stages = "5";
 
-    public MapButton(MapManager map, MapBrowser browser, String [] textures) {
+    public MapField(MapManager map, MapBrowser browser, String [] textures) {
         super(0.0f, 0.0f, Config.MAP_BUTTON_WIDTH, Config.MAP_BUTTON_HEIGHT, null, textures);
         this.browser = browser;
         this.map = map;

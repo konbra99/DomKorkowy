@@ -25,7 +25,14 @@ public class MenuContext extends Context {
 
         // MULTIPLAYER
         this.multiplayer = new Button(-0.7f, 0.4f, 1.4f, 0.2f,
-                () -> Engine.STATE = Engine.GAME_STATE.MULTIPLAYER,
+                () -> {
+                    Engine.browser.refreshContext();
+                    Engine.browser.addJoinButton();
+                    Engine.browser.addBackButton();
+                    Engine.browser.browser.createServerRoomsButtons();
+                    Engine.activeContext = Engine.browser;
+                    Engine.STATE = Engine.GAME_STATE.BROWSER;
+                },
                 Button.LONG_BUTTON);
         this.multiplayer.setText("Multiplayer", "msgothic.bmp", 0.05f, 0.1f);
 

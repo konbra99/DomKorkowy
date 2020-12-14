@@ -2,7 +2,7 @@ package graphics.gui;
 
 import graphics.Config;
 import graphics.Engine;
-import temp_server.TempRoom;
+import server.TempRoom;
 
 public class RoomField extends DataField {
     public TempRoom room;

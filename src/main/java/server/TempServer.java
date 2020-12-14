@@ -1,4 +1,4 @@
-package temp_server;
+package server;
 
 public class TempServer {
 

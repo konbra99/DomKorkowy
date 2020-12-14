@@ -7,8 +7,8 @@ import graphics.Rectangle;
 import logic.Entity;
 import map.MapManager;
 import map.json.JsonUtils;
-import temp_server.TempRoom;
-import temp_server.TempServer;
+import server.TempRoom;
+import server.TempServer;
 
 import java.io.File;
 import java.util.ArrayList;

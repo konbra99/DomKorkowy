@@ -17,6 +17,8 @@ public class Engine implements Runnable {
         GAMEPLAY,
         MULTIPLAYER,
         EDITOR,
+        AUTHORS,
+        SETTINGS,
         EXIT
     }
 
@@ -30,6 +32,8 @@ public class Engine implements Runnable {
     public static BrowserContext browser;
     public static GameplayContext gameplay;
     public static EditorContext editor;
+    public static AuthorsContext authors;
+    public static SettingsContext settings;
     public static Context activeContext;
 
     @Override
@@ -59,6 +63,8 @@ public class Engine implements Runnable {
         browser = new BrowserContext("gui/background0.png");
         gameplay = new GameplayContext();
         editor = new EditorContext();
+        authors = new AuthorsContext();
+        settings = new SettingsContext();
         activeContext = menu;
         STATE = GAME_STATE.MENU;
     }

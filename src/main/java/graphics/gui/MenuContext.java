@@ -3,14 +3,14 @@ package graphics.gui;
 import graphics.Engine;
 
 public class MenuContext extends Context {
-    Button singleplayer, multiplayer, editor, settings, quit;
+    Button singleplayer, multiplayer, editor, settings, authors, quit;
 
     public MenuContext(String background) {
         super(background);
         super.init();
 
         // SINGLEPLAYER
-        this.singleplayer = new Button(-0.7f, 0.7f, 1.4f, 0.2f,
+        this.singleplayer = new Button(-0.5f, 0.7f, 1.0f, 0.25f,
                 () -> {
                     Engine.browser.refreshList();
                     Engine.browser.addPlayButton();
@@ -24,7 +24,7 @@ public class MenuContext extends Context {
         this.singleplayer.setText("Singleplayer", "msgothic.bmp", 0.05f, 0.1f);
 
         // MULTIPLAYER
-        this.multiplayer = new Button(-0.7f, 0.4f, 1.4f, 0.2f,
+        this.multiplayer = new Button(-0.5f, 0.4f, 1.0f, 0.25f,
                 () -> {
                     Engine.browser.refreshContext();
                     Engine.browser.addJoinButton();
@@ -37,7 +37,7 @@ public class MenuContext extends Context {
         this.multiplayer.setText("Multiplayer", "msgothic.bmp", 0.05f, 0.1f);
 
         // MAP EDITOR
-        this.editor = new Button(-0.7f, 0.1f, 1.4f, 0.2f,
+        this.editor = new Button(-0.5f, 0.1f, 1.0f, 0.25f,
                 () -> {
 //                  Engine.activeContext = Engine.editor;
 //                  Engine.STATE = Engine.GAME_STATE.EDITOR; },
@@ -52,11 +52,21 @@ public class MenuContext extends Context {
                 },
                 Button.LONG_BUTTON);
         this.editor.setText("Edytor map", "msgothic.bmp", 0.05f, 0.1f);
-        this.settings = new Button(-0.7f, -0.2f, 1.4f, 0.2f,
-                () -> Engine.STATE = Engine.GAME_STATE.EDITOR,
+        this.settings = new Button(-0.5f, -0.2f, 1.0f, 0.25f,
+                () -> {
+                    Engine.STATE = Engine.GAME_STATE.SETTINGS;
+                    Engine.activeContext = Engine.settings;
+                },
                 Button.LONG_BUTTON);
         this.settings.setText("Ustawienia", "msgothic.bmp", 0.05f, 0.1f);
-        this.quit = new Button(-0.7f, -0.5f, 1.4f, 0.2f,
+        this.authors = new Button(-0.5f, -0.5f, 1.0f, 0.25f,
+                () -> {
+                    Engine.STATE = Engine.GAME_STATE.AUTHORS;
+                    Engine.activeContext = Engine.authors;
+                },
+                Button.LONG_BUTTON);
+        this.authors.setText("Autorzy", "msgothic.bmp", 0.05f, 0.1f);
+        this.quit = new Button(-0.5f, -0.8f, 1.0f, 0.25f,
                 () -> Engine.STATE = Engine.GAME_STATE.EXIT,
                 Button.LONG_BUTTON);
         this.quit.setText("Wyjdz z gry", "msgothic.bmp", 0.05f, 0.1f);
@@ -67,6 +77,7 @@ public class MenuContext extends Context {
         this.multiplayer.update();
         this.editor.update();
         this.settings.update();
+        this.authors.update();
         this.quit.update();
     }
 
@@ -76,6 +87,7 @@ public class MenuContext extends Context {
         this.multiplayer.draw();
         this.editor.draw();
         this.settings.draw();
+        this.authors.draw();
         this.quit.draw();
     }
 }

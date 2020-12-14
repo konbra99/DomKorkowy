@@ -16,18 +16,18 @@ public class OptionField extends DataField {
     int option_length;
     int option_current;
 
-    public OptionField(MapBrowser browser, String [] textures) {
+    public OptionField(MapBrowser browser, String [] textures, String[] option_strings, Object[] option_values) {
         super(0.0f, 0.0f, Config.MAP_BUTTON_WIDTH, Config.MAP_BUTTON_HEIGHT, null, textures);
         this.browser = browser;
         this.action = () -> {
             this.is_invalid = false;
-            this.browser.deselectAll();
+            if (this.browser != null)
+                this.browser.deselectAll();
         };
-        option_strings = new String[]{"EASY", "MEDIUM", "HARD"};
-        option_values = new Object[] {0.0f, 0.5f, 1.0f};
-        option_length = option_strings.length;
-        option_current = 0;
-
+        this.option_strings = option_strings;
+        this.option_values = option_values;
+        this.option_length = option_strings.length;
+        this.option_current = 0;
 
         left = new Button(0.35f, +0.05f, 0.09f, 0.18f, this::prevValue, Button.RIGHT_ARROW);
         right = new Button(0.86f, +0.05f, 0.09f, 0.18f, this::nextValue, Button.LEFT_ARROW);

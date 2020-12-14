@@ -95,7 +95,9 @@ public class MapBrowser extends Entity {
         button.setText("czas:", "msgothic.bmp", 0.05f, 0.08f);
         addButton(button);
 
-        button = new OptionField(this, Button.LONG_BUTTON);
+        String[] option_strings = new String[]{"EASY", "MEDIUM", "HARD"};
+        Object[] option_values = new Object[] {0.0f, 0.5f, 1.0f};
+        button = new OptionField(this, Button.LONG_BUTTON, option_strings, option_values);
         button.setText("trud:", "msgothic.bmp", 0.05f, 0.08f);
         addButton(button);
     }

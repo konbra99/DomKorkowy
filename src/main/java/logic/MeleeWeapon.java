@@ -45,7 +45,7 @@ public class MeleeWeapon extends Weapon {
         if (this.direction != this.player.direction) {
             this.direction = this.player.direction;
             this.rectangle.centreX -= this.direction * 0.1;
-            System.out.println(this.rectangle.centreX);
+            //System.out.println(this.rectangle.centreX);
         }
 
         if(this.attackFrame <= this.duration) {

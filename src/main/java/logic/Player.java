@@ -21,7 +21,8 @@ public class Player extends Character {
                 0.15f, 0.05f, "mace.png", 1, 4);
         this.activeWeapon = 0;
         init();
-        reset();
+        this.hp = 3;
+        //reset();
     }
 
     @Override
@@ -111,7 +112,8 @@ public class Player extends Character {
         this.activeWeapon = index;
     }
 
-    private void getDamage() {
+    @Override
+    protected void getDamage() {
         hp--;
         immune = 30;
         if (hp == 0) {
@@ -132,5 +134,7 @@ public class Player extends Character {
         immune = 0;
         vel_x = 0.0f;
         vel_y = 0.0f;
+        Engine.gameplay.map.reset();
+        Engine.gameplay.map.getCurrentStage().initStage();
     }
 }

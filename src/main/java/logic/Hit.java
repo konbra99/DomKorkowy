@@ -6,7 +6,7 @@ import graphics.Main;
 import graphics.Rectangle;
 
 public class Hit extends Entity {
-    private int shift_time = 30;
+    private int shift_time = 10;
     private int fade_time = 30;
     private int shift_end = 0, fade_end = 0;
 
@@ -75,7 +75,7 @@ public class Hit extends Entity {
                 // sprawdzamy kolizje
                 for (Entity mob : Engine.gameplay.map.getCurrentStage().mobs.values()) {
                     if (this.rectangle.collidesWith(mob.rectangle)) {
-                        System.out.println("trafiony");
+                        mob.getDamage();
                     }
                 }
             }

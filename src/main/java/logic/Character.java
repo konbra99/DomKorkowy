@@ -3,7 +3,6 @@ package logic;
 import com.google.gson.JsonObject;
 
 public class Character extends Entity {
-    public int hp;                      /* SERIALIZED */
     protected CharacterState state;     /* NOT SERIALIZED */
 
     public Character() {

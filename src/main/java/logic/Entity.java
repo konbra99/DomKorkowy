@@ -29,6 +29,9 @@ public abstract class Entity implements JsonSerializable {
 	protected float vel_y = 0.0f;           /* SERIALIZED BY OTHERS */
 	protected float vel_x = 0.0f;           /* SERIALIZED BY OTHERS */
 
+	private int id;
+	protected int hp;
+
 	protected Rectangle rectangle;          /* SERIALIZED */
 	protected String textureName;           /* SERIALIZED */
 	protected int groups;                   /* NOT SERIALIZED */
@@ -70,6 +73,13 @@ public abstract class Entity implements JsonSerializable {
 		vel_y -= 0.002f;
 	}
 
+	protected void getDamage() {
+		this.hp--;
+		if (this.hp < 1) {
+			Engine.gameplay.map.getCurrentStage().removeEntity(this.id);
+		}
+	}
+
 	public Rectangle getRectangle() {
 		return rectangle;
 	}
@@ -83,6 +93,7 @@ public abstract class Entity implements JsonSerializable {
 	public void fromJson(JsonObject obj) {
 		textureName = obj.get("textureName").getAsString();
 		rectangle.fromJson(obj);
+		this.id = obj.get("id").getAsInt();
 	}
 
 	/** Sprawdza, czy encja znajduje sie w podanej grupie. */

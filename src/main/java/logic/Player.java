@@ -135,6 +135,7 @@ public class Player extends Character {
         vel_x = 0.0f;
         vel_y = 0.0f;
         Engine.gameplay.map.reset();
+        Engine.gameplay.map.getCurrentStage().buildStage();
         Engine.gameplay.map.getCurrentStage().initStage();
     }
 }

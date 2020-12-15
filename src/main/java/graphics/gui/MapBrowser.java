@@ -56,11 +56,6 @@ public class MapBrowser extends Entity {
     }
 
     public void createServerMapButtons() {
-        if (Engine.client.isNotConnected()) {
-            System.out.println("Nie poloczono z serwerem.");
-            return;
-        }
-
         List<String> maps = Engine.client.getMaps();
 
         dataFields = new ArrayList<>();

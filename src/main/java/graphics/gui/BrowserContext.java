@@ -8,17 +8,20 @@ import java.util.ArrayList;
 public class BrowserContext extends Context {
     MapBrowser browser;
     ArrayList<Button> buttonList;
+    Warning warning;
 
     public BrowserContext(String background) {
         super(background);
         super.init();
         this.browser = new MapBrowser();
         this.buttonList = new ArrayList<>();
+        this.warning = new Warning();
     }
 
     public void refreshList() {
         buttonList = new ArrayList<>();
         this.browser.createMapButtons();
+        this.warning = new Warning();
     }
 
     @Override
@@ -100,8 +103,10 @@ public class BrowserContext extends Context {
         Button button = new Button(0.58f, 0.6f, 0.3f, 0.3f, null, Button.SHORT_BUTTON);
         button.setText("Server", "msgothic.bmp", 0.05f, 0.08f);
         button.action = () -> {
-            System.out.println("Server");
-            browser.createServerMapButtons();
+            if (Engine.client.isNotConnected())
+                warning.showWarning("Klient nie zostal polaczony z serwerem");
+            else
+                browser.createServerMapButtons();
         };
         buttonList.add(button);
     }
@@ -118,9 +123,12 @@ public class BrowserContext extends Context {
 
     @Override
     public void update() {
-        this.browser.update();
-        for (Button b : buttonList) {
-            b.update();
+        if (this.warning.is_visible) {
+            this.warning.update();
+        } else {
+            this.browser.update();
+            for (Button b : buttonList)
+                b.update();
         }
     }
 
@@ -128,8 +136,8 @@ public class BrowserContext extends Context {
     public void draw() {
         this.rectangle.draw();
         this.browser.draw();
-        for (Button b : buttonList) {
+        for (Button b : buttonList)
             b.draw();
-        }
+        this.warning.draw();
     }
 }

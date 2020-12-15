@@ -42,7 +42,7 @@ public class SettingsContext extends Context {
         option_strings = new String[]{"OFF", "ON"};
         option_values = new Object[] {false, true};
         fullScreen = new OptionField(null, Button.LONG_BUTTON, option_strings, option_values);
-        fullScreen.setText("fps", "msgothic.bmp", 0.05f, 0.08f);
+        fullScreen.setText("full", "msgothic.bmp", 0.05f, 0.08f);
         fullScreen.move(-0.5f, -0.3f);
 
         // BACK
@@ -55,7 +55,7 @@ public class SettingsContext extends Context {
 
         // BACK
         nextButton = new Button(0.75f, -0.95f, 0.20f, 0.4f, null, Button.LEFT_ARROW);
-        nextButton.setText("NEXT", "msgothic.bmp", 0.04f, 0.1f);
+        nextButton.setText("ACCEPT", "msgothic.bmp", 0.04f, 0.1f);
         nextButton.action = () -> {
             Engine.activeContext = Engine.menu;
             Engine.STATE = Engine.GAME_STATE.MENU;

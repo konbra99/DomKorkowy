@@ -59,6 +59,20 @@ public class BrowserContext extends Context {
         buttonList.add(button);
     }
 
+    public void addRefreshButton() {
+        Button button = new Button(0.25f, 0.6f, 0.6f, 0.3f, null, Button.MEDIUM_BUTTON);
+        button.setText("REFRESH", "msgothic.bmp", 0.05f, 0.12f);
+        button.action = () -> {
+            System.out.println("active");
+            browser.dataFields = new ArrayList<>();
+            if (Engine.client.isNotConnected())
+                warning.showWarning("Klient nie zostal polaczony z serwerem");
+            else
+                browser.createServerRoomsButtons();
+        };
+        buttonList.add(button);
+    }
+
     public void addBackButton() {
         Button button = new Button(0.28f, -0.85f, 0.25f, 0.5f, null, Button.RIGHT_ARROW);
         button.setText("BACK", "msgothic.bmp", 0.05f, 0.12f);

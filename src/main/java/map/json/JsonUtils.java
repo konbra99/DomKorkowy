@@ -1,8 +1,10 @@
 package map.json;
 
 import com.google.gson.*;
+import graphics.Config;
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class JsonUtils {
 
@@ -19,6 +21,19 @@ public class JsonUtils {
 		JsonParser parser = new JsonParser();
 		JsonElement obj = parser.parse(reader);
 		return (JsonObject)obj;
+	}
+
+	public static ArrayList<JsonObject> fromDirectory(String path) {
+		ArrayList<JsonObject> objects = new ArrayList<>();
+		File directory = new File(path);
+		File[] files = directory.listFiles();
+
+		for(File file: files)
+			try {
+				objects.add(fromFile(file.getAbsolutePath()));
+			} catch (Exception ignored) { }
+
+		return objects;
 	}
 
 	/** Konwertuje obiekt klsay JsonObject na String. */

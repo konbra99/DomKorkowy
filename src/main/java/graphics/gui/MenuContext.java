@@ -27,9 +27,10 @@ public class MenuContext extends Context {
         this.multiplayer = new Button(-0.5f, 0.4f, 1.0f, 0.25f,
                 () -> {
                     Engine.browser.refreshContext();
+                    Engine.browser.addRefreshButton();
                     Engine.browser.addJoinButton();
                     Engine.browser.addBackButton();
-                    Engine.browser.browser.createServerRoomsButtons();
+                    Engine.browser.browser.removeAll();
                     Engine.activeContext = Engine.browser;
                     Engine.STATE = Engine.GAME_STATE.BROWSER;
                 },

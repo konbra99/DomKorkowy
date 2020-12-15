@@ -9,9 +9,6 @@ import logic.Entity;
 import map.MapManager;
 import map.json.JsonUtils;
 import server.Room;
-import server.TempServer;
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,44 +21,29 @@ public class MapBrowser extends Entity {
     ArrayList<DataField> dataFields;
     public MapField active = null;
     float y_min = Config.SEARCH_Y;
-    float y_max = 0.0f;
     float y_curr = 0.0f;
     boolean is_new_map = false;
 
     public void createMapButtons() {
-        File mapDirectory = new File(Config.MAP_PATH);
-        File[] mapFiles = mapDirectory.listFiles();
         is_new_map = false;
         dataFields = new ArrayList<>();
         y_min = Config.SEARCH_Y;
         y_curr = 0.0f;
+        ArrayList<JsonObject> objects = JsonUtils.fromDirectory(Config.MAP_PATH);
 
-        if (mapFiles != null) {
-            for (File mapFile : mapFiles) {
-                if (!mapFile.getName().endsWith("json")) {
-                    System.out.println(mapFile.getAbsolutePath());
-                    continue;
-                }
-                try {
-                    MapManager mapManager = new MapManager();
-                    JsonObject obj = JsonUtils.fromFile(mapFile.getAbsolutePath());
-                    mapManager.fromJson(obj);
-                    addMapButton(mapManager);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
+        for(JsonObject obj: objects) {
+            MapManager mapManager = new MapManager();
+            mapManager.fromJson(obj);
+            addMapButton(mapManager);
         }
     }
 
     public void createServerMapButtons() {
-        List<String> maps = Engine.client.getMaps();
-
         dataFields = new ArrayList<>();
         is_new_map = false;
         y_min = Config.SEARCH_Y;
         y_curr = 0.0f;
+        List<String> maps = Engine.client.getMaps();
 
         for (String map : maps) {
             MapManager mapManager = new MapManager();
@@ -123,6 +105,7 @@ public class MapBrowser extends Entity {
     }
 
     public MapBrowser() {
+        this.dataFields = new ArrayList<>();
         this.searchRect = new Rectangle(Config.SEARCH_X, -1.1f, 1.0f, 2.2f);
         this.searchRect.initGL("gui/blue.png",
                 "rectangle.vert.glsl", "rectangle.frag");
@@ -153,6 +136,10 @@ public class MapBrowser extends Entity {
         for(Button button: dataFields) {
             button.is_selected = false;
         }
+    }
+
+    public void removeAll() {
+        dataFields.clear();
     }
 
     public void addMapButton(MapManager mapManager) {

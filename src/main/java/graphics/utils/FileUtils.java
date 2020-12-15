@@ -25,4 +25,13 @@ public class FileUtils {
 
         return builder.toString();
     }
+
+    public static void deleteFile(String filename) {
+        File myObj = new File(System.getProperty("user.dir") +"\\src\\main\\resources\\Maps\\"+filename);
+        if (myObj.delete()) {
+            System.out.println("Deleted the file: " + myObj.getName());
+        } else {
+            System.out.println("Failed to delete the file.");
+        }
+    }
 }

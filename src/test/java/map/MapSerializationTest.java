@@ -142,7 +142,7 @@ public class MapSerializationTest {
 
 		JsonObject obj = map.toJson();
 		try {
-			JsonUtils.toFilePretty(obj, "test_file.json");
+			JsonUtils.toFilePretty(obj, "Mapka5.json");
 			System.out.println(JsonUtils.toStringPretty(obj));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -154,7 +154,7 @@ public class MapSerializationTest {
 	public void FullMapFromJsonTest() {
 		MapManager map = new MapManager();
 		try {
-			JsonObject obj = JsonUtils.fromFile("test_file.json");
+			JsonObject obj = JsonUtils.fromFile("Mapka5.json");
 			map.fromJson(obj);
 		} catch (Exception e) {
 			e.printStackTrace();

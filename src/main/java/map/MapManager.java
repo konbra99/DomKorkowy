@@ -3,7 +3,6 @@ package map;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import logic.Entity;
 import map.json.JsonSerializable;
 
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ public class MapManager implements JsonSerializable {
 	public int maxPlayers = 10;
 	public int time = 120;
 	public float difficulty = 0.5f;
-	private JsonObject mapObject;
+	public JsonObject mapObject;
 
 	// sceny
 	public List<Stage> stages;

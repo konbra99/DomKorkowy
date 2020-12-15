@@ -9,6 +9,8 @@ import logic.Entity;
 import map.MapManager;
 import map.json.JsonUtils;
 import server.Room;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,13 +31,18 @@ public class MapBrowser extends Entity {
         dataFields = new ArrayList<>();
         y_min = Config.SEARCH_Y;
         y_curr = 0.0f;
-        ArrayList<JsonObject> objects = JsonUtils.fromDirectory(Config.MAP_PATH);
 
-        for(JsonObject obj: objects) {
-            MapManager mapManager = new MapManager();
-            mapManager.fromJson(obj);
-            addMapButton(mapManager);
-        }
+        File directory = new File(Config.MAP_PATH);
+        File[] files = directory.listFiles();
+
+        for(File file: files)
+            try {
+                MapManager mapManager = new MapManager();
+                JsonObject obj = JsonUtils.fromFile(file.getAbsolutePath());
+                mapManager.fromJson(obj);
+                addMapButton(mapManager, true).filepath = file.getAbsolutePath();
+
+            } catch (Exception ignored) { }
     }
 
     public void createServerMapButtons() {
@@ -49,7 +56,7 @@ public class MapBrowser extends Entity {
             MapManager mapManager = new MapManager();
             JsonObject obj = JsonUtils.fromString(map);
             mapManager.fromJson(obj);
-            addMapButton(mapManager);
+            addMapButton(mapManager, false);
         }
     }
 
@@ -142,12 +149,13 @@ public class MapBrowser extends Entity {
         dataFields.clear();
     }
 
-    public void addMapButton(MapManager mapManager) {
-        MapField button = new MapField(mapManager, this, Button.LONG_BUTTON);
+    public MapField addMapButton(MapManager mapManager, boolean local) {
+        MapField button = new MapField(mapManager, this, local, Button.LONG_BUTTON);
         button.move(Config.SEARCH_X, y_min / Config.RESOLUTION);
         button.setText(button.map.mapName, "msgothic.bmp", 0.05f, 0.08f);
         dataFields.add(button);
         y_min -= Config.MAP_BUTTON_HEIGHT + 0.1f;
+        return button;
     }
 
     public void addButton(DataField button) {

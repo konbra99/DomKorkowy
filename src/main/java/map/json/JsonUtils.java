@@ -1,9 +1,8 @@
 package map.json;
 
 import com.google.gson.*;
-import graphics.Config;
-
 import java.io.*;
+import java.nio.file.Files;
 import java.util.ArrayList;
 
 public class JsonUtils {
@@ -20,9 +19,11 @@ public class JsonUtils {
 		Reader reader = new FileReader(filepath);
 		JsonParser parser = new JsonParser();
 		JsonElement obj = parser.parse(reader);
+		reader.close();
 		return (JsonObject)obj;
 	}
 
+	/** Parsuje wszystkie pliku na obiekty klasy JsonObject z podanego katalogu. */
 	public static ArrayList<JsonObject> fromDirectory(String path) {
 		ArrayList<JsonObject> objects = new ArrayList<>();
 		File directory = new File(path);
@@ -64,5 +65,22 @@ public class JsonUtils {
 		writer.write(gson.toJson(obj));
 		writer.flush();
 		writer.close();
+	}
+
+	/** Usuwa podany plik mapy. */
+	public static void removeFile(String filepath) {
+		System.out.println(filepath);
+		File file = new File(filepath);
+		try {
+			Files.delete(file.toPath());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+//		if (file.delete()) {
+//			System.out.println("Deleted the file: " + file.getName());
+//		} else {
+//			System.out.println("Failed to delete the file.");
+//		}
 	}
 }

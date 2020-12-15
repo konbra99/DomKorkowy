@@ -65,6 +65,27 @@ public class Button extends Entity {
             "gui/button_big_selected.png",
             "gui/button_big.png" };
 
+    public final static String[] DELETE = {
+            "gui/sign_delete.png",
+            "gui/sign_delete.png",
+            "gui/sign_delete_highlighted.png",
+            "gui/sign_delete.png",
+            "gui/sign_delete.png" };
+
+    public final static String[] LOCAL = {
+            "gui/sign_local.png",
+            "gui/sign_local.png",
+            "gui/sign_local_highlighted.png",
+            "gui/sign_local.png",
+            "gui/sign_local.png" };
+
+    public final static String[] DOWNLOAD = {
+            "gui/sign_download.png",
+            "gui/sign_download.png",
+            "gui/sign_download_highlighted.png",
+            "gui/sign_download.png",
+            "gui/sign_download.png" };
+
     public Button(float x, float y, float width, float height, Action action) {
         super(x, y, width, height, "gui/button.png");
         this.text = "";

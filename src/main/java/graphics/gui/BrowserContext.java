@@ -75,6 +75,9 @@ public class BrowserContext extends Context {
                 MapManager map = new MapManager();
                 for (DataField dataField: browser.dataFields)
                     dataField.getValue(map);
+                Engine.editor = new EditorContext(map);
+                Engine.activeContext = Engine.editor;
+                Engine.STATE = Engine.GAME_STATE.EDITOR;
             }
             else {
                 System.out.println("NOT new map");

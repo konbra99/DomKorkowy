@@ -62,7 +62,7 @@ public class Engine implements Runnable {
         menu = new MenuContext("gui/background0.png");
         browser = new BrowserContext("gui/background0.png");
         gameplay = new GameplayContext();
-        editor = new EditorContext();
+        editor = null;
         authors = new AuthorsContext();
         settings = new SettingsContext();
         activeContext = menu;

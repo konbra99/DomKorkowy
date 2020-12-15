@@ -13,7 +13,7 @@ import static org.lwjgl.system.MemoryStack.stackPush;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Window {
-    private final long windowHandle;
+    public static long windowHandle;
 
     public Window() {
         // Setup an error callback. The default implementation

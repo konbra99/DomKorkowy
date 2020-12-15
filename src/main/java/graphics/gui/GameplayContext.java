@@ -28,7 +28,7 @@ public class GameplayContext extends Context {
             e.printStackTrace();
         }
 
-        KORKOWY = new Player(-0.7f, -0.8f, 0.08f, 0.18f, "korkowa_postac.png");
+        KORKOWY = new Player(-0.7f, -0.8f, 0.1f, 0.18f, "korkowy_ludek1.png");
     }
 
     @Override
@@ -62,6 +62,10 @@ public class GameplayContext extends Context {
 
     public Collection<Entity> getDoors() {
         return map.getCurrentStage().doors.values();
+    }
+
+    public Collection<Entity> getCollectibles() {
+        return map.getCurrentStage().collectibles.values();
     }
 
     public float[] getStart() { return map.getCurrentStage().start; }

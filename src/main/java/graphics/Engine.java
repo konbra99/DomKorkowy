@@ -3,7 +3,9 @@ package graphics;
 import graphics.gui.*;
 import org.lwjgl.Version;
 import org.lwjgl.opengl.GL;
+import server.Client;
 
+import java.io.IOException;
 import java.util.Objects;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
@@ -35,6 +37,7 @@ public class Engine implements Runnable {
     public static AuthorsContext authors;
     public static SettingsContext settings;
     public static Context activeContext;
+    public static Client client;
 
     @Override
     public void run() {
@@ -67,6 +70,9 @@ public class Engine implements Runnable {
         settings = new SettingsContext();
         activeContext = menu;
         STATE = GAME_STATE.MENU;
+
+        client = new Client();
+        client.connect();
     }
 
     private void loop() {

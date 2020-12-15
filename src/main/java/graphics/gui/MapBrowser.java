@@ -2,6 +2,7 @@ package graphics.gui;
 
 import com.google.gson.JsonObject;
 import graphics.Config;
+import graphics.Engine;
 import graphics.Input;
 import graphics.Rectangle;
 import logic.Entity;
@@ -14,7 +15,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static database.MapsConnector.getMaps;
 import static graphics.Config.MOUSE_SCROLL_SPEED;
 
 
@@ -56,7 +56,13 @@ public class MapBrowser extends Entity {
     }
 
     public void createServerMapButtons() {
-        List<String> maps = getMaps();
+        if (Engine.client.isNotConnected()) {
+            System.out.println("Nie poloczono z serwerem.");
+            return;
+        }
+
+        List<String> maps = Engine.client.getMaps();
+
         dataFields = new ArrayList<>();
         is_new_map = false;
         y_min = Config.SEARCH_Y;

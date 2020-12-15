@@ -19,6 +19,7 @@ public class MapManager implements JsonSerializable {
 	public int maxPlayers = 10;
 	public int time = 120;
 	public float difficulty = 0.5f;
+	private JsonObject mapObject;
 
 	// sceny
 	public List<Stage> stages;
@@ -85,10 +86,12 @@ public class MapManager implements JsonSerializable {
 	}
 
 	public void fromJson(JsonObject obj) {
+		mapObject = obj;
 		mapName = obj.get("mapName").getAsString();
 		author = obj.get("author").getAsString();
 		maxPlayers = obj.get("maxPlayers").getAsInt();
 		time = obj.get("time").getAsInt();
+		stages.clear();
 
 		JsonArray json_stages = obj.getAsJsonArray("stages");
 		for(JsonElement element: json_stages) {
@@ -97,5 +100,9 @@ public class MapManager implements JsonSerializable {
 			stage.fromJson(temp);
 			addStage(stage);
 		}
+	}
+
+	public void reset() {
+		fromJson(this.mapObject);
 	}
 }

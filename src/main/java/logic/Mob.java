@@ -19,6 +19,7 @@ public class Mob extends Character {
         this.beginX = beginX;
         this.endX = endX;
         groups |= GROUP_MOBS;
+        this.hp = 10;
     }
 
     @Override
@@ -47,7 +48,7 @@ public class Mob extends Character {
         obj.addProperty("endX", endX);
         obj.addProperty("vel_x", vel_x);
         return obj;
-    };
+    }
 
     @Override
     public void fromJson(JsonObject obj) {
@@ -55,5 +56,5 @@ public class Mob extends Character {
         this.endX = obj.get("endX").getAsFloat();
         this.vel_x = obj.get("vel_x").getAsFloat();
         super.fromJson(obj);
-    };
+    }
 }

@@ -16,6 +16,14 @@ public class Server {
 	DataInputStream input;
 	DataOutputStream output;
 
+	/*************** TYMCZASOWO *****************/
+	Room[] rooms = {
+			new Room(0, "aaaa", "aaaaa", "asdasd", 12),
+			new Room(1, "bbbb", "ccccc", "asdasd", 111),
+			new Room(2, "cccc", "ddddd", "asdasd", 999),
+	};
+	/********************************************/
+
 	public Server() throws IOException {
 		ServerSocket serverSocket = new ServerSocket(7117);
 
@@ -33,6 +41,7 @@ public class Server {
 			int num = input.readInt();
 
 			switch(num) {
+
 				case GET_MAPS:
 					System.out.println("Client [] GET_MAPS");
 					List<String> maps = MapsConnector.getMaps();
@@ -40,6 +49,14 @@ public class Server {
 					output.writeInt(maps.size());
 					for(String map: maps)
 						output.writeUTF(map);
+					break;
+
+				case GET_ROOMS:
+					System.out.println("Client [] GET_ROOMS");
+					output.writeInt(SET_ROOMS);
+					output.writeInt(rooms.length);
+					for(Room room: rooms)
+						output.writeUTF(room.toJson().toString());
 					break;
 			}
 		}

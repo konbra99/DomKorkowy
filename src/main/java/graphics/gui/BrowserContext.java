@@ -115,7 +115,6 @@ public class BrowserContext extends Context {
         Button button = new Button(0.25f, 0.27f, 0.62f, 0.3f, null, Button.MEDIUM_BUTTON);
         button.setText("New", "msgothic.bmp", 0.05f, 0.08f);
         button.action = () -> {
-            System.out.println("Server");
             browser.createNewMapButtons();
         };
         buttonList.add(button);

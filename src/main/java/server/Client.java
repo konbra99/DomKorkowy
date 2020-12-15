@@ -8,7 +8,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-import static server.Protocol.GET_MAPS;
+import static server.Protocol.*;
 
 public class Client{
 
@@ -52,5 +52,18 @@ public class Client{
 		} catch (IOException ignored) {}
 
 		return maps;
+	}
+
+	public List<String> getRooms() {
+		List<String> rooms = new ArrayList<>();
+		try {
+			output.writeInt(GET_ROOMS);
+			input.readInt();
+			int num = input.readInt();
+			for(int i = 0; i < num; i++)
+				rooms.add(input.readUTF());
+		} catch (IOException ignored) {}
+
+		return rooms;
 	}
 }

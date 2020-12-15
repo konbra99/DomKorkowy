@@ -127,6 +127,12 @@ public class Player extends Character {
         vel_x *= 0.9f;
     }
 
+    public void heal(int x) {
+        hp += x;
+        if(hp>3) { hp = 3; }
+        Engine.gameplay.HEALTHBAR.setTexture(hp + "hp.png");
+    }
+
     private void reset() {
         hp = 3;
         float[] start = Engine.gameplay.getStart();

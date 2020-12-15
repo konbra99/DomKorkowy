@@ -16,7 +16,7 @@ public class Player extends Character {
         // Trzy sloty na bronie, dwie przykładowe dodane od początku
         this.weapons = new MeleeWeapon[3];
         this.weapons[0] = new MeleeWeapon(this, 0, posX - width, posY - height / 2, 0.12f,
-                0.12f, 0.06f, "sword1.png", 5, 8);
+                0.13f, 0.08f, "sword1.png", 5, 8);
         this.weapons[1] = new MeleeWeapon(this, 1, posX - width, posY - height / 2, 0.075f,
                 0.15f, 0.05f, "mace.png", 1, 4);
         this.activeWeapon = 0;
@@ -71,6 +71,8 @@ public class Player extends Character {
                 Engine.gameplay.map.nextStage();
                 reset();
             }
+
+        //for()
 
         this.rectangle.setOrientation(direction == RIGHT);
         this.rectangle.move(vel_x, vel_y);

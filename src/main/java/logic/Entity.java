@@ -29,7 +29,7 @@ public abstract class Entity implements JsonSerializable {
 	protected float vel_y = 0.0f;           /* SERIALIZED BY OTHERS */
 	protected float vel_x = 0.0f;           /* SERIALIZED BY OTHERS */
 
-	private int id;
+	protected int id;
 	protected int hp;
 
 	protected Rectangle rectangle;          /* SERIALIZED */
@@ -53,7 +53,9 @@ public abstract class Entity implements JsonSerializable {
 
 	public void update() {}
 
-	public void init() {}
+	public void init() {
+		rectangle.initGL(this.textureName, "rectangle.vert.glsl", "rectangle.frag");
+	}
 
 	protected void gravity() {
 		for (Entity p : Engine.gameplay.getPlatforms()) {

@@ -15,6 +15,7 @@ public class Button extends Entity {
     protected boolean is_active;
     protected boolean is_selected;
     protected boolean is_invalid;
+    protected boolean is_visible;
     protected String texture_enabled = "gui/button_long.png";
     protected String texture_disabled = "gui/button_long.png";
     protected String texture_highlighted = "gui/button_long.png";
@@ -57,6 +58,13 @@ public class Button extends Entity {
             "gui/larrow_selected.png",
             "gui/larrow.png" };
 
+    public final static String[] BIG_BUTTON = {
+            "gui/button_big.png",
+            "gui/button_big_disabled.png",
+            "gui/button_big_highlighted.png",
+            "gui/button_big_selected.png",
+            "gui/button_big.png" };
+
     public final static String[] SELECT = {
             "gui/select.png",
             "gui/select.png",
@@ -97,6 +105,7 @@ public class Button extends Entity {
         this.is_active = true;
         this.is_selected = false;
         this.is_invalid = false;
+        this.is_visible = true;
         this.rectangle.initGL("gui/textarea_active.png", "rectangle.vert.glsl", "rectangle.frag");
     }
 
@@ -108,6 +117,7 @@ public class Button extends Entity {
         this.is_active = true;
         this.is_selected = false;
         this.is_invalid = false;
+        this.is_visible = true;
         this.rectangle.initGL("gui/textarea_active.png", "rectangle.vert.glsl", "rectangle.frag");
 
         this.texture_enabled = textures[0];

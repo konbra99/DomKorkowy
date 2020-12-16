@@ -2,19 +2,19 @@ package graphics.gui;
 
 import com.google.gson.JsonObject;
 import graphics.Config;
+import graphics.Engine;
 import graphics.Input;
 import graphics.Rectangle;
 import logic.Entity;
 import map.MapManager;
 import map.json.JsonUtils;
-import temp_server.TempRoom;
-import temp_server.TempServer;
+import server.Room;
+import server.TempServer;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static database.MapsConnector.getMaps;
 import static graphics.Config.MOUSE_SCROLL_SPEED;
 
 
@@ -55,7 +55,8 @@ public class MapBrowser extends Entity {
     }
 
     public void createServerMapButtons() {
-        List<String> maps = getMaps();
+        List<String> maps = Engine.client.getMaps();
+
         dataFields = new ArrayList<>();
         is_new_map = false;
         y_min = Config.SEARCH_Y;
@@ -102,13 +103,18 @@ public class MapBrowser extends Entity {
     }
 
     public void createServerRoomsButtons() {
-        TempRoom[] rooms = TempServer.getRooms();
+        List<String> rooms = Engine.client.getRooms();
+
         dataFields = new ArrayList<>();
         is_new_map = false;
         y_min = Config.SEARCH_Y;
         y_curr = 0.0f;
 
-        for (TempRoom room : rooms) {
+        for (String roomStr : rooms) {
+            Room room = new Room();
+            JsonObject obj = JsonUtils.fromString(roomStr);
+            room.fromJson(obj);
+
             RoomField roomField = new RoomField(room, this, Button.LONG_BUTTON);
             roomField.setText(room.room_name, "msgothic.bmp", 0.05f, 0.08f);
             addButton(roomField);

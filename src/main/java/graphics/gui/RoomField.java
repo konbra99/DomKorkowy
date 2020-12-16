@@ -2,16 +2,18 @@ package graphics.gui;
 
 import graphics.Config;
 import graphics.Engine;
-import temp_server.TempRoom;
+import server.Room;
 
 public class RoomField extends DataField {
-    public TempRoom room;
+    public Room room;
     MapBrowser browser;
+    String str_max_players;
 
-    public RoomField(TempRoom room, MapBrowser browser, String [] textures) {
+    public RoomField(Room room, MapBrowser browser, String [] textures) {
         super(0.0f, 0.0f, Config.MAP_BUTTON_WIDTH, Config.MAP_BUTTON_HEIGHT, null, textures);
         this.browser = browser;
         this.room = room;
+        this.str_max_players = Integer.toString(room.max_players);
 
         this.action = () -> {
             browser.deselectAll();
@@ -26,9 +28,9 @@ public class RoomField extends DataField {
         super.draw();
         Engine.fontLoader.renderText(room.map_name, font, text_x-0.25f, text_y-0.04f,
                 charwidth*0.7f, charheight*0.7f, 0.0f, 0.0f, 0.0f, 1.0f);
-        Engine.fontLoader.renderText(room.room_admin, font, text_x+0.1f, text_y-0.04f,
+        Engine.fontLoader.renderText(room.admin_name, font, text_x+0.1f, text_y-0.04f,
                 charwidth*0.7f, charheight*0.7f,0.0f, 0.0f, 0.0f, 1.0f);
-        Engine.fontLoader.renderText(room.max_players, font, text_x+0.4f, text_y-0.04f,
+        Engine.fontLoader.renderText(str_max_players, font, text_x+0.4f, text_y-0.04f,
                 charwidth*0.7f, charheight*0.7f,0.0f, 0.0f, 0.0f, 1.0f);
     }
 

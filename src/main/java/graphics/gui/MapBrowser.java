@@ -39,7 +39,6 @@ public class MapBrowser extends Entity {
         if (mapFiles != null) {
             for (File mapFile : mapFiles) {
                 if (!mapFile.getName().endsWith("json")) {
-                    System.out.println(mapFile.getAbsolutePath());
                     continue;
                 }
                 try {

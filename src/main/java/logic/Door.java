@@ -28,11 +28,11 @@ public class Door extends Entity {
 		JsonObject obj = super.toJson();
 		obj.addProperty("activeFlag", activeFlag);
 		return obj;
-	};
+	}
 
 	@Override
 	public void fromJson(JsonObject obj) {
 		this.activeFlag = obj.get("activeFlag").getAsBoolean();
 		super.fromJson(obj);
-	};
+	}
 }

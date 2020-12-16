@@ -46,7 +46,6 @@ public class Stage implements JsonSerializable {
 		mobs = new HashMap<>();
 		obstacles = new HashMap<>();
 		doors = new HashMap<>();
-		System.out.println("tworze all map");
 		allMap = new ArrayList<>();
 
 		start = new float[2];

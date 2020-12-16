@@ -91,7 +91,7 @@ public class Engine implements Runnable {
             activeContext.draw();
 
             fontLoader.renderText("fps: " + avg, "msgothic.bmp",
-                    0.65f, 0.9f, 0.05f, 0.08f,
+                    0.65f, -1.0f, 0.05f, 0.08f,
                     0.0f, 1.0f, 0.0f, 1.0f);
 
             glfwSwapBuffers(window.getWindowHandle()); // swap the color buffers

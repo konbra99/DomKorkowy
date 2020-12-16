@@ -71,7 +71,6 @@ public class BrowserContext extends Context {
         button.setText("EDIT", "msgothic.bmp", 0.05f, 0.1f);
         button.action = () -> {
             if (browser.is_new_map) {
-                System.out.println("New map");
                 MapManager map = new MapManager();
                 for (DataField dataField: browser.dataFields)
                     dataField.getValue(map);

@@ -1,7 +1,11 @@
 package graphics;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import map.json.JsonSerializable;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.glUseProgram;
@@ -25,13 +29,13 @@ public class Rectangle implements JsonSerializable {
 
     public Rectangle(float posX, float posY, float width, float height) {
         this.posX = posX;
-        this.posY = posY/Config.RESOLUTION;
+        this.posY = posY / Config.RESOLUTION;
         this.org_posX = posX;
         this.org_posY = this.posY;
-        this.centreX = posX + width/2;
-        this.centreY = (posY + height/2)/Config.RESOLUTION;
+        this.centreX = posX + width / 2;
+        this.centreY = (posY + height / 2) / Config.RESOLUTION;
         this.width = width;
-        this.height = height/Config.RESOLUTION;
+        this.height = height / Config.RESOLUTION;
         this.angle = 0.0f;
     }
 
@@ -158,29 +162,29 @@ public class Rectangle implements JsonSerializable {
         this.texture.setImage(imageName);
     }
 
-    /** Poczatek procesu serializacji. */
+    /**
+     * Poczatek procesu serializacji.
+     */
     public JsonObject toJson() {
         JsonObject obj = new JsonObject();
         obj.addProperty("posX", posX);
         obj.addProperty("posY", posY);
-        obj.addProperty("org_posX", org_posX);
-        obj.addProperty("org_posY", org_posY);
         obj.addProperty("width", width);
         obj.addProperty("height", height);
-        obj.addProperty("centreX", centreX);
-        obj.addProperty("centreY", centreY);
         return obj;
     }
 
-    /** Koniec procesu deserializacji. */
+    /**
+     * Koniec procesu deserializacji.
+     */
     public void fromJson(JsonObject obj) {
-        posX   = obj.get("posX").getAsFloat();
-        posY   = obj.get("posY").getAsFloat();
-        width  = obj.get("width").getAsFloat();
+        posX = obj.get("posX").getAsFloat();
+        posY = obj.get("posY").getAsFloat();
+        width = obj.get("width").getAsFloat();
         height = obj.get("height").getAsFloat();
-        org_posX = obj.get("org_posX").getAsFloat();
-        org_posY = obj.get("org_posY").getAsFloat();
-        centreX = obj.get("centreX").getAsFloat();
-        centreY = obj.get("centreY").getAsFloat();
+        org_posX = posX;
+        org_posY = posY;
+        centreX = posX + width / 2;
+        centreY = posY + height / 2;
     }
 }

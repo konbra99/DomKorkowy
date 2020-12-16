@@ -172,7 +172,7 @@ public class EditorContext extends Context {
     private float xdrag_shift, ydrag_shift;
     MapManager map;
     ElementButton addPlatform, addObstacle, addMob;
-    Button saveMap;
+    Button saveMap, backButton;
     Entity newElement = null;
     Entity selected = null;
     Action actClick, actDefClick, actDrag;
@@ -197,6 +197,13 @@ public class EditorContext extends Context {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        };
+
+        backButton = new Button(0.4f, -1.0f, 0.25f, 0.5f, null, Button.LEFT_ARROW);
+        backButton.setText("BACK", "msgothic.bmp", 0.04f, 0.1f);
+        backButton.action = () -> {
+            Engine.activeContext = Engine.menu;
+            Engine.STATE = Engine.GAME_STATE.MENU;
         };
 
         this.actDefClick = () -> {
@@ -229,6 +236,7 @@ public class EditorContext extends Context {
         addObstacle.update();
         addMob.update();
         saveMap.update();
+        backButton.update();
 
         switch (state) {
             case NEW -> {
@@ -260,6 +268,7 @@ public class EditorContext extends Context {
         addObstacle.draw();
         addMob.draw();
         saveMap.draw();
+        backButton.draw();
 
         if (state == EDITING_STATE.NEW) {
             newElement.draw();

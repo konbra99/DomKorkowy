@@ -32,6 +32,7 @@ public class Stage implements JsonSerializable {
 	public Map<Integer, Entity> mobs;
 	public Map<Integer, Entity> obstacles;
 	public Map<Integer, Entity> doors;
+	public Map<Integer, Entity> collectibles;
 
 	// listy
 	public List<Entity> allMap;
@@ -46,6 +47,7 @@ public class Stage implements JsonSerializable {
 		mobs = new HashMap<>();
 		obstacles = new HashMap<>();
 		doors = new HashMap<>();
+		collectibles = new HashMap<>();
 		allMap = new ArrayList<>();
 
 		start = new float[2];

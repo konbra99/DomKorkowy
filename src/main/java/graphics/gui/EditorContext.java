@@ -164,6 +164,7 @@ public class EditorContext extends Context {
     private float xdrag_shift, ydrag_shift;
     MapManager map;
     ElementButton addPlatform, addObstacle, addMob;
+    Button saveMap;
     Entity newElement = null;
     Entity selected = null;
     Action actClick, actDefClick, actDrag;
@@ -178,6 +179,9 @@ public class EditorContext extends Context {
         addObstacle = new ElementButton(-0.95f, -0.25f, CHOSEN.OBSTACLE, Button.OBS, this);
         addMob = new ElementButton(-0.95f, -0.85f, CHOSEN.MOB, Button.MOBS, this);
         state = EDITING_STATE.NONE;
+        saveMap = new Button(0.7f, -1.0f, 0.25f, 0.5f, null, Button.RIGHT_ARROW);
+        saveMap.setText("Zapisz", "msogthic.bmp", 0.03f, 0.08f);
+        saveMap.action = map::toJson;
 
         this.actDefClick = () -> {
             for (Entity e : map.getCurrentStage().allMap) {

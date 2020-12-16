@@ -2,6 +2,8 @@ package logic;
 
 import com.google.gson.JsonObject;
 
+import java.util.Map;
+
 public class Mob extends Character {
 
     protected float beginX;
@@ -19,7 +21,7 @@ public class Mob extends Character {
         this.beginX = beginX;
         this.endX = endX;
         groups |= GROUP_MOBS;
-        this.hp = 10;
+        this.hp = 3;
     }
 
     @Override
@@ -39,6 +41,23 @@ public class Mob extends Character {
 
         rectangle.setOrientation(direction != RIGHT);
         rectangle.move(direction*vel_x, 0f);
+    }
+
+    @Override
+    public Map<String, Float> getAttributes() {
+        Map<String, Float> attr = super.getAttributes();
+        attr.put("beginX", beginX);
+        attr.put("endX", endX);
+        attr.put("vel_x", vel_x);
+        return attr;
+    }
+
+    @Override
+    public void setAttributes(Map<String, Float> map) {
+        super.setAttributes(map);
+        beginX = map.get("beginX");
+        endX = map.get("endX");
+        vel_x = map.get("vel_x");
     }
 
     @Override

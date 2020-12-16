@@ -13,6 +13,7 @@ public class Input {
     public static boolean ATTACK = false;
     public static boolean L_SHIFT = false;
     public static float MOUSE_X = -2.0f, MOUSE_Y = -2.0f;
+    public static boolean DRAG = false;
     public static float MOUSE_POS_X = 0.0f, MOUSE_POS_Y = 0.0f;
     public static float MOUSE_SCROLL_X = 0.0f, MOUSE_SCROLL_Y = 0.0f;
     public static ArrayList<Character> singlePressed = new ArrayList<>();
@@ -46,11 +47,14 @@ public class Input {
 
     public static void handleMouse(int button, int action, long window) {
         if (button == GLFW_MOUSE_BUTTON_1 && action == GLFW_PRESS) {
+            DRAG = true;
             DoubleBuffer b1 = BufferUtils.createDoubleBuffer(1);
             DoubleBuffer b2 = BufferUtils.createDoubleBuffer(1);
             glfwGetCursorPos(window, b1, b2);
             MOUSE_X = (float) ((2 * b1.get(0) / Config.WIDTH) - 1.0);
             MOUSE_Y = (float) ((((2 * (Config.HEIGHT - b2.get(0))) / Config.HEIGHT) - 1.0) * (9.0 / 16.0));
+        } else if (button == GLFW_MOUSE_BUTTON_1 && action == GLFW_RELEASE) {
+            DRAG = false;
         }
     }
 

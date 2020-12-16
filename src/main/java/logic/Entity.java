@@ -1,9 +1,13 @@
 package logic;
 import com.google.gson.JsonObject;
+import graphics.Config;
 import graphics.Engine;
 import graphics.Rectangle;
 import graphics.gui.GameplayContext;
 import map.json.JsonSerializable;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class Entity implements JsonSerializable {
 
@@ -49,6 +53,10 @@ public abstract class Entity implements JsonSerializable {
 
 	public void move() {}
 
+	public void moveTo(float x, float y) {
+		this.rectangle.move(x - this.rectangle.posX, y - this.rectangle.posY);
+	}
+
 	public void draw() { rectangle.draw(); }
 
 	public void update() {}
@@ -86,9 +94,29 @@ public abstract class Entity implements JsonSerializable {
 		return rectangle;
 	}
 
+	public Map<String, Float> getAttributes() {
+		Map<String, Float> attr = new HashMap<>();
+		attr.put("posX", rectangle.posX);
+		attr.put("posY", rectangle.posY);
+		attr.put("width", rectangle.width);
+		attr.put("height", rectangle.height);
+		return attr;
+	}
+
+	public void setAttributes(Map<String, Float> map) {
+		if (rectangle.width != map.get("width") || rectangle.height != map.get("height")) {
+			rectangle = new Rectangle(map.get("posX"), map.get("posY"), map.get("width"), map.get("height") * Config.RESOLUTION);
+			init();
+		} else {
+			moveTo(map.get("posX"), map.get("posY"));
+		}
+	}
+
 	public JsonObject toJson() {
 		JsonObject obj = rectangle.toJson();
 		obj.addProperty("textureName", textureName);
+		obj.addProperty("hp", hp);
+		obj.addProperty("direction", direction);
 		return obj;
 	}
 

@@ -23,14 +23,6 @@ public class Character extends Entity {
     }
 
     @Override
-    public JsonObject toJson() {
-        JsonObject obj = super.toJson();
-        obj.addProperty("hp", hp);
-        obj.addProperty("direction", direction);
-        return obj;
-    }
-
-    @Override
     public void fromJson(JsonObject obj) {
         hp = obj.get("hp").getAsInt();
         direction = obj.get("direction").getAsInt();

@@ -86,6 +86,38 @@ public class Button extends Entity {
             "gui/sign_download.png",
             "gui/sign_download.png" };
 
+    public final static String[] SELECT = {
+            "gui/select.png",
+            "gui/select.png",
+            "gui/select.png",
+            "gui/select.png",
+            "gui/select.png"
+    };
+
+    public final static String[] PLAT = {
+            "gui/addplat.png",
+            "gui/addplat.png",
+            "gui/addplat.png",
+            "gui/addplat.png",
+            "gui/addplat.png"
+    };
+
+    public final static String[] OBS = {
+            "gui/addobs.png",
+            "gui/addobs.png",
+            "gui/addobs.png",
+            "gui/addobs.png",
+            "gui/addobs.png"
+    };
+
+    public final static String[] MOBS = {
+            "gui/addmobs.png",
+            "gui/addmobs.png",
+            "gui/addmobs.png",
+            "gui/addmobs.png",
+            "gui/addmobs.png"
+    };
+
     public Button(float x, float y, float width, float height, Action action) {
         super(x, y, width, height, "gui/button.png");
         this.text = "";

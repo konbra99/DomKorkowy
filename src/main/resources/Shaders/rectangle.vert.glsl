@@ -2,7 +2,7 @@
 layout (location = 0) in vec3 aPos;
 layout (location = 1) in vec2 aTexCoord;
 
-uniform bool isRight;
+uniform bool isRight = true;
 uniform float resolution;
 uniform vec2 offset;
 out vec2 texCoord;

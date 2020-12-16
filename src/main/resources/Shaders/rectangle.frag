@@ -11,5 +11,5 @@ void main() {
     if (texColor.a < 0.1)
         discard;
 
-    myColor = vec4(texColor.rgb, myAlpha);
+    myColor = vec4(texColor.rgb, myAlpha*texColor.a);
 }

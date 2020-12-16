@@ -5,7 +5,9 @@ import logic.Entity;
 import logic.Platform;
 import map.MapManager;
 import map.Stage;
+import map.json.JsonUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -180,8 +182,16 @@ public class EditorContext extends Context {
         addMob = new ElementButton(-0.95f, -0.85f, CHOSEN.MOB, Button.MOBS, this);
         state = EDITING_STATE.NONE;
         saveMap = new Button(0.7f, -1.0f, 0.25f, 0.5f, null, Button.RIGHT_ARROW);
-        saveMap.setText("Zapisz", "msogthic.bmp", 0.03f, 0.08f);
-        saveMap.action = map::toJson;
+        saveMap.setText("Zapisz", "msgothic.bmp", 0.03f, 0.08f);
+        saveMap.action = () -> {
+            try {
+                map.getCurrentStage().buildHashMap();
+                map.getCurrentStage().buildStage();
+                JsonUtils.toFile(map.toJson(), Config.MAP_PATH + map.mapName + ".json");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        };
 
         this.actDefClick = () -> {
             for (Entity e : map.getCurrentStage().allMap) {
@@ -212,6 +222,7 @@ public class EditorContext extends Context {
         addPlatform.update();
         addObstacle.update();
         addMob.update();
+        saveMap.update();
 
         switch (state) {
             case NEW -> {
@@ -242,6 +253,7 @@ public class EditorContext extends Context {
         addPlatform.draw();
         addObstacle.draw();
         addMob.draw();
+        saveMap.draw();
 
         if (state == EDITING_STATE.NEW) {
             newElement.draw();

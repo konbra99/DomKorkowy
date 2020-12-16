@@ -118,7 +118,7 @@ public class Stage implements JsonSerializable {
 	 * W trybie edycji elementy nie posiadaja jeszcze id. */
 	public void drawMap() {
 		background.draw();
-		for(Entity entity: allMap) {
+		for (Entity entity : allMap) {
 			entity.draw();
 		}
 	}

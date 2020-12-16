@@ -13,19 +13,6 @@ public class HealthPotionSmall extends HealthPotion {
     }
 
     @Override
-    public void init() {
-        super.init();
-        rectangle.initGL(this.textureName, "rectangle.vert.glsl", "rectangle.frag");
-    }
-
-    @Override
-    public void update() {
-        if (Engine.gameplay.KORKOWY.getRectangle().collidesWith(this.getRectangle())) {
-            usage();
-        }
-    }
-
-    @Override
     public void usage() {
         Engine.gameplay.KORKOWY.heal(1);
         Engine.gameplay.map.getCurrentStage().removeEntity(this.id);

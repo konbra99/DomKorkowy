@@ -34,7 +34,7 @@ public class BrowserContext extends Context {
     }
 
     public void addPlayButton() {
-        Button button = new Button(0.58f, -0.85f, 0.25f, 0.5f, null, Button.LEFT_ARROW);
+        Button button = new Button(0.58f, -0.85f, 0.25f, 0.5f, null, Button.RIGHT_ARROW);
         button.setText("PLAY", "msgothic.bmp", 0.05f, 0.12f);
         button.action = () -> {
             if (browser.active != null) {
@@ -49,7 +49,7 @@ public class BrowserContext extends Context {
     }
 
     public void addJoinButton() {
-        Button button = new Button(0.58f, -0.85f, 0.25f, 0.5f, null, Button.LEFT_ARROW);
+        Button button = new Button(0.58f, -0.85f, 0.25f, 0.5f, null, Button.RIGHT_ARROW);
         button.setText("JOIN", "msgothic.bmp", 0.05f, 0.12f);
         button.action = () -> {
             if (browser.active != null) {
@@ -60,7 +60,7 @@ public class BrowserContext extends Context {
     }
 
     public void addBackButton() {
-        Button button = new Button(0.28f, -0.85f, 0.25f, 0.5f, null, Button.RIGHT_ARROW);
+        Button button = new Button(0.28f, -0.85f, 0.25f, 0.5f, null, Button.LEFT_ARROW);
         button.setText("BACK", "msgothic.bmp", 0.05f, 0.12f);
         button.action = () -> {
             Engine.activeContext = Engine.menu;
@@ -70,7 +70,7 @@ public class BrowserContext extends Context {
     }
 
     public void addEditButton() {
-        Button button = new Button(0.58f, -0.85f, 0.25f, 0.5f, null, Button.LEFT_ARROW);
+        Button button = new Button(0.58f, -0.85f, 0.25f, 0.5f, null, Button.RIGHT_ARROW);
         button.setText("EDIT", "msgothic.bmp", 0.05f, 0.1f);
         button.action = () -> {
             if (browser.is_new_map) {

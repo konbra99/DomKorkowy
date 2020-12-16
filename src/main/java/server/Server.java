@@ -58,6 +58,14 @@ public class Server {
 					for(Room room: rooms)
 						output.writeUTF(room.toJson().toString());
 					break;
+
+				case CREATE_MAP:
+					System.out.println("Client [] CREATE_MAP");
+					String src = input.readUTF();
+					output.writeInt(CREATE_MAP);
+					boolean status = MapsConnector.addMap(src);
+					output.writeBoolean(status);
+					break;
 			}
 		}
 	}

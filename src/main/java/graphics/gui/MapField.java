@@ -17,10 +17,12 @@ public class MapField extends DataField {
     Button local;
     Button download;
     Button delete;
+    Button upload;
 
     boolean download_flag;
     boolean local_flag;
     boolean delete_flag;
+    boolean upload_flag;
 
     public MapField(MapManager map, MapBrowser browser, boolean is_local, String [] textures) {
         super(0.0f, 0.0f, Config.MAP_BUTTON_WIDTH, Config.MAP_BUTTON_HEIGHT, null, textures);
@@ -38,6 +40,7 @@ public class MapField extends DataField {
         delete = new Button(0.83f, 0.1f, 0.1f, 0.1f, null, Button.DELETE);
         local = new Button(0.83f, 0.1f, 0.1f, 0.1f, ()-> System.out.println("local"), Button.LOCAL);
         download = new Button(0.83f, 0.1f, 0.1f, 0.1f, null, Button.DOWNLOAD);
+        upload = new Button(0.71f, 0.1f, 0.1f, 0.1f, null, Button.UPLOAD);
 
         download.action = () -> {
             try {
@@ -57,21 +60,32 @@ public class MapField extends DataField {
         };
 
         delete.action = () -> {
-            System.out.println("delete " + filepath);
             this.is_selected = true;
             this.is_invalid = false;
             JsonUtils.removeFile(filepath);
             is_active = false;
         };
 
+        upload.action = () -> {
+            if (Engine.client.isNotConnected()) {
+                Engine.browser.warning.showWarning("Klient nie zostal polaczony z serwerem");
+            }
+            else {
+                Engine.client.addMap(JsonUtils.toString(map.mapObject));
+            }
+            System.out.println("upload ");
+        };
+
         if (is_local) {
             download_flag = false;
             local_flag = false;
             delete_flag = true;
+            upload_flag = true;
         } else {
             download_flag = true;
             local_flag = false;
             delete_flag = false;
+            upload_flag = false;
         }
     }
 
@@ -96,6 +110,8 @@ public class MapField extends DataField {
             local.draw();
         if (download_flag)
             download.draw();
+        if (upload_flag)
+            upload.draw();
     }
 
     @Override
@@ -108,6 +124,8 @@ public class MapField extends DataField {
                 local.update();
             if (download_flag)
                 download.update();
+            if (upload_flag)
+                upload.update();
         }
     }
 
@@ -117,5 +135,6 @@ public class MapField extends DataField {
         delete.move(dx, dy);
         local.move(dx, dy);
         download.move(dx, dy);
+        upload.move(dx, dy);
     }
 }

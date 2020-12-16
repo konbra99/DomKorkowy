@@ -1,5 +1,7 @@
 package server;
 
+import map.MapManager;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -65,5 +67,17 @@ public class Client{
 		} catch (IOException ignored) {}
 
 		return rooms;
+	}
+
+	public boolean addMap(String map) {
+		try {
+			output.writeInt(CREATE_MAP);
+			output.writeUTF(map);
+			input.readInt();
+			return input.readBoolean();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 }

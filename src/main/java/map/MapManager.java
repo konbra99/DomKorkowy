@@ -15,7 +15,6 @@ public class MapManager implements JsonSerializable {
 	public String mapName = "default";
 	public String author = "default";
 	public String description = "default";
-	public int maxPlayers = 10;
 	public int time = 120;
 	public float difficulty = 0.5f;
 	public JsonObject mapObject;
@@ -72,9 +71,9 @@ public class MapManager implements JsonSerializable {
 		JsonObject obj = new JsonObject();
 		JsonArray json_stages = new JsonArray();
 		obj.addProperty("mapName", mapName);
-		obj.addProperty("maxPlayers", maxPlayers);
 		obj.addProperty("author", author);
 		obj.addProperty("time", time);
+		obj.addProperty("description", description);
 		obj.add("stages", json_stages);
 
 		for(Stage stage: stages) {
@@ -88,8 +87,9 @@ public class MapManager implements JsonSerializable {
 		mapObject = obj;
 		mapName = obj.get("mapName").getAsString();
 		author = obj.get("author").getAsString();
-		maxPlayers = obj.get("maxPlayers").getAsInt();
 		time = obj.get("time").getAsInt();
+		if (obj.has("description"))
+			description = obj.get("description").getAsString();
 		stages.clear();
 
 		JsonArray json_stages = obj.getAsJsonArray("stages");

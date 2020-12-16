@@ -86,6 +86,13 @@ public class Button extends Entity {
             "gui/sign_download.png",
             "gui/sign_download.png" };
 
+    public final static String[] UPLOAD = {
+            "gui/sign_upload.png",
+            "gui/sign_upload.png",
+            "gui/sign_upload_highlighted.png",
+            "gui/sign_upload.png",
+            "gui/sign_upload.png" };
+
     public Button(float x, float y, float width, float height, Action action) {
         super(x, y, width, height, "gui/button.png");
         this.text = "";

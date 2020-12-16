@@ -1,6 +1,8 @@
 package database;
 
+import com.google.gson.JsonObject;
 import map.MapManager;
+import map.json.JsonUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -30,28 +32,59 @@ public class MapsConnector {
 		return map;
 	}
 
-	public static void addMap(MapManager map) {
+//	public static void addMap(MapManager map) {
+//		Session session = HibernateUtils.getSessionFactory().openSession();
+//		Transaction transaction = session.beginTransaction();
+//
+//		try {
+//			MapsEntity mapEntity = new MapsEntity();
+//			mapEntity.setName(map.mapName);
+//			mapEntity.setAuthor(map.author);
+//			mapEntity.setDescription(map.description);
+//			mapEntity.setNumOfStages(map.stages.size());
+//			mapEntity.setSrc(map.toJson().toString());
+//			session.save(mapEntity);
+//			transaction.commit();
+//		}
+//		catch(Exception exception) {
+//			transaction.rollback();
+//			throw exception;
+//		}
+//		finally {
+//			session.close();
+//		}
+//	}
+
+	public static boolean addMap(String src) {
 		Session session = HibernateUtils.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
+		JsonObject obj = JsonUtils.fromString(src);
 
 		try {
 			MapsEntity mapEntity = new MapsEntity();
-			mapEntity.setName(map.mapName);
-			mapEntity.setAuthor(map.author);
-			mapEntity.setDescription(map.description);
-			mapEntity.setNumOfStages(map.stages.size());
-			mapEntity.setSrc(map.toJson().toString());
+			mapEntity.setName(obj.get("mapName").getAsString());
+			mapEntity.setAuthor(obj.get("author").getAsString());
+			mapEntity.setNumOfStages(obj.get("stages").getAsJsonArray().size());
+			mapEntity.setTime(obj.get("time").getAsInt());
+			if (obj.has("description"))
+				mapEntity.setDescription(obj.get("description").getAsString());
+
+
+			mapEntity.setSrc(src);
 			session.save(mapEntity);
 			transaction.commit();
+			return true;
 		}
 		catch(Exception exception) {
 			transaction.rollback();
-			throw exception;
+			exception.printStackTrace();
+			return false;
 		}
 		finally {
 			session.close();
 		}
 	}
+
 
 	public static void addPlay(int id) {
 		Session session = HibernateUtils.getSessionFactory().openSession();

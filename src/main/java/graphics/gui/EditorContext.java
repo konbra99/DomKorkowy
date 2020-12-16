@@ -2,6 +2,8 @@ package graphics.gui;
 
 import graphics.*;
 import logic.Entity;
+import logic.Mob;
+import logic.Obstacle;
 import logic.Platform;
 import map.MapManager;
 import map.Stage;
@@ -127,8 +129,12 @@ class ElementButton extends Button {
                             "platforms/platforma.png");
                 }
                 case OBSTACLE -> {
+                    editor.newElement = new Obstacle(0.0f, 0.0f, 0.1f, 0.1f,
+                            "obstacles/spikes_2.png");
                 }
                 case MOB -> {
+                    editor.newElement = new Mob(0.0f, 0.0f, 0.1f, 0.2f, "mobs/enemy1.png",
+                            0.0f, 0.0f, 0.0f, -1);
                 }
             }
             editor.newElement.init();

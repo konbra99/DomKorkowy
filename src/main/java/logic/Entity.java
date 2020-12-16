@@ -113,6 +113,8 @@ public abstract class Entity implements JsonSerializable {
 	public JsonObject toJson() {
 		JsonObject obj = rectangle.toJson();
 		obj.addProperty("textureName", textureName);
+		obj.addProperty("hp", hp);
+		obj.addProperty("direction", direction);
 		return obj;
 	}
 

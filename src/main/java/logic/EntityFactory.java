@@ -1,5 +1,8 @@
 package logic;
 
+import logic.collectibles.HealthPotion;
+import logic.collectibles.HealthPotionLarge;
+import logic.collectibles.HealthPotionSmall;
 import map.exceptions.NoexistentType;
 
 /**
@@ -22,6 +25,9 @@ public class EntityFactory {
 			case "StaticObject"     -> new StaticObject();
 			case "TestRect"         -> new TestRect();
 			case "WheelObstacle"    -> new WheelObstacle();
+			case "HealthPotionSmall"-> new HealthPotionSmall();
+			case "HealthPotionLarge"-> new HealthPotionLarge();
+			case "HealthPotion"     -> new HealthPotion();
 			default                 -> throw new NoexistentType(type);
 		};
 	}

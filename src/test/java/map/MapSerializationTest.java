@@ -3,6 +3,7 @@ package map;
 import com.google.gson.JsonObject;
 import graphics.Config;
 import logic.*;
+import logic.collectibles.HealthPotionSmall;
 import map.json.JsonUtils;
 import org.junit.Test;
 
@@ -62,6 +63,10 @@ public class MapSerializationTest {
 
 		// moby
 		stage.addMapEntity(new Mob(0.5f, -0.5f, 0.08f, 0.18f,"koniec.png",-0.2f,0.7f,0.01f, Entity.RIGHT));
+
+		// itemy
+		stage.addMapEntity(new HealthPotionSmall(0.7f, -0.45f, 0.1f, 0.24f));
+
 		stage.buildHashMap();
 		map.addStage(stage);
 
@@ -142,7 +147,7 @@ public class MapSerializationTest {
 
 		JsonObject obj = map.toJson();
 		try {
-			JsonUtils.toFilePretty(obj, "Mapka5.json");
+			JsonUtils.toFilePretty(obj, "test_file100.json");
 			System.out.println(JsonUtils.toStringPretty(obj));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -154,7 +159,7 @@ public class MapSerializationTest {
 	public void FullMapFromJsonTest() {
 		MapManager map = new MapManager();
 		try {
-			JsonObject obj = JsonUtils.fromFile("Mapka5.json");
+			JsonObject obj = JsonUtils.fromFile("test_file100.json");
 			map.fromJson(obj);
 		} catch (Exception e) {
 			e.printStackTrace();

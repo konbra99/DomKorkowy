@@ -19,7 +19,7 @@ public class GameplayContext extends Context {
         map = new MapManager();
         HEALTHBAR = new Rectangle(-1.0f, 0.9f, 0.18f, 0.08f);
         HEALTHBAR.initGL("3hp.png", "rectangle.vert.glsl", "rectangle.frag");
-        HP_S = new HealthPotionSmall(0.7f, -0.45f, 0.1f, 0.24f);
+        //HP_S = new HealthPotionSmall(0.7f, -0.45f, 0.1f, 0.24f);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class GameplayContext extends Context {
         map.update();
         KORKOWY.move();
         KORKOWY.update();
-        HP_S.update();
+        //HP_S.update();
         Input.resetInputs();
     }
 
@@ -50,7 +50,7 @@ public class GameplayContext extends Context {
         map.draw();
         KORKOWY.draw();
         HEALTHBAR.draw();
-        HP_S.draw();
+        //HP_S.draw();
     }
 
     public Collection<Entity> getPlatforms() {

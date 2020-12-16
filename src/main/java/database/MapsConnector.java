@@ -82,7 +82,7 @@ public class MapsConnector {
 		// ADD MAP
 //		try {
 //			MapManager map = new MapManager();
-//			JsonObject obj = JsonUtils.fromFile("Mapka5.json");
+//			JsonObject obj = JsonUtils.fromFile("test_file100.json");
 //			map.fromJson(obj);
 //			addMap(map);
 //		} catch (Exception e) {

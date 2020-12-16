@@ -1,10 +1,5 @@
 package map;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -12,6 +7,11 @@ import graphics.Rectangle;
 import logic.Entity;
 import logic.EntityFactory;
 import map.json.JsonSerializable;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import static logic.Entity.*;
 
 /**
@@ -35,7 +35,7 @@ public class Stage implements JsonSerializable {
 	public Map<Integer, Entity> collectibles;
 
 	// listy
-	public List<Entity> allMap;
+	public ArrayList<Entity> allMap;
 
 	public Stage() {
 		this(null, 0.0f, 0.0f);
@@ -120,8 +120,9 @@ public class Stage implements JsonSerializable {
 	 * W trybie edycji elementy nie posiadaja jeszcze id. */
 	public void drawMap() {
 		background.draw();
-		for(Entity entity: allMap)
+		for (Entity entity : allMap) {
 			entity.draw();
+		}
 	}
 
 	/** Grupuje elementy z all do poszczegolnych map pomocnicznych.
@@ -163,7 +164,7 @@ public class Stage implements JsonSerializable {
 			all.put(counter, entity);
 			counter++;
 		}
-		allMap = null;
+		// allMap = null
 	}
 
 	public JsonObject toJson() {

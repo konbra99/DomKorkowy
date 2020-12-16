@@ -1,7 +1,5 @@
 package logic;
 
-import graphics.Input;
-
 public class Platform extends Entity{
 
     public Platform() {
@@ -18,18 +16,5 @@ public class Platform extends Entity{
     public void init() {
         this.rectangle.X_WRAP = true;
         this.rectangle.initGL(textureName, "rectangle.vert.glsl", "rectangle.frag");
-    }
-
-    @Override
-    public void update() {
-        if (this.rectangle.hasPoint(Input.MOUSE_X, Input.MOUSE_Y)) {
-            if (this.textureName.equals("platforma.png")) {
-                this.rectangle.setTexture("platforma2.jpg");
-                this.textureName = "platforma2.jpg";
-            } else {
-                this.rectangle.setTexture("platforma.png");
-                this.textureName = "platforma.png";
-            }
-        }
     }
 }

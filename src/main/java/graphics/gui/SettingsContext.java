@@ -46,7 +46,7 @@ public class SettingsContext extends Context {
         fullScreen.move(-0.5f, -0.3f);
 
         // BACK
-        backButton = new Button(-0.95f, -0.95f, 0.20f, 0.4f, null, Button.RIGHT_ARROW);
+        backButton = new Button(-0.95f, -0.95f, 0.20f, 0.4f, null, Button.LEFT_ARROW);
         backButton.setText("BACK", "msgothic.bmp", 0.04f, 0.1f);
         backButton.action = () -> {
             Engine.activeContext = Engine.menu;
@@ -54,7 +54,7 @@ public class SettingsContext extends Context {
         };
 
         // BACK
-        nextButton = new Button(0.75f, -0.95f, 0.20f, 0.4f, null, Button.LEFT_ARROW);
+        nextButton = new Button(0.75f, -0.95f, 0.20f, 0.4f, null, Button.RIGHT_ARROW);
         nextButton.setText("ACCEPT", "msgothic.bmp", 0.04f, 0.1f);
         nextButton.action = () -> {
             Engine.activeContext = Engine.menu;

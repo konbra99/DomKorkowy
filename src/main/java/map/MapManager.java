@@ -21,7 +21,7 @@ public class MapManager implements JsonSerializable {
 
 	// sceny
 	public List<Stage> stages;
-	int currentStage;
+	public int currentStage;
 
 	public MapManager() {
 		stages = new ArrayList<>();

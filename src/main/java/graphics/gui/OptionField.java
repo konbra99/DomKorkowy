@@ -29,8 +29,8 @@ public class OptionField extends DataField {
         this.option_length = option_strings.length;
         this.option_current = 0;
 
-        left = new Button(0.35f, +0.05f, 0.09f, 0.18f, this::prevValue, Button.RIGHT_ARROW);
-        right = new Button(0.86f, +0.05f, 0.09f, 0.18f, this::nextValue, Button.LEFT_ARROW);
+        left = new Button(0.35f, +0.05f, 0.09f, 0.18f, this::prevValue, Button.LEFT_ARROW);
+        right = new Button(0.86f, +0.05f, 0.09f, 0.18f, this::nextValue, Button.RIGHT_ARROW);
     }
 
     @Override

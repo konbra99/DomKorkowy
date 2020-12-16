@@ -65,7 +65,7 @@ public class Engine implements Runnable {
         menu = new MenuContext("gui/background0.png");
         browser = new BrowserContext("gui/background0.png");
         gameplay = new GameplayContext();
-        editor = new EditorContext();
+        editor = null;
         authors = new AuthorsContext();
         settings = new SettingsContext();
         activeContext = menu;
@@ -97,7 +97,7 @@ public class Engine implements Runnable {
             activeContext.draw();
 
             fontLoader.renderText("fps: " + avg, "msgothic.bmp",
-                    0.65f, 0.9f, 0.05f, 0.08f,
+                    0.65f, -1.0f, 0.05f, 0.08f,
                     0.0f, 1.0f, 0.0f, 1.0f);
 
             glfwSwapBuffers(window.getWindowHandle()); // swap the color buffers

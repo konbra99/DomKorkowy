@@ -204,7 +204,7 @@
           "centreX": 0.54,
           "centreY": -0.230625,
           "textureName": "koniec.png",
-          "hp": 10,
+          "hp": 2,
           "direction": 1,
           "beginX": -0.2,
           "endX": 0.7,

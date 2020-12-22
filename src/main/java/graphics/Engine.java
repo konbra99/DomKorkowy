@@ -4,6 +4,7 @@ import graphics.gui.*;
 import org.lwjgl.Version;
 import org.lwjgl.opengl.GL;
 import server.Client;
+import sound.SoundManager;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -25,6 +26,7 @@ public class Engine implements Runnable {
     }
 
     private Window window;
+    private SoundManager soundManager;
 
     public static int FRAMES;
     public static GAME_STATE STATE;
@@ -50,10 +52,14 @@ public class Engine implements Runnable {
         glfwDestroyWindow(window.getWindowHandle());
         glfwTerminate();
         Objects.requireNonNull(glfwSetErrorCallback(null)).free();
+        soundManager.cleanup();
     }
 
     private void init() {
         window = new Window();
+        soundManager = new SoundManager();
+        soundManager.playBackgroundMusic();
+
         GL.createCapabilities();
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

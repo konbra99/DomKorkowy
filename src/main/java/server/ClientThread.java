@@ -1,6 +1,7 @@
 package server;
 
 import database.MapsConnector;
+import org.lwjgl.system.CallbackI;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -13,13 +14,12 @@ import static server.Protocol.CREATE_MAP;
 
 public class ClientThread extends Thread{
 
-	private Socket socket;
+	public int id;
+	public boolean status;
 	private DataInputStream input;
 	private DataOutputStream output;
-	private int id;
 
 	public ClientThread(Socket socket, int id) throws IOException {
-		this.socket = socket;
 		this.id = id;
 		input = new DataInputStream(socket.getInputStream());
 		output = new DataOutputStream(socket.getOutputStream());
@@ -34,34 +34,70 @@ public class ClientThread extends Thread{
 				switch (num) {
 
 					case GET_MAPS:
-						System.out.println("Client [] GET_MAPS");
+						System.out.printf("Client [%d] GET_MAPS\n", id);
 						List<String> maps = MapsConnector.getMaps();
-						output.writeInt(SET_MAPS);
+						output.writeInt(GET_MAPS);
 						output.writeInt(maps.size());
 						for (String map : maps)
 							output.writeUTF(map);
 						break;
 
 					case GET_ROOMS:
-						System.out.println("Client [] GET_ROOMS");
-						output.writeInt(SET_ROOMS);
-						output.writeInt(Server.lobbies.length);
-						for (Lobby lobby : Server.lobbies)
+						System.out.printf("Client [%d] GET_ROOMS\n", id);
+						output.writeInt(GET_ROOMS);
+						output.writeInt(Server.lobbies.size());
+						for (Lobby lobby : Server.lobbies.values())
 							output.writeUTF(lobby.toJson().toString());
 						break;
 
 					case CREATE_MAP:
-						System.out.println("Client [] CREATE_MAP");
+						System.out.printf("Client [%d] CREATE_MAP\n", id);
 						String src = input.readUTF();
 						output.writeInt(CREATE_MAP);
 						boolean status = MapsConnector.addMap(src);
 						output.writeBoolean(status);
 						break;
+
+					case GET_CLIENT_ID:
+						System.out.printf("Client [%d] GET_CLIENT_ID\n", id);
+						output.writeInt(GET_CLIENT_ID);
+						output.writeInt(id);
+						break;
+
+					case LOBBY_MY_JOIN:
+						System.out.printf("Client [%d] LOBBY_MY_JOIN\n", id);
+						int id = input.readInt();
+						Lobby lobby = Server.lobbies.get(id);
+						if (lobby == null) {
+							// lobby nie istnieje
+							output.writeInt(LOBBY_MY_JOIN);
+							output.writeInt(LOBBY_NOT_EXIST);
+						}
+						else {
+							// lobby istnieje
+							lobby.join(this);
+						}
+						break;
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
 				break;
 			}
+		}
+	}
+
+	public void writeInt(int v) {
+		try {
+			output.writeInt(v);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void writeBoolean(boolean v) {
+		try {
+			output.writeBoolean(v);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 }

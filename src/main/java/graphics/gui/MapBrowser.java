@@ -22,6 +22,7 @@ public class MapBrowser extends Entity {
     Rectangle searchRect;
     ArrayList<DataField> dataFields;
     public MapField active = null;
+    public RoomField roomActive = null;
     float y_min = Config.SEARCH_Y;
     float y_curr = 0.0f;
     boolean is_new_map = false;

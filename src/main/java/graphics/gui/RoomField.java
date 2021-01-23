@@ -16,6 +16,7 @@ public class RoomField extends DataField {
         this.str_max_players = Integer.toString(lobby.max_players);
 
         this.action = () -> {
+            this.browser.roomActive = this;
             browser.deselectAll();
             this.is_selected = true;
             this.is_invalid = false;

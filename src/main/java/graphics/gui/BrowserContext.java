@@ -52,8 +52,8 @@ public class BrowserContext extends Context {
         Button button = new Button(0.58f, -0.85f, 0.25f, 0.5f, null, Button.RIGHT_ARROW);
         button.setText("JOIN", "msgothic.bmp", 0.05f, 0.12f);
         button.action = () -> {
-            if (browser.active != null) {
-                System.out.println("JOIN");
+            if (browser.roomActive != null) {
+                Engine.client.lobbyJoin(browser.roomActive.lobby.id);
             }
         };
         buttonList.add(button);

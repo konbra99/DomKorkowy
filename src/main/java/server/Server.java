@@ -3,6 +3,8 @@ package server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Server {
 
@@ -11,13 +13,7 @@ public class Server {
 	private static int lobbyCounter = 0;
 	private final static int port = 7117;
 
-	/*************** TYMCZASOWO *****************/
-	public static Lobby[] lobbies = {
-			new Lobby(lobbyCounter++, "aaaa", "aaaaa", "asdasd", 12),
-			new Lobby(lobbyCounter++, "bbbb", "ccccc", "asdasd", 111),
-			new Lobby(lobbyCounter++, "cccc", "ddddd", "asdasd", 999),
-	};
-	/********************************************/
+	public static Map<Integer, Lobby> lobbies;
 
 	public Server() {
 		try {
@@ -25,6 +21,13 @@ public class Server {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+		lobbies = new HashMap<>();
+		/*************** TYMCZASOWO *****************/
+		lobbies.put(lobbyCounter, new Lobby(lobbyCounter, "test1", "test2", "test3", 12));
+		lobbyCounter++;
+		/********************************************/
+
 	}
 	public void run() throws IOException{
 		Socket socket;

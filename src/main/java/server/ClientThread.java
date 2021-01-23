@@ -15,6 +15,7 @@ import static server.Protocol.CREATE_MAP;
 public class ClientThread extends Thread{
 
 	public int id;
+	public int lobbyId;
 	public boolean status;
 	private DataInputStream input;
 	private DataOutputStream output;
@@ -66,8 +67,8 @@ public class ClientThread extends Thread{
 
 					case LOBBY_MY_JOIN:
 						System.out.printf("Client [%d] LOBBY_MY_JOIN\n", id);
-						int id = input.readInt();
-						Lobby lobby = Server.lobbies.get(id);
+						int tempLobbyId = input.readInt();
+						Lobby lobby = Server.lobbies.get(tempLobbyId);
 						if (lobby == null) {
 							// lobby nie istnieje
 							output.writeInt(LOBBY_MY_JOIN);
@@ -78,6 +79,15 @@ public class ClientThread extends Thread{
 							lobby.join(this);
 						}
 						break;
+
+					case LOBBY_MY_EXIT:
+						System.out.printf("Client [%d] LOBBY_MY_EXIT\n", id);
+						Server.lobbies.get(lobbyId).exit(this);
+						break;
+
+					default:
+						System.out.println("ClientThread: nierozpoznany komunikat");
+
 				}
 			} catch (IOException e) {
 				break;

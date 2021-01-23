@@ -24,7 +24,10 @@ public class Server {
 
 		lobbies = new HashMap<>();
 		/*************** TYMCZASOWO *****************/
-		lobbies.put(lobbyCounter, new Lobby(lobbyCounter, "test1", "test2", "test3", 12));
+		lobbies.put(lobbyCounter, new Lobby(lobbyCounter, "test1", "test2", "test3", 3));
+		lobbyCounter++;
+
+		lobbies.put(lobbyCounter, new Lobby(lobbyCounter, "test4", "test5", "test6", 3));
 		lobbyCounter++;
 		/********************************************/
 

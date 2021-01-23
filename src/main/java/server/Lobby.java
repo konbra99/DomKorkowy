@@ -36,6 +36,7 @@ public class Lobby implements JsonSerializable {
 		}
 		else {
 			// jest wolne miejsce
+			client.lobbyId = this.id;
 			client.writeInt(LOBBY_MY_JOIN);
 			client.writeInt(LOBBY_JOINED);
 
@@ -57,7 +58,16 @@ public class Lobby implements JsonSerializable {
 	}
 
 	public void exit(ClientThread client) {
+		// komunikat do wszystkich graczy
+		for(ClientThread c: clients) {
+			c.writeInt(LOBBY_OTHER_EXIT);
+			c.writeInt(client.id);
+		}
+		clients.remove(client);
 
+		// pusty pokoj
+		if (clients.size() == 0)
+			Server.lobbies.remove(id);
 	}
 
 	@Override

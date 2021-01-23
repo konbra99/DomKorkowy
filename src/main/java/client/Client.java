@@ -15,7 +15,7 @@ public class Client{
 	private DataInputStream input;
 	private DataOutputStream output;
 	private boolean isConnected;
-	private int id;
+	public int id;
 
 	public Client() {
 		isConnected = false;
@@ -89,26 +89,28 @@ public class Client{
 		} catch (IOException ignored) {}
 	}
 
-	public void lobbyJoin(int lobbyId) {
+	public int lobbyJoin(int lobbyId) {
 		try {
 			System.out.println("proba dolaczenia do pokoju");
 
 			output.writeInt(LOBBY_MY_JOIN);
 			output.writeInt(lobbyId);
 			input.readInt();
-
-			int status = input.readInt();
-			if (status == LOBBY_NOT_EXIST) {
-				System.out.println("lobby nie istnieje");
-			}
-			else if (status == LOBBY_IS_FULL) {
-				System.out.println("lobby nie ma miejsc");
-			}
-			else if (status == LOBBY_JOINED) {
-				System.out.println("dolaczono do lobby");
-				new LobbyReader(input).start();
-			}
+			return input.readInt();
 
 		} catch (IOException ignored) {}
+		return -1;
+	}
+
+	public void lobbyExit() {
+		try {
+			output.writeInt(LOBBY_MY_EXIT);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void spawnLobbyReader() {
+		new LobbyReader(input).start();
 	}
 }

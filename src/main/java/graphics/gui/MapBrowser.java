@@ -112,6 +112,19 @@ public class MapBrowser extends Entity {
         }
     }
 
+    public void createLobbyButtons() {
+        dataFields = new ArrayList<>();
+        is_new_map = false;
+        y_min = Config.SEARCH_Y;
+        y_curr = 0.0f;
+
+        for (int i = 0; i < roomActive.lobby.max_players; i++) {
+            DataField roomField = new ClientRadioField(Button.LONG_BUTTON);
+            roomField.setText("EMPTY", "msgothic.bmp", 0.05f, 0.08f);
+            addButton(roomField);
+        }
+    }
+
     public MapBrowser() {
         this.dataFields = new ArrayList<>();
         this.searchRect = new Rectangle(Config.SEARCH_X, -1.1f, 1.0f, 2.2f);
@@ -163,5 +176,23 @@ public class MapBrowser extends Entity {
         button.move(Config.SEARCH_X, y_min / Config.RESOLUTION);
         dataFields.add(button);
         y_min -= Config.MAP_BUTTON_HEIGHT + 0.1f;
+    }
+
+    public void join(int id) {
+        for (DataField field: dataFields) {
+            if (((ClientRadioField)field).join(id)) break;
+        }
+    }
+
+    public void exit(int id) {
+        for (DataField field: dataFields) {
+            if (((ClientRadioField)field).exit(id)) break;
+        }
+    }
+
+    public void status(int id, boolean s) {
+        for (DataField field: dataFields) {
+            if (((ClientRadioField)field).status(id, s)) break;
+        }
     }
 }

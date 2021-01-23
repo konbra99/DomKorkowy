@@ -1,12 +1,15 @@
 package graphics.gui;
 
+import client.LobbyReader;
 import graphics.Engine;
 import map.MapManager;
 
 import java.util.ArrayList;
 
+import static server.Protocol.*;
+
 public class BrowserContext extends Context {
-    MapBrowser browser;
+    public MapBrowser browser;
     ArrayList<Button> buttonList;
     Warning warning;
 
@@ -53,7 +56,25 @@ public class BrowserContext extends Context {
         button.setText("JOIN", "msgothic.bmp", 0.05f, 0.12f);
         button.action = () -> {
             if (browser.roomActive != null) {
-                Engine.client.lobbyJoin(browser.roomActive.lobby.id);
+                int status = Engine.client.lobbyJoin(browser.roomActive.lobby.id);
+                if (status == LOBBY_NOT_EXIST) {
+                    System.out.println("lobby nie istnieje");
+                }
+                else if (status == LOBBY_IS_FULL) {
+                    System.out.println("lobby nie ma miejsc");
+                }
+                else if (status == LOBBY_JOINED) {
+                    System.out.println("dolaczono do lobby");
+                    Engine.browser.refreshContext();
+                    Engine.browser.addExitButton();
+                    Engine.browser.addRefreshButton();
+                    Engine.browser.browser.removeAll();
+                    Engine.activeContext = Engine.browser;
+                    Engine.browser.browser.createLobbyButtons();
+                    Engine.STATE = Engine.GAME_STATE.BROWSER;
+                    Engine.browser.browser.join(Engine.client.id);
+                    Engine.client.spawnLobbyReader();
+                }
             }
         };
         buttonList.add(button);
@@ -77,6 +98,18 @@ public class BrowserContext extends Context {
         Button button = new Button(0.28f, -0.85f, 0.25f, 0.5f, null, Button.LEFT_ARROW);
         button.setText("BACK", "msgothic.bmp", 0.05f, 0.12f);
         button.action = () -> {
+            Engine.activeContext = Engine.menu;
+            Engine.STATE = Engine.GAME_STATE.MENU;
+        };
+        buttonList.add(button);
+    }
+
+    public void addExitButton() {
+        Button button = new Button(0.28f, -0.85f, 0.25f, 0.5f, null, Button.LEFT_ARROW);
+        button.setText("EXIT", "msgothic.bmp", 0.05f, 0.12f);
+        button.action = () -> {
+            System.out.println("BrowserContext -> ROOM EXIT");
+            Engine.client.lobbyExit();
             Engine.activeContext = Engine.menu;
             Engine.STATE = Engine.GAME_STATE.MENU;
         };

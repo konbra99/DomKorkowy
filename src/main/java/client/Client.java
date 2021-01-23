@@ -1,6 +1,4 @@
-package server;
-
-import map.MapManager;
+package client;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

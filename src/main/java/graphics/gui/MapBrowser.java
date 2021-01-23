@@ -8,7 +8,7 @@ import graphics.Rectangle;
 import logic.Entity;
 import map.MapManager;
 import map.json.JsonUtils;
-import server.Room;
+import server.Lobby;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -101,12 +101,12 @@ public class MapBrowser extends Entity {
         y_curr = 0.0f;
 
         for (String roomStr : rooms) {
-            Room room = new Room();
+            Lobby lobby = new Lobby();
             JsonObject obj = JsonUtils.fromString(roomStr);
-            room.fromJson(obj);
+            lobby.fromJson(obj);
 
-            RoomField roomField = new RoomField(room, this, Button.LONG_BUTTON);
-            roomField.setText(room.room_name, "msgothic.bmp", 0.05f, 0.08f);
+            RoomField roomField = new RoomField(lobby, this, Button.LONG_BUTTON);
+            roomField.setText(lobby.room_name, "msgothic.bmp", 0.05f, 0.08f);
             addButton(roomField);
         }
     }

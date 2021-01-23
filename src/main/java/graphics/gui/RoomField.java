@@ -2,33 +2,33 @@ package graphics.gui;
 
 import graphics.Config;
 import graphics.Engine;
-import server.Room;
+import server.Lobby;
 
 public class RoomField extends DataField {
-    public Room room;
+    public Lobby lobby;
     MapBrowser browser;
     String str_max_players;
 
-    public RoomField(Room room, MapBrowser browser, String [] textures) {
+    public RoomField(Lobby lobby, MapBrowser browser, String [] textures) {
         super(0.0f, 0.0f, Config.MAP_BUTTON_WIDTH, Config.MAP_BUTTON_HEIGHT, null, textures);
         this.browser = browser;
-        this.room = room;
-        this.str_max_players = Integer.toString(room.max_players);
+        this.lobby = lobby;
+        this.str_max_players = Integer.toString(lobby.max_players);
 
         this.action = () -> {
             browser.deselectAll();
             this.is_selected = true;
             this.is_invalid = false;
-            System.out.println("ustawiony pokoj: " + room);
+            System.out.println("ustawiony pokoj: " + lobby);
         };
     }
 
     @Override
     public void draw() {
         super.draw();
-        Engine.fontLoader.renderText(room.map_name, font, text_x-0.25f, text_y-0.04f,
+        Engine.fontLoader.renderText(lobby.map_name, font, text_x-0.25f, text_y-0.04f,
                 charwidth*0.7f, charheight*0.7f, 0.0f, 0.0f, 0.0f, 1.0f);
-        Engine.fontLoader.renderText(room.admin_name, font, text_x+0.1f, text_y-0.04f,
+        Engine.fontLoader.renderText(lobby.admin_name, font, text_x+0.1f, text_y-0.04f,
                 charwidth*0.7f, charheight*0.7f,0.0f, 0.0f, 0.0f, 1.0f);
         Engine.fontLoader.renderText(str_max_players, font, text_x+0.4f, text_y-0.04f,
                 charwidth*0.7f, charheight*0.7f,0.0f, 0.0f, 0.0f, 1.0f);

@@ -3,10 +3,9 @@ package graphics;
 import graphics.gui.*;
 import org.lwjgl.Version;
 import org.lwjgl.opengl.GL;
-import server.Client;
+import client.Client;
 import sound.SoundManager;
 
-import java.io.IOException;
 import java.util.Objects;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;

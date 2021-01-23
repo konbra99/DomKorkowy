@@ -3,18 +3,18 @@ package server;
 import com.google.gson.JsonObject;
 import map.json.JsonSerializable;
 
-public class Room implements JsonSerializable {
+public class Lobby implements JsonSerializable {
 	public int id;
 	public String room_name;
 	public String admin_name;
 	public String map_name;
 	public int max_players;
 
-	public Room() {
+	public Lobby() {
 
 	}
 
-	public Room(int id, String room_name, String admin_name, String map_name, int max_players) {
+	public Lobby(int id, String room_name, String admin_name, String map_name, int max_players) {
 		this.id = id;
 		this.room_name = room_name;
 		this.admin_name = admin_name;

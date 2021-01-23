@@ -15,7 +15,9 @@ public class Client{
 	private DataInputStream input;
 	private DataOutputStream output;
 	private boolean isConnected;
+	public boolean isReady;
 	public int id;
+
 
 	public Client() {
 		isConnected = false;
@@ -35,6 +37,7 @@ public class Client{
 			input = new DataInputStream(socket.getInputStream());
 			output = new DataOutputStream(socket.getOutputStream());
 			isConnected = true;
+			isReady = false;
 			System.out.println("Client polaczony z serwerem");
 			getId();
 		} catch (IOException e) {
@@ -106,6 +109,15 @@ public class Client{
 		try {
 			output.writeInt(LOBBY_MY_EXIT);
 		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void lobbyStatus() {
+		try {
+			output.writeInt(LOBBY_MY_STATUS);
+			output.writeBoolean(isReady);
+		} catch( IOException e) {
 			e.printStackTrace();
 		}
 	}

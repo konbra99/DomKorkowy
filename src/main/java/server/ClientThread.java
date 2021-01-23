@@ -85,6 +85,12 @@ public class ClientThread extends Thread{
 						Server.lobbies.get(lobbyId).exit(this);
 						break;
 
+					case LOBBY_MY_STATUS:
+						System.out.printf("Client [%d] LOBBY_MY_STATUS\n", id);
+						boolean tempStatus = input.readBoolean();
+						Server.lobbies.get(lobbyId).status(this, tempStatus);
+						break;
+
 					default:
 						System.out.println("ClientThread: nierozpoznany komunikat");
 

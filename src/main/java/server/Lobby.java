@@ -57,7 +57,19 @@ public class Lobby implements JsonSerializable {
 		}
 	}
 
-	public void exit(ClientThread client) {
+	public synchronized void status(ClientThread client, boolean tempStatus) {
+		// komunikat do wszystkich graczy
+		for(ClientThread c: clients) {
+			c.writeInt(LOBBY_OTHER_STATUS);
+			c.writeInt(client.id);
+			c.writeBoolean(tempStatus);
+		}
+		client.status = tempStatus;
+
+		// TODO wszyscy gotowi, mozna grac
+	}
+
+	public synchronized void exit(ClientThread client) {
 		// komunikat do wszystkich graczy
 		for(ClientThread c: clients) {
 			c.writeInt(LOBBY_OTHER_EXIT);
@@ -65,7 +77,7 @@ public class Lobby implements JsonSerializable {
 		}
 		clients.remove(client);
 
-		// pusty pokoj
+		// pusty pokoj, usuwamy
 		if (clients.size() == 0)
 			Server.lobbies.remove(id);
 	}

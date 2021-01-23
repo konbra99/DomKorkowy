@@ -67,7 +67,7 @@ public class BrowserContext extends Context {
                     System.out.println("dolaczono do lobby");
                     Engine.browser.refreshContext();
                     Engine.browser.addExitButton();
-                    Engine.browser.addRefreshButton();
+                    Engine.browser.addReadyButton();
                     Engine.browser.browser.removeAll();
                     Engine.activeContext = Engine.browser;
                     Engine.browser.browser.createLobbyButtons();
@@ -90,6 +90,20 @@ public class BrowserContext extends Context {
                 warning.showWarning("Klient nie zostal polaczony z serwerem");
             else
                 browser.createServerRoomsButtons();
+        };
+        buttonList.add(button);
+    }
+
+    public void addReadyButton() {
+        Button button = new Button(0.25f, 0.6f, 0.6f, 0.3f, null, Button.MEDIUM_BUTTON);
+        button.setText("NOT READY", "msgothic.bmp", 0.05f, 0.12f);
+        button.action = () -> {
+
+            button.text = (Engine.client.isReady) ? "NOT READY" : "READY";
+            System.out.println((Engine.client.isReady) ? "NOT READY" : "READY");
+
+            Engine.client.isReady = !Engine.client.isReady;
+            Engine.client.lobbyStatus();
         };
         buttonList.add(button);
     }

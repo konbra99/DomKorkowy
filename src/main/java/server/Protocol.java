@@ -18,7 +18,7 @@ public class Protocol {
 	public final static int DELETE_ROOM = -11;  //
 
 	public final static int LOBBY_MY_JOIN = 50;     //      LOBBY_MY_JOIN lobby_id      LOBBY_MY_JOIN status
-	public final static int LOBBY_MY_EXIT = 51;     //      LOBBY_MY_EXIT
+	public final static int LOBBY_MY_EXIT = 51;     //      LOBBY_MY_EXIT               ---
 	public final static int LOBBY_MY_STATUS = 52;   //      LOBBY_MY_STATUS status      ---
 	public final static int LOBBY_OTHER_JOIN = 53;  //      ---                         LOBBY_OTHER_JOIN id
 	public final static int LOBBY_OTHER_EXIT = 54;  //      ---                         LOBBY_OTHER_EXIT id

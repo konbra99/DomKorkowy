@@ -13,10 +13,10 @@ public class Lobby implements JsonSerializable {
 	public String admin_name;
 	public String map_name;
 	public int max_players;
+	private ClientThread admin;
 	ArrayList<ClientThread> clients;
 
 	public Lobby() {
-
 	}
 
 	public Lobby(int id, String room_name, String admin_name, String map_name, int max_players) {
@@ -25,6 +25,7 @@ public class Lobby implements JsonSerializable {
 		this.admin_name = admin_name;
 		this.map_name = map_name;
 		this.max_players = max_players;
+
 		clients = new ArrayList<>();
 	}
 
@@ -54,6 +55,7 @@ public class Lobby implements JsonSerializable {
 				client.writeBoolean(c.status);
 			}
 			clients.add(client);
+			checkAdmin();
 		}
 	}
 
@@ -76,10 +78,20 @@ public class Lobby implements JsonSerializable {
 			c.writeInt(client.id);
 		}
 		clients.remove(client);
+		if (admin == client)
+			admin = null;
+		checkAdmin();
 
 		// pusty pokoj, usuwamy
 		if (clients.size() == 0)
 			Server.lobbies.remove(id);
+	}
+
+	public synchronized void checkAdmin() {
+		if (admin == null && clients.size() > 0) {
+			admin = clients.get(0);
+			clients.get(0).writeInt(LOBBY_ADMIN);
+		}
 	}
 
 	@Override

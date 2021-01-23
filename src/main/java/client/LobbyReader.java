@@ -51,6 +51,7 @@ public class LobbyReader extends Thread {
 
 					case LOBBY_ADMIN:
 						System.out.println("Lobby [] LOBBY_ADMIN ");
+						Engine.browser.startButton.is_visible = true;
 						break;
 				}
 			} catch (IOException e) {

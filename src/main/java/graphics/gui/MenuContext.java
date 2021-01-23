@@ -30,6 +30,7 @@ public class MenuContext extends Context {
                     Engine.browser.addRefreshButton();
                     Engine.browser.addJoinButton();
                     Engine.browser.addBackButton();
+                    Engine.browser.addStartButton();
                     Engine.browser.browser.removeAll();
                     Engine.activeContext = Engine.browser;
                     Engine.STATE = Engine.GAME_STATE.BROWSER;

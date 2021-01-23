@@ -1,6 +1,5 @@
 package graphics.gui;
 
-import client.LobbyReader;
 import graphics.Engine;
 import map.MapManager;
 
@@ -12,6 +11,7 @@ public class BrowserContext extends Context {
     public MapBrowser browser;
     ArrayList<Button> buttonList;
     Warning warning;
+    public Button startButton;
 
     public BrowserContext(String background) {
         super(background);
@@ -30,6 +30,10 @@ public class BrowserContext extends Context {
     @Override
     public void refreshContext() {
         this.buttonList.clear();
+        if (startButton != null) {
+            startButton.is_visible = false;
+            startButton.is_active = false;
+        }
     }
 
     public void addButton(Button button) {
@@ -106,6 +110,17 @@ public class BrowserContext extends Context {
             Engine.client.lobbyStatus();
         };
         buttonList.add(button);
+    }
+
+    public void addStartButton() {
+        Button button = new Button(0.25f, 0.2f, 0.6f, 0.3f, null, Button.MEDIUM_BUTTON);
+        button.setText("START", "msgothic.bmp", 0.05f, 0.12f);
+        button.is_active = false;
+        button.is_visible = false;
+        button.action = () -> {
+            System.out.println("BrowserContext: Start");
+        };
+        startButton = button;
     }
 
     public void addBackButton() {
@@ -191,6 +206,7 @@ public class BrowserContext extends Context {
             this.browser.update();
             for (Button b : buttonList)
                 b.update();
+            startButton.update();
         }
     }
 
@@ -200,6 +216,7 @@ public class BrowserContext extends Context {
         this.browser.draw();
         for (Button b : buttonList)
             b.draw();
+        startButton.draw();
         this.warning.draw();
     }
 }

@@ -15,7 +15,7 @@ public class Button extends Entity {
     protected boolean is_active;
     protected boolean is_selected;
     protected boolean is_invalid;
-    protected boolean is_visible;
+    public boolean is_visible;
     protected String texture_enabled = "gui/button_long.png";
     protected String texture_disabled = "gui/button_long.png";
     protected String texture_highlighted = "gui/button_long.png";
@@ -170,10 +170,12 @@ public class Button extends Entity {
             this.rectangle.setTexture(texture_disabled);
         }
 
-        super.draw();
-        if (this.text.length() > 0 && this.font.length() > 0) {
-            Engine.fontLoader.renderText(text, font, text_x, text_y, charwidth, charheight,
-                    0.0f, 0.0f, 0.0f, 1.0f);
+        if (is_visible) {
+            super.draw();
+            if (this.text.length() > 0 && this.font.length() > 0) {
+                Engine.fontLoader.renderText(text, font, text_x, text_y, charwidth, charheight,
+                        0.0f, 0.0f, 0.0f, 1.0f);
+            }
         }
     }
 

@@ -23,7 +23,8 @@ public class Protocol {
 	public final static int LOBBY_OTHER_JOIN = 53;  //      ---                         LOBBY_OTHER_JOIN id
 	public final static int LOBBY_OTHER_EXIT = 54;  //      ---                         LOBBY_OTHER_EXIT id
 	public final static int LOBBY_OTHER_STATUS = 55;//      ---                         LOBBY_OTHER_STATUS id status
-	public final static int LOBBY_ADMIN = 56;       //
+	public final static int LOBBY_ADMIN = 56;       //      ---                         LOBBY_ADMIN
+	public final static int LOBBY_READY = 57;       //      ---                         LOBBY_READY status
 
 	// STATUS LOBBY
 	public final static int LOBBY_NOT_EXIST = 1;

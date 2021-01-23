@@ -53,6 +53,12 @@ public class LobbyReader extends Thread {
 						System.out.println("Lobby [] LOBBY_ADMIN ");
 						Engine.browser.startButton.is_visible = true;
 						break;
+
+					case LOBBY_READY:
+						s = input.readBoolean();
+						System.out.println("Lobby [] LOBBY_READY " + s);
+						Engine.browser.startButton.is_active = s;
+						break;
 				}
 			} catch (IOException e) {
 				e.printStackTrace();

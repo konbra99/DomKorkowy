@@ -12,7 +12,7 @@ public class Button extends Entity {
     String text, font;
     Action action;
     float text_x, text_y, charwidth, charheight;
-    protected boolean is_active;
+    public boolean is_active;
     protected boolean is_selected;
     protected boolean is_invalid;
     public boolean is_visible;

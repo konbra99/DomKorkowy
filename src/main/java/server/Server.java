@@ -1,5 +1,7 @@
 package server;
 
+import map.json.JsonUtils;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -32,6 +34,7 @@ public class Server {
 		/********************************************/
 
 	}
+
 	public void run() throws IOException{
 		Socket socket;
 		while (true) {
@@ -41,6 +44,13 @@ public class Server {
 			System.out.println("New client " + clientCounter);
 			clientCounter++;
 		}
+	}
+
+	public synchronized static void addLobby(String lobbyStr) {
+		Lobby lobby = new Lobby();
+		lobby.fromJson(JsonUtils.fromString(lobbyStr));
+		lobby.setId(lobbyCounter);
+		lobbies.put(lobbyCounter++, lobby);
 	}
 
 	public static void main(String[] args) throws IOException {

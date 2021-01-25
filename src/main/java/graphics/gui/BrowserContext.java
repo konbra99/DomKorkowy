@@ -3,6 +3,7 @@ package graphics.gui;
 import graphics.Engine;
 import graphics.gui_enums.MenuButtonNames;
 import map.MapManager;
+import server.Lobby;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -102,12 +103,17 @@ public class BrowserContext extends Context {
         button.setText("CREATE", "msgothic.bmp", 0.05f, 0.12f);
         button.setActiveVisible(false, false);
         button.action = () -> {
-            String name = browser.dataFieldsMap.get(LOBBY_NAME).getAsNonemptyString();
+            String lobby_name = browser.dataFieldsMap.get(LOBBY_NAME).getAsNonemptyString();
             Integer max_players = browser.dataFieldsMap.get(LOBBY_MAX_PLAYERS).getAsPositiveInteger();
+            String map_context = browser.dataFieldsMap.get(LOBBY_MAP).getAsString();
 
-            System.out.println("BrowserContext: addCreateButton");
-            System.out.println(name);
-            System.out.println(max_players);
+            if (lobby_name != null && max_players != null && map_context != null) {
+                Lobby lobby = new Lobby();
+                lobby.lobby_name = lobby_name;
+                lobby.max_players = max_players;
+                lobby.map_context = map_context;
+                Engine.client.lobbyCreate(lobby.toJson().toString());
+            }
         };
         buttonMap.put(CREATE_LOBBY, button);
     }

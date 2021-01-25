@@ -9,26 +9,34 @@ public class Lobby implements JsonSerializable {
 
 	// zmienne
 	public int id;
-	public String room_name;
+	public String lobby_name;
 	public String admin_name;
 	public String map_name;
+	public String map_context;
 	public int max_players;
 	public boolean prev_status;
 	private ClientThread admin;
 	ArrayList<ClientThread> clients;
 
 	public Lobby() {
+		this.id = -1;
+		this.lobby_name = "default";
+		this.admin_name = "default";
+		this.map_name = "default";
+		this.max_players = -1;
+		this.map_context = "default";
 	}
 
-	public Lobby(int id, String room_name, String admin_name, String map_name, int max_players) {
+	public Lobby(int id, String lobby_name, String admin_name, String map_name, int max_players) {
 		this.id = id;
-		this.room_name = room_name;
+		this.lobby_name = lobby_name;
 		this.admin_name = admin_name;
 		this.map_name = map_name;
 		this.max_players = max_players;
-		this.prev_status = false;
 
-		clients = new ArrayList<>();
+		this.prev_status = false;
+		this.clients = new ArrayList<>();
+		this.admin = null;
 	}
 
 	public synchronized void join(ClientThread client) {
@@ -123,7 +131,7 @@ public class Lobby implements JsonSerializable {
 	public JsonObject toJson() {
 		JsonObject obj = new JsonObject();
 		obj.addProperty("id", id);
-		obj.addProperty("room_name", room_name);
+		obj.addProperty("lobby_name", lobby_name);
 		obj.addProperty("admin_name", admin_name);
 		obj.addProperty("map_name", map_name);
 		obj.addProperty("max_players", max_players);
@@ -133,9 +141,17 @@ public class Lobby implements JsonSerializable {
 	@Override
 	public void fromJson(JsonObject obj) {
 		id = obj.get("id").getAsInt();
-		room_name = obj.get("room_name").getAsString();
+		lobby_name = obj.get("lobby_name").getAsString();
 		admin_name = obj.get("admin_name").getAsString();
 		map_name = obj.get("map_name").getAsString();
 		max_players = obj.get("max_players").getAsInt();
+
+		this.prev_status = false;
+		this.clients = new ArrayList<>();
+		this.admin = null;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }

@@ -106,20 +106,33 @@ public class MapBrowser extends Entity {
 
         DataField button;
 
+        // NAZWA LOBBY
         button = new TextField(this, Button.LONG_BUTTON);
         button.setText("nazwa:", "msgothic.bmp", 0.05f, 0.08f);
         addButton(button);
         dataFieldsMap.put(LOBBY_NAME, button);
 
+        // MAKSYMALNA LICZBA BRACZU
         button = new TextField(this, Button.LONG_BUTTON);
         button.setText("l.graczy:", "msgothic.bmp", 0.05f, 0.08f);
         addButton(button);
         dataFieldsMap.put(LOBBY_MAX_PLAYERS, button);
 
-        String[] option_strings = new String[]{"EASY", "MEDIUM", "HARD"};
-        Object[] option_values = new Object[] {0.0f, 0.5f, 1.0f};
-        button = new OptionField(this, Button.LONG_BUTTON, option_strings, option_values);
-        button.setText("trud:", "msgothic.bmp", 0.05f, 0.08f);
+        // MAPA
+        File directory = new File(Config.MAP_PATH);
+        File[] files = directory.listFiles();
+        List<String> map_names = new ArrayList<>();
+        List<String> map_contexts = new ArrayList<>();
+
+        for(File file: files) {
+            try {
+                map_names.add(file.getName().substring(0,7));
+                map_contexts.add(JsonUtils.toString(file));
+            } catch (Exception ignored) {}
+        }
+
+        button = new OptionField(this, Button.LONG_BUTTON, map_names.toArray(new String[1]), map_contexts.toArray());
+        button.setText("mapa:", "msgothic.bmp", 0.05f, 0.08f);
         addButton(button);
         dataFieldsMap.put(LOBBY_MAP, button);
     }
@@ -138,7 +151,7 @@ public class MapBrowser extends Entity {
             lobby.fromJson(obj);
 
             RoomField roomField = new RoomField(lobby, this, Button.LONG_BUTTON);
-            roomField.setText(lobby.room_name, "msgothic.bmp", 0.05f, 0.08f);
+            roomField.setText(lobby.lobby_name, "msgothic.bmp", 0.05f, 0.08f);
             addButton(roomField);
         }
     }

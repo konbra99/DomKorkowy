@@ -122,6 +122,16 @@ public class Client{
 		}
 	}
 
+	public void lobbyCreate(String lobby) {
+		try {
+			output.writeInt(LOBBY_CREATE);
+			output.writeUTF(lobby);
+
+		} catch( IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void spawnLobbyReader() {
 		new LobbyReader(input, output).start();
 	}

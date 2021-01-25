@@ -1,9 +1,12 @@
 package map.json;
 
 import com.google.gson.*;
+import graphics.Config;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class JsonUtils {
 
@@ -23,7 +26,7 @@ public class JsonUtils {
 		return (JsonObject)obj;
 	}
 
-	/** Parsuje wszystkie pliku na obiekty klasy JsonObject z podanego katalogu. */
+	/** Parsuje wszystkie pliki na obiekty klasy JsonObject z podanego katalogu. */
 	public static ArrayList<JsonObject> fromDirectory(String path) {
 		ArrayList<JsonObject> objects = new ArrayList<>();
 		File directory = new File(path);
@@ -41,6 +44,15 @@ public class JsonUtils {
 	public static String toString(JsonObject obj) {
 		Gson gson = new GsonBuilder().serializeNulls().create();
 		return gson.toJson(obj);
+	}
+
+	public static String toString(File file) {
+		StringBuilder builder = new StringBuilder();
+		try {
+			Scanner scanner = new Scanner(file);
+			while (scanner.hasNextLine()) builder.append(scanner.nextLine()).append("\n");
+		} catch (FileNotFoundException ignored) {}
+		return builder.toString();
 	}
 
 	/** Konwertuje obiekt klsay JsonObject na ladnie wygladajacy String. */

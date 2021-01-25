@@ -95,6 +95,12 @@ public class ClientThread extends Thread{
 						Server.lobbies.get(lobbyId).status(this, tempStatus);
 						break;
 
+					case LOBBY_CREATE:
+						System.out.printf("Client [%d] LOBBY_CREATE\n", id);
+						String lobbyStr = input.readUTF();
+						Server.addLobby(lobbyStr);
+						break;
+
 					case PING:
 						System.out.printf("Client [%d] PING\n", id);
 						break;

@@ -15,10 +15,7 @@ public class DataField extends Button{
 		return false;
 	}
 
-	public Object getValue() {
-		return null;
-	}
-
+	public Object getAsObject() { return null; }
 	public Float getAsFloat() { return null; }
 	public Integer getAsInteger() { return null; }
 	public Integer getAsPositiveInteger() { return null; }

@@ -1,11 +1,15 @@
 package graphics.gui;
 
+import client.PlayerAspect;
+import graphics.Engine;
 import graphics.Input;
 import graphics.Rectangle;
 import logic.Entity;
 import logic.Player;
 import logic.collectibles.HealthPotionSmall;
 import map.MapManager;
+import map.json.JsonUtils;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.Collection;
 
@@ -14,28 +18,38 @@ public class GameplayContext extends Context {
     public Player KORKOWY;
     public Rectangle HEALTHBAR;
     public HealthPotionSmall HP_S;
+    public boolean refresh;
 
     public GameplayContext() {
         map = new MapManager();
         HEALTHBAR = new Rectangle(-1.0f, 0.9f, 0.18f, 0.08f);
         HEALTHBAR.initGL("3hp.png", "rectangle.vert.glsl", "rectangle.frag");
         //HP_S = new HealthPotionSmall(0.7f, -0.45f, 0.1f, 0.24f);
+        refresh = false;
     }
 
     @Override
     public void refreshContext() {
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("application_context.xml");
+        KORKOWY = (Player) context.getBean("player");
+
         // init temp map
         try {
             map.nextStage();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        KORKOWY = new Player(-0.7f, -0.8f, 0.1f, 0.18f, "korkowy_ludek.png");
     }
 
     @Override
     public void update() {
+        // refresh
+        if (refresh) {
+            map = new MapManager();
+            map.fromJson(JsonUtils.fromString(Engine.browser.browser.roomActive.lobby.map_context));
+            refreshContext();
+            refresh = false;
+        }
         //    update
         map.move();
         map.update();

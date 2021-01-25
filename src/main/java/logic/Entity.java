@@ -3,7 +3,6 @@ import com.google.gson.JsonObject;
 import graphics.Config;
 import graphics.Engine;
 import graphics.Rectangle;
-import graphics.gui.GameplayContext;
 import map.json.JsonSerializable;
 
 import java.util.HashMap;
@@ -83,7 +82,7 @@ public abstract class Entity implements JsonSerializable {
 		vel_y -= 0.002f;
 	}
 
-	protected void getDamage() {
+	public void getDamage() {
 		this.hp--;
 		if (this.hp < 1) {
 			Engine.gameplay.map.getCurrentStage().removeEntity(this.id);

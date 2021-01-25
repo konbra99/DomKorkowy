@@ -101,6 +101,22 @@ public class ClientThread extends Thread{
 						Server.addLobby(lobbyStr);
 						break;
 
+					case LOBBY_START:
+						System.out.printf("Client [%d] LOBBY_START\n", id);
+						Server.lobbies.get(lobbyId).start();
+						break;
+
+					case MULTI_MY_POSITION:
+						float x = input.readFloat();
+						float y = input.readFloat();
+						//System.out.printf("Client [%d] MULTI_MY_POSITION %f %f\n", id, x, y);
+						break;
+
+					case MULTI_MY_STAGE:
+						int stage = input.readInt();
+						System.out.printf("Client [%d] MULTI_MY_STAGE %d\n", id, stage);
+						break;
+
 					case PING:
 						System.out.printf("Client [%d] PING\n", id);
 						break;

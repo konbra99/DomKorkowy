@@ -24,7 +24,7 @@ public class Engine implements Runnable {
         EXIT
     }
 
-    private Window window;
+    public Window window;
     private SoundManager soundManager;
 
     public static int FRAMES;

@@ -2,7 +2,6 @@ package logic;
 
 import graphics.Engine;
 import graphics.Input;
-import graphics.gui.GameplayContext;
 
 import static logic.CharacterState.*;
 
@@ -10,9 +9,15 @@ public class Player extends Character {
     private Weapon[] weapons;
     private int activeWeapon;
     private int immune;
+    public int stage;
 
-    public Player(float posX, float posY, float width, float height, String texture) {
-        super(posX, posY, width, height, texture, RIGHT);
+    public Player() {
+        super(-0.7f, -0.8f, 0.1f, 0.18f, "korkowy_ludek.png", RIGHT);
+        float posX = -0.7f;
+        float posY = -0.8f;
+        float width = 0.1f;
+        float height = 0.18f;
+
         // Trzy sloty na bronie, dwie przykładowe dodane od początku
         this.weapons = new MeleeWeapon[3];
         this.weapons[0] = new MeleeWeapon(this, 0, posX - width, posY - height / 2, 0.12f,
@@ -25,7 +30,7 @@ public class Player extends Character {
         //reset();
     }
 
-    @Override
+
     public void move() {
         float speed = 1;
 
@@ -114,8 +119,7 @@ public class Player extends Character {
         this.activeWeapon = index;
     }
 
-    @Override
-    protected void getDamage() {
+    public void getDamage() {
         hp--;
         immune = 30;
         if (hp == 0) {
@@ -133,7 +137,7 @@ public class Player extends Character {
         Engine.gameplay.HEALTHBAR.setTexture(hp + "hp.png");
     }
 
-    private void reset() {
+    public void reset() {
         hp = 3;
         float[] start = Engine.gameplay.getStart();
         rectangle.move(start[0] - rectangle.posX, start[1] - rectangle.posY);
@@ -145,5 +149,13 @@ public class Player extends Character {
         Engine.gameplay.map.reset();
         Engine.gameplay.map.getCurrentStage().buildStage();
         Engine.gameplay.map.getCurrentStage().initStage();
+    }
+
+    public void setStage(int stage) {
+        this.stage = stage;
+    }
+
+    public int getStage() {
+        return this.stage;
     }
 }

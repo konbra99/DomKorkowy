@@ -126,8 +126,34 @@ public class Client{
 		try {
 			output.writeInt(LOBBY_CREATE);
 			output.writeUTF(lobby);
-
 		} catch( IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void lobbyStart() {
+		try {
+			output.writeInt(LOBBY_START);
+		} catch( IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void updatePosition(float x, float y) {
+		try {
+			output.writeInt(MULTI_MY_POSITION);
+			output.writeFloat(x);
+			output.writeFloat(y);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void updateStage(int stage) {
+		try {
+			output.writeInt(MULTI_MY_STAGE);
+			output.writeInt(stage);
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

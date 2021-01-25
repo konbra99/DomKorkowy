@@ -23,16 +23,7 @@ public class Server {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		lobbies = new HashMap<>();
-		/*************** TYMCZASOWO *****************/
-		lobbies.put(lobbyCounter, new Lobby(lobbyCounter, "test1", "test2", "test3", 3));
-		lobbyCounter++;
-
-		lobbies.put(lobbyCounter, new Lobby(lobbyCounter, "test4", "test5", "test6", 3));
-		lobbyCounter++;
-		/********************************************/
-
 	}
 
 	public void run() throws IOException{

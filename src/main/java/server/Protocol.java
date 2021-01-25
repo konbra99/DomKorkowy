@@ -17,6 +17,7 @@ public class Protocol {
 	public final static int DELETE_ROOM = 13;
 	public final static int PING = 14;              //      PING                        PING
 
+	// LOBBY
 	public final static int LOBBY_MY_JOIN = 50;     //      LOBBY_MY_JOIN lobby_id      LOBBY_MY_JOIN status
 	public final static int LOBBY_MY_EXIT = 51;     //      LOBBY_MY_EXIT               ---
 	public final static int LOBBY_MY_STATUS = 52;   //      LOBBY_MY_STATUS status      ---
@@ -25,7 +26,12 @@ public class Protocol {
 	public final static int LOBBY_OTHER_STATUS = 55;//      ---                         LOBBY_OTHER_STATUS id status
 	public final static int LOBBY_ADMIN = 56;       //      ---                         LOBBY_ADMIN
 	public final static int LOBBY_READY = 57;       //      ---                         LOBBY_READY status
-	public final static int LOBBY_CREATE = 58;      //      LOBBY_CREATE lobby
+	public final static int LOBBY_CREATE = 58;      //      LOBBY_CREATE lobby          ---
+	public final static int LOBBY_START = 59;       //      LOBBY_START                 LOBBY_START
+
+	// MULTIPLAYER
+	public final static int MULTI_MY_POSITION = 100;//      MULTI_MY_POSITION x y       ---
+	public final static int MULTI_MY_STAGE = 101;   //      MULTI_MY_STAGE stage        ---
 
 	// STATUS LOBBY
 	public final static int LOBBY_NOT_EXIST = 1;

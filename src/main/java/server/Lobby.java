@@ -27,12 +27,13 @@ public class Lobby implements JsonSerializable {
 		this.map_context = "default";
 	}
 
-	public Lobby(int id, String lobby_name, String admin_name, String map_name, int max_players) {
+	public Lobby(int id, String lobby_name, String admin_name, String map_name, int max_players, String map_context) {
 		this.id = id;
 		this.lobby_name = lobby_name;
 		this.admin_name = admin_name;
 		this.map_name = map_name;
 		this.max_players = max_players;
+		this.map_context = map_context;
 
 		this.prev_status = false;
 		this.clients = new ArrayList<>();
@@ -101,6 +102,11 @@ public class Lobby implements JsonSerializable {
 		}
 	}
 
+	public synchronized void start() {
+		for (ClientThread c: clients)
+			c.writeInt(LOBBY_START);
+	}
+
 	public synchronized void checkAdmin() {
 		if (admin == null && clients.size() > 0) {
 			admin = clients.get(0);
@@ -135,6 +141,7 @@ public class Lobby implements JsonSerializable {
 		obj.addProperty("admin_name", admin_name);
 		obj.addProperty("map_name", map_name);
 		obj.addProperty("max_players", max_players);
+		obj.addProperty("map_context", map_context);
 		return obj;
 	}
 
@@ -145,6 +152,7 @@ public class Lobby implements JsonSerializable {
 		admin_name = obj.get("admin_name").getAsString();
 		map_name = obj.get("map_name").getAsString();
 		max_players = obj.get("max_players").getAsInt();
+		map_context = obj.get("map_context").getAsString();
 
 		this.prev_status = false;
 		this.clients = new ArrayList<>();

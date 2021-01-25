@@ -106,6 +106,7 @@ public class BrowserContext extends Context {
             String lobby_name = browser.dataFieldsMap.get(LOBBY_NAME).getAsNonemptyString();
             Integer max_players = browser.dataFieldsMap.get(LOBBY_MAX_PLAYERS).getAsPositiveInteger();
             String map_context = browser.dataFieldsMap.get(LOBBY_MAP).getAsString();
+            System.out.println(map_context);
 
             if (lobby_name != null && max_players != null && map_context != null) {
                 Lobby lobby = new Lobby();
@@ -155,7 +156,7 @@ public class BrowserContext extends Context {
         button.setText("START", "msgothic.bmp", 0.05f, 0.12f);
         button.setActiveVisible(false, false);
         button.action = () -> {
-            System.out.println("BrowserContext: Start");
+            Engine.client.lobbyStart();
         };
         buttonMap.put(START, button);
     }

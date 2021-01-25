@@ -1,12 +1,17 @@
 package client;
 
 import graphics.Engine;
+import graphics.Window;
+import map.MapManager;
+import map.json.JsonUtils;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
 import static graphics.gui_enums.MenuButtonNames.*;
+import static org.lwjgl.opengl.WGL.wglCreateContext;
+import static org.lwjgl.opengl.WGL.wglMakeCurrent;
 import static server.Protocol.*;
 
 public class LobbyReader extends Thread {
@@ -63,6 +68,13 @@ public class LobbyReader extends Thread {
 						s = input.readBoolean();
 						System.out.println("Lobby [] LOBBY_READY " + s);
 						Engine.browser.buttonMap.get(START).setActive(s);
+						break;
+
+					case LOBBY_START:
+						System.out.println("Lobby [] LOBBY_START ");
+						Engine.activeContext = Engine.gameplay;
+						Engine.STATE = Engine.GAME_STATE.GAMEPLAY;
+						Engine.gameplay.refresh = true;
 						break;
 
 					case PING:

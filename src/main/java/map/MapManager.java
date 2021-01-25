@@ -3,6 +3,7 @@ package map;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import graphics.Engine;
 import map.json.JsonSerializable;
 
 import java.util.ArrayList;
@@ -63,6 +64,8 @@ public class MapManager implements JsonSerializable {
 			stages.get(currentStage).buildHashMap();
 			stages.get(currentStage).buildStage();
 			stages.get(currentStage).initStage();
+			Engine.gameplay.KORKOWY.setStage(currentStage);
+			System.out.println("stage: " + currentStage);
 			return true;
 		}
 	}

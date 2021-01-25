@@ -5,6 +5,7 @@ import graphics.Config;
 import graphics.Engine;
 import graphics.Input;
 import graphics.Rectangle;
+import graphics.gui_enums.NewLobbyButtonNames;
 import logic.Entity;
 import map.MapManager;
 import map.json.JsonUtils;
@@ -12,15 +13,19 @@ import server.Lobby;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static graphics.Config.MOUSE_SCROLL_SPEED;
-
+import static graphics.gui_enums.NewLobbyButtonNames.*;
 
 public class MapBrowser extends Entity {
     // searchRect to pasek na ktorym beda wyswietlane mapy
     Rectangle searchRect;
     ArrayList<DataField> dataFields;
+    Map<NewLobbyButtonNames, DataField> dataFieldsMap;
+
     public MapField active = null;
     public RoomField roomActive = null;
     float y_min = Config.SEARCH_Y;
@@ -73,7 +78,6 @@ public class MapBrowser extends Entity {
         button.setText("nazwa:", "msgothic.bmp", 0.05f, 0.08f);
         addButton(button);
 
-
         button = new TextField(this, TextField.Type.AUTHOR, Button.LONG_BUTTON);
         button.setText("autor:", "msgothic.bmp", 0.05f, 0.08f);
         addButton(button);
@@ -91,6 +95,33 @@ public class MapBrowser extends Entity {
         button = new OptionField(this, Button.LONG_BUTTON, option_strings, option_values);
         button.setText("trud:", "msgothic.bmp", 0.05f, 0.08f);
         addButton(button);
+    }
+
+    public void createNewLobbyButtons() {
+        dataFields = new ArrayList<>();
+        dataFieldsMap = new HashMap<>();
+        y_min = Config.SEARCH_Y;
+        y_curr = 0.0f;
+        is_new_map = true;
+
+        DataField button;
+
+        button = new TextField(this, Button.LONG_BUTTON);
+        button.setText("nazwa:", "msgothic.bmp", 0.05f, 0.08f);
+        addButton(button);
+        dataFieldsMap.put(LOBBY_NAME, button);
+
+        button = new TextField(this, Button.LONG_BUTTON);
+        button.setText("l.graczy:", "msgothic.bmp", 0.05f, 0.08f);
+        addButton(button);
+        dataFieldsMap.put(LOBBY_MAX_PLAYERS, button);
+
+        String[] option_strings = new String[]{"EASY", "MEDIUM", "HARD"};
+        Object[] option_values = new Object[] {0.0f, 0.5f, 1.0f};
+        button = new OptionField(this, Button.LONG_BUTTON, option_strings, option_values);
+        button.setText("trud:", "msgothic.bmp", 0.05f, 0.08f);
+        addButton(button);
+        dataFieldsMap.put(LOBBY_MAP, button);
     }
 
     public void createServerRoomsButtons() {

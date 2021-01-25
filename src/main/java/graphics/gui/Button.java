@@ -12,10 +12,10 @@ public class Button extends Entity {
     String text, font;
     Action action;
     float text_x, text_y, charwidth, charheight;
-    public boolean is_active;
     protected boolean is_selected;
     protected boolean is_invalid;
-    public boolean is_visible;
+    protected boolean is_visible;
+    protected boolean is_active;
     protected String texture_enabled = "gui/button_long.png";
     protected String texture_disabled = "gui/button_long.png";
     protected String texture_highlighted = "gui/button_long.png";
@@ -198,12 +198,16 @@ public class Button extends Entity {
     }
 
     public void setActive(boolean is_active) {
-        if (this.is_active != is_active)
-            if (is_active) {
-                this.is_active = is_active;
-            } else {
-                this.is_active = is_active;
-            }
+        this.is_active = is_active;
+    }
+
+    public void setVisible(boolean is_visible) {
+        this.is_visible = is_visible;
+    }
+
+    public void setActiveVisible(boolean is_active, boolean is_visible) {
+        this.is_active = is_active;
+        this.is_visible = is_visible;
     }
 
     public void move(float dx, float dy) {

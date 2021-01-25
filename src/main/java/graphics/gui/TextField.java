@@ -31,6 +31,23 @@ public class TextField extends DataField {
         };
     }
 
+    public TextField(MapBrowser browser, String [] textures) {
+        super(0.0f, 0.0f, Config.MAP_BUTTON_WIDTH, Config.MAP_BUTTON_HEIGHT, null, textures);
+        this.browser = browser;
+
+        textArea = new TextArea(0.44f, 0.07f, Config.MAP_BUTTON_WIDTH/2, Config.MAP_BUTTON_HEIGHT/2,
+                0.05f, 0.12f, "msgothic.bmp",
+                0.0f, 0.0f, 0.0f, 1.0f);
+        this.action = () -> {
+            this.is_invalid = false;
+            textArea.getRectangle().setTexture("gui/cyan.png");
+            this.browser.deselectAll();
+            this.is_selected = true;
+            this.textArea.Clear();
+            Engine.active = textArea;
+        };
+    }
+
     @Override
     public void update() {
         this.text_x = this.rectangle.posX + 0.1f;
@@ -74,5 +91,44 @@ public class TextField extends DataField {
             textArea.getRectangle().setTexture("gui/red.png");
             return false;
         }
+    }
+
+    public Float getAsFloat() {
+        // TODO
+        return null;
+    }
+
+    public Integer getAsInteger() {
+        // TODO
+        return null;
+    }
+
+    @Override
+    public Integer getAsPositiveInteger() {
+        try {
+            int i = Integer.parseInt(textArea.text);
+            if (i <= 0) throw new Exception();
+            return i;
+        } catch (Exception e) {
+            is_invalid = true;
+            textArea.getRectangle().setTexture("gui/red.png");
+            return null;
+        }
+    }
+
+    @Override
+    public String getAsString() {
+        return textArea.text;
+    }
+
+    @Override
+    public String getAsNonemptyString() {
+        if (textArea.text.isEmpty()) {
+            is_invalid = true;
+            textArea.getRectangle().setTexture("gui/red.png");
+            return null;
+        }
+        else
+            return textArea.text;
     }
 }

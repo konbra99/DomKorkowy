@@ -123,6 +123,6 @@ public class Client{
 	}
 
 	public void spawnLobbyReader() {
-		new LobbyReader(input).start();
+		new LobbyReader(input, output).start();
 	}
 }

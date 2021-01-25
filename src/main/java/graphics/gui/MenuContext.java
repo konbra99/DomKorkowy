@@ -2,6 +2,8 @@ package graphics.gui;
 
 import graphics.Engine;
 
+import static graphics.gui_enums.MenuButtonNames.*;
+
 public class MenuContext extends Context {
     Button singleplayer, multiplayer, editor, settings, authors, quit;
 
@@ -28,9 +30,9 @@ public class MenuContext extends Context {
                 () -> {
                     Engine.browser.refreshContext();
                     Engine.browser.addRefreshButton();
-                    Engine.browser.addJoinButton();
                     Engine.browser.addBackButton();
-                    Engine.browser.addStartButton();
+                    Engine.browser.buttonMap.get(NEW_LOBBY).setActiveVisible(true, true);
+                    Engine.browser.buttonMap.get(JOIN_LOBBY).setActiveVisible(true, true);
                     Engine.browser.browser.removeAll();
                     Engine.activeContext = Engine.browser;
                     Engine.STATE = Engine.GAME_STATE.BROWSER;

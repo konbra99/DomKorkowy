@@ -18,4 +18,11 @@ public class DataField extends Button{
 	public Object getValue() {
 		return null;
 	}
+
+	public Float getAsFloat() { return null; }
+	public Integer getAsInteger() { return null; }
+	public Integer getAsPositiveInteger() { return null; }
+	public String getAsString() { return null; }
+	public String getAsNonemptyString() { return null; }
+
 }

@@ -4,18 +4,18 @@ public class Protocol {
 
 	private Protocol() {}
 
-	// PROTOKOL					                //      SEND BY CLIENT              SERVER RESPONSE
-	public final static int GET_MAPS = 1;       //      GET_MAPS                    GET_MAPS num map1 map2 ...
-	public final static int GET_MAP = 2;        //
-	public final static int GET_ROOMS = 3;      //      GET_ROOMS                   GET_ROOMS num room1 room2 ...
-	public final static int GET_ROOM = 4;       //
-	public final static int GET_CLIENT_ID = 5;  //      GET_CLIENT_ID               GET_CLIENT_ID id
+	// PROTOKOL					                    //      SEND BY CLIENT              SERVER RESPONSE
+	public final static int GET_MAPS = 1;           //      GET_MAPS                    GET_MAPS num map1 map2 ...
+	public final static int GET_MAP = 2;            //
+	public final static int GET_ROOMS = 3;          //      GET_ROOMS                   GET_ROOMS num room1 room2 ...
+	public final static int GET_ROOM = 4;           //
+	public final static int GET_CLIENT_ID = 5;      //      GET_CLIENT_ID               GET_CLIENT_ID id
 
-	public final static int CREATE_MAP = 10;    //      CREATE_MAP src              CREATE_MAP status
-	public final static int CREATE_ROOM = 11;   //
-
-	public final static int DELETE_MAP = -10;   //
-	public final static int DELETE_ROOM = -11;  //
+	public final static int CREATE_MAP = 10;        //      CREATE_MAP src              CREATE_MAP status
+	public final static int CREATE_ROOM = 11;       //
+	public final static int DELETE_MAP = 12;        //
+	public final static int DELETE_ROOM = 13;
+	public final static int PING = 14;              //      PING                        PING
 
 	public final static int LOBBY_MY_JOIN = 50;     //      LOBBY_MY_JOIN lobby_id      LOBBY_MY_JOIN status
 	public final static int LOBBY_MY_EXIT = 51;     //      LOBBY_MY_EXIT               ---

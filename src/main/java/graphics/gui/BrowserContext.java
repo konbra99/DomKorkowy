@@ -1,24 +1,38 @@
 package graphics.gui;
 
 import graphics.Engine;
+import graphics.gui_enums.MenuButtonNames;
 import map.MapManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import static graphics.gui_enums.MenuButtonNames.*;
+import static graphics.gui_enums.NewLobbyButtonNames.*;
 import static server.Protocol.*;
 
 public class BrowserContext extends Context {
+
+
+
+    // ZMIENNE
     public MapBrowser browser;
     ArrayList<Button> buttonList;
+    public Map<MenuButtonNames, Button> buttonMap;
     Warning warning;
-    public Button startButton;
 
     public BrowserContext(String background) {
         super(background);
         super.init();
         this.browser = new MapBrowser();
         this.buttonList = new ArrayList<>();
+        this.buttonMap = new HashMap<>();
         this.warning = new Warning();
+        addStartButton();
+        addNewLobbyButton();
+        addCreateLobbyButton();
+        addJoinButton();
     }
 
     public void refreshList() {
@@ -30,10 +44,8 @@ public class BrowserContext extends Context {
     @Override
     public void refreshContext() {
         this.buttonList.clear();
-        if (startButton != null) {
-            startButton.is_visible = false;
-            startButton.is_active = false;
-        }
+        for(Button b: buttonMap.values())
+            b.setActiveVisible(false, false);
     }
 
     public void addButton(Button button) {
@@ -58,6 +70,7 @@ public class BrowserContext extends Context {
     public void addJoinButton() {
         Button button = new Button(0.58f, -0.85f, 0.25f, 0.5f, null, Button.RIGHT_ARROW);
         button.setText("JOIN", "msgothic.bmp", 0.05f, 0.12f);
+        button.setActiveVisible(false, false);
         button.action = () -> {
             if (browser.roomActive != null) {
                 int status = Engine.client.lobbyJoin(browser.roomActive.lobby.id);
@@ -81,19 +94,38 @@ public class BrowserContext extends Context {
                 }
             }
         };
-        buttonList.add(button);
+        buttonMap.put(JOIN_LOBBY, button);
+    }
+
+    public void addCreateLobbyButton() {
+        Button button = new Button(0.58f, -0.85f, 0.25f, 0.5f, null, Button.RIGHT_ARROW);
+        button.setText("CREATE", "msgothic.bmp", 0.05f, 0.12f);
+        button.setActiveVisible(false, false);
+        button.action = () -> {
+            String name = browser.dataFieldsMap.get(LOBBY_NAME).getAsNonemptyString();
+            Integer max_players = browser.dataFieldsMap.get(LOBBY_MAX_PLAYERS).getAsPositiveInteger();
+
+            System.out.println("BrowserContext: addCreateButton");
+            System.out.println(name);
+            System.out.println(max_players);
+        };
+        buttonMap.put(CREATE_LOBBY, button);
     }
 
     public void addRefreshButton() {
         Button button = new Button(0.25f, 0.6f, 0.6f, 0.3f, null, Button.MEDIUM_BUTTON);
         button.setText("REFRESH", "msgothic.bmp", 0.05f, 0.12f);
         button.action = () -> {
-            System.out.println("active");
             browser.dataFields = new ArrayList<>();
             if (Engine.client.isNotConnected())
                 warning.showWarning("Klient nie zostal polaczony z serwerem");
-            else
+            else {
                 browser.createServerRoomsButtons();
+                buttonMap.get(JOIN_LOBBY).setActiveVisible(true, true);
+                buttonMap.get(CREATE_LOBBY).setActiveVisible(false, false);
+            }
+
+
         };
         buttonList.add(button);
     }
@@ -115,12 +147,11 @@ public class BrowserContext extends Context {
     public void addStartButton() {
         Button button = new Button(0.25f, 0.2f, 0.6f, 0.3f, null, Button.MEDIUM_BUTTON);
         button.setText("START", "msgothic.bmp", 0.05f, 0.12f);
-        button.is_active = false;
-        button.is_visible = false;
+        button.setActiveVisible(false, false);
         button.action = () -> {
             System.out.println("BrowserContext: Start");
         };
-        startButton = button;
+        buttonMap.put(START, button);
     }
 
     public void addBackButton() {
@@ -198,6 +229,18 @@ public class BrowserContext extends Context {
         buttonList.add(button);
     }
 
+    public void addNewLobbyButton() {
+        Button button = new Button(0.25f, 0.27f, 0.6f, 0.3f, null, Button.MEDIUM_BUTTON);
+        button.setText("New", "msgothic.bmp", 0.05f, 0.08f);
+        button.setActiveVisible(false, false);
+        button.action = () -> {
+            browser.createNewLobbyButtons();
+            buttonMap.get(JOIN_LOBBY).setActiveVisible(false, false);
+            buttonMap.get(CREATE_LOBBY).setActiveVisible(true, true);
+        };
+        buttonMap.put(NEW_LOBBY, button);
+    }
+
     @Override
     public void update() {
         if (this.warning.is_visible) {
@@ -206,7 +249,8 @@ public class BrowserContext extends Context {
             this.browser.update();
             for (Button b : buttonList)
                 b.update();
-            startButton.update();
+            for(Button b: buttonMap.values())
+                b.update();
         }
     }
 
@@ -216,7 +260,8 @@ public class BrowserContext extends Context {
         this.browser.draw();
         for (Button b : buttonList)
             b.draw();
-        startButton.draw();
+        for(Button b: buttonMap.values())
+            b.draw();
         this.warning.draw();
     }
 }

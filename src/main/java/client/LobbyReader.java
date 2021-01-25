@@ -3,15 +3,20 @@ package client;
 import graphics.Engine;
 
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 
+import static graphics.gui_enums.MenuButtonNames.*;
 import static server.Protocol.*;
 
 public class LobbyReader extends Thread {
 
 	private DataInputStream input;
-	public LobbyReader(DataInputStream input) {
+	private DataOutputStream output;
+
+	public LobbyReader(DataInputStream input, DataOutputStream output) {
 		this.input = input;
+		this.output = output;
 	}
 
 	@Override
@@ -51,13 +56,18 @@ public class LobbyReader extends Thread {
 
 					case LOBBY_ADMIN:
 						System.out.println("Lobby [] LOBBY_ADMIN ");
-						Engine.browser.startButton.is_visible = true;
+						Engine.browser.buttonMap.get(START).setVisible(true);
 						break;
 
 					case LOBBY_READY:
 						s = input.readBoolean();
 						System.out.println("Lobby [] LOBBY_READY " + s);
-						Engine.browser.startButton.is_active = s;
+						Engine.browser.buttonMap.get(START).setActive(s);
+						break;
+
+					case PING:
+						System.out.println("Lobby [] PING ");
+						output.writeInt(PING);
 						break;
 				}
 			} catch (IOException e) {

@@ -7,6 +7,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.util.List;
 
 import static server.Protocol.*;
@@ -22,6 +23,8 @@ public class ClientThread extends Thread{
 
 	public ClientThread(Socket socket, int id) throws IOException {
 		this.id = id;
+		this.lobbyId = -1;
+		socket.setSoTimeout(10*1000);
 		input = new DataInputStream(socket.getInputStream());
 		output = new DataOutputStream(socket.getOutputStream());
 	}
@@ -83,6 +86,7 @@ public class ClientThread extends Thread{
 					case LOBBY_MY_EXIT:
 						System.out.printf("Client [%d] LOBBY_MY_EXIT\n", id);
 						Server.lobbies.get(lobbyId).exit(this);
+						lobbyId = -1;
 						break;
 
 					case LOBBY_MY_STATUS:
@@ -91,12 +95,24 @@ public class ClientThread extends Thread{
 						Server.lobbies.get(lobbyId).status(this, tempStatus);
 						break;
 
+					case PING:
+						System.out.printf("Client [%d] PING\n", id);
+						break;
+
 					default:
 						System.out.println("ClientThread: nierozpoznany komunikat");
 
 				}
-			} catch (IOException e) {
-				break;
+			}
+			catch (SocketTimeoutException e) {
+				// czas minal, sprawdzamy czy klient jeszcze zyje
+				if (lobbyId != -1) writeInt(PING);
+			}
+			catch (IOException e) {
+				// klient nie zyje, trzeba go usunac
+				if (lobbyId != -1)
+					Server.lobbies.get(lobbyId).exit(this);
+				return;
 			}
 		}
 	}

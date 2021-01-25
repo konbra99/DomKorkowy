@@ -12,6 +12,8 @@ import map.json.JsonUtils;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GameplayContext extends Context {
     public MapManager map;
@@ -19,6 +21,7 @@ public class GameplayContext extends Context {
     public Rectangle HEALTHBAR;
     public HealthPotionSmall HP_S;
     public boolean refresh;
+    Map<Integer, Player> players;
 
     public GameplayContext() {
         map = new MapManager();
@@ -49,13 +52,15 @@ public class GameplayContext extends Context {
             map.fromJson(JsonUtils.fromString(Engine.browser.browser.roomActive.lobby.map_context));
             refreshContext();
             refresh = false;
+            players = new HashMap<>();
+
         }
-        //    update
+        // update
         map.move();
         map.update();
         KORKOWY.move();
         KORKOWY.update();
-        //HP_S.update();
+        // HP_S.update();
         Input.resetInputs();
     }
 

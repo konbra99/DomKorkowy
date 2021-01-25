@@ -1,17 +1,11 @@
 package client;
 
 import graphics.Engine;
-import graphics.Window;
-import map.MapManager;
-import map.json.JsonUtils;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
 import static graphics.gui_enums.MenuButtonNames.*;
-import static org.lwjgl.opengl.WGL.wglCreateContext;
-import static org.lwjgl.opengl.WGL.wglMakeCurrent;
 import static server.Protocol.*;
 
 public class LobbyReader extends Thread {

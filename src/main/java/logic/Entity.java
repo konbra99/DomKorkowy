@@ -53,6 +53,7 @@ public abstract class Entity implements JsonSerializable {
 	public void move() {}
 
 	public void moveTo(float x, float y) {
+		System.out.println("move " + x + " " + y);
 		this.rectangle.move(x - this.rectangle.posX, y - this.rectangle.posY);
 	}
 

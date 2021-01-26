@@ -13,7 +13,6 @@ public class Player extends Character {
     private int immune;
     public int stage;
     public ArrayList<playerAction> actionList;
-    private int stage;
 
     public Player() {
         super(-0.7f, -0.8f, 0.1f, 0.18f, "korkowy_ludek.png", RIGHT);
@@ -110,15 +109,22 @@ public class Player extends Character {
             this.setActiveWeapon(1);
             Input.TWO_KEY = false;
         }
-        for (playerAction action : actionList)
-        {
-            action.action();
-        }
-
-        actionList.clear();
 
 
         weapons[activeWeapon].update();
+    }
+
+    public void doActions() {
+        synchronized (actionList) {
+            for (playerAction action : actionList) action.action();
+            actionList.clear();
+        }
+    }
+
+    public void addAction(playerAction action) {
+        synchronized (actionList) {
+            actionList.add(action);
+        }
     }
 
     @Override

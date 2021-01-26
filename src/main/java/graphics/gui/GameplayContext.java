@@ -23,18 +23,11 @@ public class GameplayContext extends Context {
     static public Player KORKOWY;
     public static Map<Integer, Player> players;
 
-    //// to tylko tak dla testu ////
-    Player przeciwnik;
-    int i = 1;
-    ////////////////////////////////
-
     public GameplayContext() {
         map = new MapManager();
         HEALTHBAR = new Rectangle(-1.0f, 0.9f, 0.18f, 0.08f);
         HEALTHBAR.initGL("3hp.png", "rectangle.vert.glsl", "rectangle.frag");
-        //HP_S = new HealthPotionSmall(0.7f, -0.45f, 0.1f, 0.24f);
         refresh = false;
-        przeciwnik = new Player();
     }
 
     @Override
@@ -43,7 +36,7 @@ public class GameplayContext extends Context {
         KORKOWY = (Player) context.getBean("player");
         players = new HashMap<>();
 
-        // init temp map
+        // init map
         try {
             map.nextStage();
         } catch (Exception e) {
@@ -73,14 +66,8 @@ public class GameplayContext extends Context {
         map.update();
         KORKOWY.move();
         KORKOWY.update();
+        for (Player p: players.values()) p.doActions();
 
-
-        przeciwnik.actionList.add(()->przeciwnik.moveTo(0.4f * i, 0.4f));
-        przeciwnik.update();
-        i *= -1;
-
-
-        // HP_S.update();
         Input.resetInputs();
     }
 
@@ -91,8 +78,6 @@ public class GameplayContext extends Context {
             if (p.getStage() == MapManager.currentStage) p.draw();
         KORKOWY.draw();
         HEALTHBAR.draw();
-        przeciwnik.draw();
-        //HP_S.draw();
     }
 
     public Collection<Entity> getPlatforms() {

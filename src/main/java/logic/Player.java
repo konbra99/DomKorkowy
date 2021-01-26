@@ -34,6 +34,11 @@ public class Player extends Character {
         //reset();
     }
 
+    @Override
+    public void moveTo(float x, float y) {
+        super.moveTo(x, y);
+        this.rectangle.setOrientation(direction == RIGHT);
+    }
 
     public void move() {
         float speed = 1;
@@ -111,6 +116,10 @@ public class Player extends Character {
         }
 
 
+        weapons[activeWeapon].update();
+    }
+
+    public void updateWeapon() {
         weapons[activeWeapon].update();
     }
 

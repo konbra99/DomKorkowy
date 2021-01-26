@@ -70,7 +70,10 @@ public class GameplayContext extends Context {
         KORKOWY.move();
         KORKOWY.update();
         KORKOWY.doActions();
-        for (Player p: players.values()) p.doActions();
+        for (Player p: players.values())  {
+            p.doActions();
+            p.updateWeapon();
+        }
 
         Input.resetInputs();
     }

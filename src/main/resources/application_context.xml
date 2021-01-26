@@ -29,6 +29,7 @@
         <aop:aspect ref="player_aspect">
             <aop:after pointcut-ref="update" method="positionChange"/>
             <aop:after pointcut-ref="update" method="weaponChange"/>
+            <aop:after pointcut-ref="update" method="directionChange"/>
             <aop:after pointcut-ref="stage" method="stageChange"/>
         </aop:aspect>
 

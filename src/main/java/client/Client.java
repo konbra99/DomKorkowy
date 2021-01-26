@@ -171,6 +171,13 @@ public class Client{
 		} catch (IOException ignored) {}
 	}
 
+	public void updateDirection(int direction) {
+		try {
+			output.writeInt(MULTI_MY_DIRECTION);
+			output.writeInt(direction);
+		} catch (IOException ignored) {}
+	}
+
 	public void removeEntity(int stage, int id) {
 		try {
 			output.writeInt(MULTI_MY_REMOVE);

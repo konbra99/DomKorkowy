@@ -6,6 +6,7 @@ import logic.Player;
 public class PlayerAspect {
 	float posX;
 	float posY;
+	int direction;
 	int activeWeapon;
 	Player player;
 
@@ -13,21 +14,30 @@ public class PlayerAspect {
 		this.posX = -100f;
 		this.posY = -100f;
 		this.activeWeapon = -100;
+		this.direction = -100;
 		this.player = player;
 	}
 
 	public void positionChange() {
-		float new_posX = player.getRectangle().posX;
-		float new_posY = player.getRectangle().posY;
-		if (posX != new_posX || posY != new_posY) {
-			Engine.client.updatePosition(new_posX, new_posY);
+		float newPosX = player.getRectangle().posX;
+		float newPosY = player.getRectangle().posY;
+		if (posX != newPosX || posY != newPosY) {
+			Engine.client.updatePosition(newPosX, newPosY);
 		}
-		posX = new_posX;
-		posY = new_posY;
+		posX = newPosX;
+		posY = newPosY;
+	}
+
+	public void directionChange() {
+		int newDirection = player.getDirection();
+		if (direction != newDirection) {
+			System.out.println("Direction change");
+			Engine.client.updateDirection(newDirection);
+			direction = newDirection;
+		}
 	}
 
 	public void stageChange() {
-		System.out.println("Stage has changed");
 		Engine.client.updateStage(player.getStage());
 	}
 

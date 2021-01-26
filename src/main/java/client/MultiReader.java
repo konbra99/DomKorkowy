@@ -1,6 +1,5 @@
 package client;
 
-import graphics.Engine;
 import graphics.gui.GameplayContext;
 
 import java.io.DataInputStream;
@@ -56,7 +55,12 @@ public class MultiReader extends Thread{
 						//System.out.printf("Client [] MULTI_OTHER_REMOVE %d %d\n", stageId, entityId);
 						GameplayContext.KORKOWY.addAction(() -> GameplayContext.map.removeEntityFromStage(stageId, entityId));
 					}
-
+					case MULTI_OTHER_DIRECTION -> {
+						int tempId = input.readInt();
+						int direction = input.readInt();
+						System.out.printf("Client [%d] MULTI_OTHER_DIRECTION %d\n", tempId, direction);
+						GameplayContext.players.get(tempId).addAction(() -> GameplayContext.players.get(tempId).setDirection(direction));
+					}
 					case PING -> {
 						//System.out.println("Lobby [] PING ");
 						output.writeInt(PING);

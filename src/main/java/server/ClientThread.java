@@ -137,6 +137,12 @@ public class ClientThread extends Thread{
 						System.out.printf("Client [%d] MULTI_MY_REMOVE %d %d\n", id, stageId, entityId);
 						break;
 
+					case MULTI_MY_DIRECTION:
+						int direction = input.readInt();
+						lobby.updateDirection(this, direction);
+						System.out.printf("Client [%d] MULTI_MY_DIRECTION %d \n", id, direction);
+						break;
+
 					case PING:
 						System.out.printf("Client [%d] PING\n", id);
 						break;

@@ -174,6 +174,16 @@ public class Lobby implements JsonSerializable {
 		}
 	}
 
+	public synchronized void updateDirection(ClientThread client, int direction) {
+		for(ClientThread c: clients) {
+			if (client != c) {
+				c.writeInt(MULTI_OTHER_DIRECTION);
+				c.writeInt(client.id);
+				c.writeInt(direction);
+			}
+		}
+	}
+
 	public synchronized void removeEntity(ClientThread client, int stage, int id) {
 		for(ClientThread c: clients) {
 			if (c != client) {

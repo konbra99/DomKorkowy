@@ -22,7 +22,7 @@ public class MapManager implements JsonSerializable {
 
 	// sceny
 	public List<Stage> stages;
-	public static int currentStage;
+	private static int currentStage;
 
 	public MapManager() {
 		stages = new ArrayList<>();
@@ -49,10 +49,22 @@ public class MapManager implements JsonSerializable {
 		stages.add(stage);
 	}
 
+	/** Usuwa Entity z bierzacej sceny */
+	public void removeEntity(int id) {
+		stages.get(currentStage).removeEntity(id);
+	}
+
+	public void removeEntityFromStage(int stage, int id) {
+		stages.get(stage).removeEntity(id);
+	}
+
 	/** Zwraca bierzaca scene. */
 	public Stage getCurrentStage() {
 		return stages.get(currentStage);
 	}
+
+	/** Zwraca numer bierzacej sceny */
+	public static int getCurrentStageNoumber() { return currentStage; }
 
 	/** Przechodzi do nastepnej sceny, zwraca false, jesli nastepna scena nie istnieje. */
 	public boolean nextStage() {

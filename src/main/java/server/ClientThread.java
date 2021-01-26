@@ -130,6 +130,13 @@ public class ClientThread extends Thread{
 						lobby.updateAttack(this, id);
 						break;
 
+					case MULTI_MY_REMOVE:
+						int stageId = input.readInt();
+						int entityId = input.readInt();
+						lobby.removeEntity(this, stageId, entityId);
+						System.out.printf("Client [%d] MULTI_MY_REMOVE %d %d\n", id, stageId, entityId);
+						break;
+
 					case PING:
 						System.out.printf("Client [%d] PING\n", id);
 						break;

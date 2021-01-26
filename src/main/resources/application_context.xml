@@ -10,17 +10,30 @@
     <bean id="player" class="logic.Player">
     </bean>
 
+    <bean id="map" class="map.MapManager">
+    </bean>
+
     <bean id="player_aspect" class="client.PlayerAspect">
         <constructor-arg ref="player"/>
+    </bean>
+
+    <bean id="map_aspect" class="client.MapAspect">
+        <constructor-arg ref="map"/>
     </bean>
 
     <aop:config proxy-target-class="true">
         <aop:pointcut id="update" expression="execution(public * logic.Player.update(..))"/>
         <aop:pointcut id="stage" expression="execution(public * logic.Player.setStage(..))"/>
+        <aop:pointcut id="remove" expression="execution(public * map.MapManager.removeEntity(..))"/>
+
         <aop:aspect ref="player_aspect">
             <aop:after pointcut-ref="update" method="positionChange"/>
             <aop:after pointcut-ref="update" method="weaponChange"/>
             <aop:after pointcut-ref="stage" method="stageChange"/>
+        </aop:aspect>
+
+        <aop:aspect ref="map_aspect">
+            <aop:after pointcut-ref="remove" method="afterEntityRemove"/>
         </aop:aspect>
     </aop:config>
 </beans>

@@ -34,10 +34,12 @@ public class Protocol {
 	public final static int MULTI_MY_STAGE = 101;       //      MULTI_MY_STAGE stage        ---
 	public final static int MULTI_MY_WEAPON = 102;      //      MULTI_MY_WEAPON weapon      ---
 	public final static int MULTI_MY_ATTACK = 103;      //      MULTI_MY_ATTACK id hp       ---
+	public final static int MULTI_MY_REMOVE = 104;      //      MULTI_MY_REMOVE stage id    ---
 	public final static int MULTI_OTHER_POSITION = 110; //      ---                         MULTI_OTHER_POSITION id x y
 	public final static int MULTI_OTHER_STAGE = 111;    //      ---                         MULTI_OTHER_STAGE id stage
 	public final static int MULTI_OTHER_WEAPON = 112;   //      ---                         MULTI_OTHER_WEAPON id weapon
 	public final static int MULTI_OTHER_ATTACK = 113;   //      ---                         MULTI_OTHER_ATTACK hp
+	public final static int MULTI_OTHER_REMOVE = 114;   //      ---                         MULTI_OTHER_REMOVE stage id
 
 	// STATUS LOBBY
 	public final static int LOBBY_NOT_EXIST = 1;

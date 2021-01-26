@@ -16,23 +16,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GameplayContext extends Context {
-    public MapManager map;
+    public static MapManager map;
     public Rectangle HEALTHBAR;
     public HealthPotionSmall HP_S;
     public boolean refresh;
     static public Player KORKOWY;
     public static Map<Integer, Player> players;
+    private ClassPathXmlApplicationContext context;
 
     public GameplayContext() {
-        map = new MapManager();
+        context = new ClassPathXmlApplicationContext("application_context.xml");
+        map = (MapManager) context.getBean("map");
         HEALTHBAR = new Rectangle(-1.0f, 0.9f, 0.18f, 0.08f);
         HEALTHBAR.initGL("3hp.png", "rectangle.vert.glsl", "rectangle.frag");
         refresh = false;
+
     }
 
     @Override
     public void refreshContext() {
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("application_context.xml");
         KORKOWY = (Player) context.getBean("player");
         players = new HashMap<>();
 
@@ -48,16 +50,17 @@ public class GameplayContext extends Context {
     public void update() {
         // refresh
         if (refresh) {
-            map = new MapManager();
+            map = (MapManager) context.getBean("map");
             map.fromJson(JsonUtils.fromString(Engine.browser.browser.roomActive.lobby.map_context));
             refreshContext();
 
             for (DataField d: Engine.browser.browser.dataFields) {
                 int id = d.getAsInteger();
-                if (id != Engine.client.id)
+                if (id != -1 && id != Engine.client.id)
                     players.put(id, new Player());
             }
             refresh = false;
+            System.out.println("length: " + players.size());
             Engine.client.spawnMultiReader();
         }
 
@@ -66,6 +69,7 @@ public class GameplayContext extends Context {
         map.update();
         KORKOWY.move();
         KORKOWY.update();
+        KORKOWY.doActions();
         for (Player p: players.values()) p.doActions();
 
         Input.resetInputs();
@@ -75,7 +79,7 @@ public class GameplayContext extends Context {
     public void draw() {
         map.draw();
         for(Player p: players.values())
-            if (p.getStage() == MapManager.currentStage) p.draw();
+            if (p.getStage() == MapManager.getCurrentStageNoumber()) p.draw();
         KORKOWY.draw();
         HEALTHBAR.draw();
     }

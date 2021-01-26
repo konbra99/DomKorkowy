@@ -18,7 +18,6 @@ public class Client{
 	public boolean isReady;
 	public int id;
 
-
 	public Client() {
 		isConnected = false;
 	}
@@ -168,6 +167,14 @@ public class Client{
 	public void updateAttack(int id) {
 		try {
 			output.writeInt(MULTI_MY_ATTACK);
+			output.writeInt(id);
+		} catch (IOException ignored) {}
+	}
+
+	public void removeEntity(int stage, int id) {
+		try {
+			output.writeInt(MULTI_MY_REMOVE);
+			output.writeInt(stage);
 			output.writeInt(id);
 		} catch (IOException ignored) {}
 	}

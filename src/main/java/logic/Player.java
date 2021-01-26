@@ -168,9 +168,6 @@ public class Player extends Character {
         immune = 0;
         vel_x = 0.0f;
         vel_y = 0.0f;
-        Engine.gameplay.map.reset();
-        Engine.gameplay.map.getCurrentStage().buildStage();
-        Engine.gameplay.map.getCurrentStage().initStage();
     }
 
     public void setStage(int stage) {

@@ -174,6 +174,16 @@ public class Lobby implements JsonSerializable {
 		}
 	}
 
+	public synchronized void removeEntity(ClientThread client, int stage, int id) {
+		for(ClientThread c: clients) {
+			if (c != client) {
+				c.writeInt(MULTI_OTHER_REMOVE);
+				c.writeInt(stage);
+				c.writeInt(id);
+			}
+		}
+	}
+
 	@Override
 	public JsonObject toJson() {
 		JsonObject obj = new JsonObject();

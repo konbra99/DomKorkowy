@@ -53,7 +53,6 @@ public abstract class Entity implements JsonSerializable {
 	public void move() {}
 
 	public void moveTo(float x, float y) {
-		System.out.println("move " + x + " " + y);
 		this.rectangle.move(x - this.rectangle.posX, y - this.rectangle.posY);
 	}
 
@@ -86,7 +85,7 @@ public abstract class Entity implements JsonSerializable {
 	public void getDamage() {
 		this.hp--;
 		if (this.hp < 1) {
-			Engine.gameplay.map.getCurrentStage().removeEntity(this.id);
+			Engine.gameplay.map.removeEntity(this.id);
 		}
 	}
 

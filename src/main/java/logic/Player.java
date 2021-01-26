@@ -3,6 +3,8 @@ package logic;
 import graphics.Engine;
 import graphics.Input;
 
+import java.util.ArrayList;
+
 import static logic.CharacterState.*;
 
 public class Player extends Character {
@@ -10,6 +12,7 @@ public class Player extends Character {
     private int activeWeapon;
     private int immune;
     public int stage;
+    public ArrayList<playerAction> actionList;
 
     public Player() {
         super(-0.7f, -0.8f, 0.1f, 0.18f, "korkowy_ludek.png", RIGHT);
@@ -27,6 +30,7 @@ public class Player extends Character {
         this.activeWeapon = 0;
         init();
         this.hp = 3;
+        actionList = new ArrayList<>();
         //reset();
     }
 
@@ -105,6 +109,13 @@ public class Player extends Character {
             this.setActiveWeapon(1);
             Input.TWO_KEY = false;
         }
+        for (playerAction action : actionList)
+        {
+            action.action();
+        }
+
+        actionList.clear();
+
 
         weapons[activeWeapon].update();
     }

@@ -69,7 +69,7 @@ public class LobbyReader extends Thread {
 						Engine.activeContext = Engine.gameplay;
 						Engine.STATE = Engine.GAME_STATE.GAMEPLAY;
 						Engine.gameplay.refresh = true;
-						break;
+						return;
 
 					case PING:
 						System.out.println("Lobby [] PING ");

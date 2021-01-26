@@ -16,14 +16,13 @@ import static server.Protocol.CREATE_MAP;
 public class ClientThread extends Thread{
 
 	public int id;
-	public int lobbyId;
 	public boolean status;
+	private Lobby lobby;
 	private DataInputStream input;
 	private DataOutputStream output;
 
 	public ClientThread(Socket socket, int id) throws IOException {
 		this.id = id;
-		this.lobbyId = -1;
 		socket.setSoTimeout(10*1000);
 		input = new DataInputStream(socket.getInputStream());
 		output = new DataOutputStream(socket.getOutputStream());
@@ -70,29 +69,29 @@ public class ClientThread extends Thread{
 
 					case LOBBY_MY_JOIN:
 						System.out.printf("Client [%d] LOBBY_MY_JOIN\n", id);
-						int tempLobbyId = input.readInt();
-						Lobby lobby = Server.lobbies.get(tempLobbyId);
-						if (lobby == null) {
+						int lobbyId = input.readInt();
+						Lobby tempLobby = Server.lobbies.get(lobbyId);
+						if (tempLobby == null) {
 							// lobby nie istnieje
 							output.writeInt(LOBBY_MY_JOIN);
 							output.writeInt(LOBBY_NOT_EXIST);
 						}
 						else {
 							// lobby istnieje
-							lobby.join(this);
+							tempLobby.join(this);
 						}
 						break;
 
 					case LOBBY_MY_EXIT:
 						System.out.printf("Client [%d] LOBBY_MY_EXIT\n", id);
-						Server.lobbies.get(lobbyId).exit(this);
-						lobbyId = -1;
+						lobby.exit(this);
+						lobby = null;
 						break;
 
 					case LOBBY_MY_STATUS:
 						System.out.printf("Client [%d] LOBBY_MY_STATUS\n", id);
 						boolean tempStatus = input.readBoolean();
-						Server.lobbies.get(lobbyId).status(this, tempStatus);
+						lobby.status(this, tempStatus);
 						break;
 
 					case LOBBY_CREATE:
@@ -103,18 +102,32 @@ public class ClientThread extends Thread{
 
 					case LOBBY_START:
 						System.out.printf("Client [%d] LOBBY_START\n", id);
-						Server.lobbies.get(lobbyId).start();
+						lobby.start();
 						break;
 
 					case MULTI_MY_POSITION:
 						float x = input.readFloat();
 						float y = input.readFloat();
-						//System.out.printf("Client [%d] MULTI_MY_POSITION %f %f\n", id, x, y);
+						System.out.printf("Client [%d] MULTI_MY_POSITION %f %f\n", id, x, y);
+						lobby.updatePosition(this, x, y);
 						break;
 
 					case MULTI_MY_STAGE:
 						int stage = input.readInt();
 						System.out.printf("Client [%d] MULTI_MY_STAGE %d\n", id, stage);
+						lobby.updateStage(this, stage);
+						break;
+
+					case MULTI_MY_WEAPON:
+						int weapon = input.readInt();
+						System.out.printf("Client [%d] MULTI_MY_WEAPON %d\n", id, weapon);
+						lobby.updateWeapon(this, weapon);
+						break;
+
+					case MULTI_MY_ATTACK:
+						int tempId = input.readInt();
+						System.out.printf("Client [%d] MULTI_MY_ATTACK %d\n", id, tempId);
+						lobby.updateAttack(this, id);
 						break;
 
 					case PING:
@@ -128,12 +141,12 @@ public class ClientThread extends Thread{
 			}
 			catch (SocketTimeoutException e) {
 				// czas minal, sprawdzamy czy klient jeszcze zyje
-				if (lobbyId != -1) writeInt(PING);
+				if (lobby != null) writeInt(PING);
 			}
 			catch (IOException e) {
 				// klient nie zyje, trzeba go usunac
-				if (lobbyId != -1)
-					Server.lobbies.get(lobbyId).exit(this);
+				if (lobby != null)
+					lobby.exit(this);
 				return;
 			}
 		}
@@ -147,11 +160,23 @@ public class ClientThread extends Thread{
 		}
 	}
 
+	public void writeFloat(float v) {
+		try {
+			output.writeFloat(v);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void writeBoolean(boolean v) {
 		try {
 			output.writeBoolean(v);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void setLobby(Lobby lobby) {
+		this.lobby = lobby;
 	}
 }

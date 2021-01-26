@@ -134,4 +134,8 @@ public abstract class Entity implements JsonSerializable {
 	public boolean isActive() {
 		return this.activeFlag;
 	}
+
+	public int getDirection() {
+		return this.direction;
+	}
 }

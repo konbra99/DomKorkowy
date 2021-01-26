@@ -76,4 +76,9 @@ public class ClientRadioField extends DataField {
 			return false;
 		}
 	}
+
+	@Override
+	public Integer getAsInteger() {
+		return id;
+	}
 }

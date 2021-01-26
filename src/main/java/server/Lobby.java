@@ -48,7 +48,7 @@ public class Lobby implements JsonSerializable {
 		}
 		else {
 			// jest wolne miejsce
-			client.lobbyId = this.id;
+			client.setLobby(this);
 			client.writeInt(LOBBY_MY_JOIN);
 			client.writeInt(LOBBY_JOINED);
 
@@ -130,6 +130,47 @@ public class Lobby implements JsonSerializable {
 			admin.writeInt(LOBBY_READY);
 			admin.writeBoolean(status);
 			prev_status = status;
+		}
+	}
+
+	public synchronized void updatePosition(ClientThread client, float x, float y) {
+		for(ClientThread c: clients) {
+			if (client != c) {
+				c.writeInt(MULTI_OTHER_POSITION);
+				c.writeInt(client.id);
+				c.writeFloat(x);
+				c.writeFloat(y);
+			}
+		}
+	}
+
+	public synchronized void updateWeapon(ClientThread client, int weapon) {
+		for(ClientThread c: clients) {
+			if (client != c) {
+				c.writeInt(MULTI_OTHER_WEAPON);
+				c.writeInt(client.id);
+				c.writeInt(weapon);
+			}
+		}
+	}
+
+	public synchronized void updateStage(ClientThread client, int stage) {
+		for(ClientThread c: clients) {
+			if (client != c) {
+				c.writeInt(MULTI_OTHER_STAGE);
+				c.writeInt(client.id);
+				c.writeInt(stage);
+			}
+		}
+	}
+
+	public synchronized void updateAttack(ClientThread client, int id) {
+		for(ClientThread c: clients) {
+			if (c.id == id) {
+				c.writeInt(MULTI_OTHER_ATTACK);
+				c.writeInt(client.id);
+				break;
+			}
 		}
 	}
 

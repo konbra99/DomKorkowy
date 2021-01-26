@@ -17,11 +17,11 @@ import java.util.Map;
 
 public class GameplayContext extends Context {
     public MapManager map;
-    public Player KORKOWY;
     public Rectangle HEALTHBAR;
     public HealthPotionSmall HP_S;
     public boolean refresh;
-    Map<Integer, Player> players;
+    static public Player KORKOWY;
+    public static Map<Integer, Player> players;
 
     public GameplayContext() {
         map = new MapManager();
@@ -35,6 +35,7 @@ public class GameplayContext extends Context {
     public void refreshContext() {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("application_context.xml");
         KORKOWY = (Player) context.getBean("player");
+        players = new HashMap<>();
 
         // init temp map
         try {
@@ -51,10 +52,16 @@ public class GameplayContext extends Context {
             map = new MapManager();
             map.fromJson(JsonUtils.fromString(Engine.browser.browser.roomActive.lobby.map_context));
             refreshContext();
-            refresh = false;
-            players = new HashMap<>();
 
+            for (DataField d: Engine.browser.browser.dataFields) {
+                int id = d.getAsInteger();
+                if (id != Engine.client.id)
+                    players.put(id, new Player());
+            }
+            refresh = false;
+            Engine.client.spawnMultiReader();
         }
+
         // update
         map.move();
         map.update();
@@ -67,6 +74,8 @@ public class GameplayContext extends Context {
     @Override
     public void draw() {
         map.draw();
+        for(Player p: players.values())
+            if (p.getStage() == MapManager.currentStage) p.draw();
         KORKOWY.draw();
         HEALTHBAR.draw();
         //HP_S.draw();
@@ -91,6 +100,8 @@ public class GameplayContext extends Context {
     public Collection<Entity> getCollectibles() {
         return map.getCurrentStage().collectibles.values();
     }
+
+    public Collection<Player> getEnemies() { return players.values(); }
 
     public float[] getStart() { return map.getCurrentStage().start; }
 }

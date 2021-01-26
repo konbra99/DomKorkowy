@@ -15,12 +15,12 @@
     </bean>
 
     <aop:config proxy-target-class="true">
+        <aop:pointcut id="update" expression="execution(public * logic.Player.update(..))"/>
+        <aop:pointcut id="stage" expression="execution(public * logic.Player.setStage(..))"/>
         <aop:aspect ref="player_aspect">
-            <aop:pointcut id="move" expression="execution(public * logic.Player.move(..))"/>
-            <aop:after pointcut-ref="move" method="afterMove"/>
-
-            <aop:pointcut id="stage" expression="execution(public * logic.Player.setStage(..))"/>
-            <aop:after pointcut-ref="stage" method="afterStage"/>
+            <aop:after pointcut-ref="update" method="positionChange"/>
+            <aop:after pointcut-ref="update" method="weaponChange"/>
+            <aop:after pointcut-ref="stage" method="stageChange"/>
         </aop:aspect>
     </aop:config>
 </beans>

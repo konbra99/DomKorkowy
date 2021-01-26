@@ -4,7 +4,7 @@ public class Protocol {
 
 	private Protocol() {}
 
-	// PROTOKOL					                    //      SEND BY CLIENT              SERVER RESPONSE
+	// PROTOKOL					                    //      KIENT->SERWER               SERWER->KLIENT
 	public final static int GET_MAPS = 1;           //      GET_MAPS                    GET_MAPS num map1 map2 ...
 	public final static int GET_MAP = 2;            //
 	public final static int GET_ROOMS = 3;          //      GET_ROOMS                   GET_ROOMS num room1 room2 ...
@@ -29,9 +29,15 @@ public class Protocol {
 	public final static int LOBBY_CREATE = 58;      //      LOBBY_CREATE lobby          ---
 	public final static int LOBBY_START = 59;       //      LOBBY_START                 LOBBY_START
 
-	// MULTIPLAYER
-	public final static int MULTI_MY_POSITION = 100;//      MULTI_MY_POSITION x y       ---
-	public final static int MULTI_MY_STAGE = 101;   //      MULTI_MY_STAGE stage        ---
+	// MULTIPLAYER					                    //      KIENT->SERWER               SERWER->KLIENT
+	public final static int MULTI_MY_POSITION = 100;    //      MULTI_MY_POSITION x y d     ---
+	public final static int MULTI_MY_STAGE = 101;       //      MULTI_MY_STAGE stage        ---
+	public final static int MULTI_MY_WEAPON = 102;      //      MULTI_MY_WEAPON weapon      ---
+	public final static int MULTI_MY_ATTACK = 103;      //      MULTI_MY_ATTACK id hp       ---
+	public final static int MULTI_OTHER_POSITION = 110; //      ---                         MULTI_OTHER_POSITION id x y
+	public final static int MULTI_OTHER_STAGE = 111;    //      ---                         MULTI_OTHER_STAGE id stage
+	public final static int MULTI_OTHER_WEAPON = 112;   //      ---                         MULTI_OTHER_WEAPON id weapon
+	public final static int MULTI_OTHER_ATTACK = 113;   //      ---                         MULTI_OTHER_ATTACK hp
 
 	// STATUS LOBBY
 	public final static int LOBBY_NOT_EXIST = 1;

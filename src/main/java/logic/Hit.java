@@ -72,11 +72,17 @@ public class Hit extends Entity {
             this.rectangle.setFade(fade);
 
             if (Engine.FRAMES == shift_end) {
-                // sprawdzamy kolizje
-                for (Entity mob : Engine.gameplay.map.getCurrentStage().mobs.values()) {
+                // kolizja z mobami
+                for (Entity mob : Engine.gameplay.getMobs()) {
                     if (this.rectangle.collidesWith(mob.rectangle)) {
                         mob.getDamage();
                     }
+                }
+
+                // kolizja z przeciwnikami
+                for(Player p: Engine.gameplay.getEnemies()) {
+                    if (this.rectangle.collidesWith(p.rectangle))
+                        Engine.client.updateAttack(p.id);
                 }
             }
         } else if (Engine.FRAMES <= fade_end) {

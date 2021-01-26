@@ -22,7 +22,7 @@ public class MapManager implements JsonSerializable {
 
 	// sceny
 	public List<Stage> stages;
-	public int currentStage;
+	public static int currentStage;
 
 	public MapManager() {
 		stages = new ArrayList<>();

@@ -9,7 +9,7 @@ public class Player extends Character {
     private Weapon[] weapons;
     private int activeWeapon;
     private int immune;
-    public int stage;
+    private int stage;
 
     public Player() {
         super(-0.7f, -0.8f, 0.1f, 0.18f, "korkowy_ludek.png", RIGHT);
@@ -29,7 +29,6 @@ public class Player extends Character {
         this.hp = 3;
         //reset();
     }
-
 
     public void move() {
         float speed = 1;
@@ -117,6 +116,10 @@ public class Player extends Character {
 
     public void setActiveWeapon(int index) {
         this.activeWeapon = index;
+    }
+
+    public int getActiveWeapon() {
+        return this.activeWeapon;
     }
 
     public void getDamage() {

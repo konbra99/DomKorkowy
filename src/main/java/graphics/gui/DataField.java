@@ -14,7 +14,6 @@ public class DataField extends Button{
 	public boolean getValue(MapManager map) {
 		return false;
 	}
-
 	public Object getAsObject() { return null; }
 	public Float getAsFloat() { return null; }
 	public Integer getAsInteger() { return null; }

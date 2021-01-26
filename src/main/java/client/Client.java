@@ -158,7 +158,23 @@ public class Client{
 		}
 	}
 
+	public void updateWeapon(int weapon) {
+		try {
+			output.writeInt(MULTI_MY_WEAPON);
+			output.writeInt(weapon);
+		} catch (IOException ignored) {}
+	}
+
+	public void updateAttack(int id) {
+		try {
+			output.writeInt(MULTI_MY_ATTACK);
+			output.writeInt(id);
+		} catch (IOException ignored) {}
+	}
+
 	public void spawnLobbyReader() {
 		new LobbyReader(input, output).start();
 	}
+
+	public void spawnMultiReader() { new MultiReader(input, output).start(); }
 }

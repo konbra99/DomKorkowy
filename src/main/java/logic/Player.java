@@ -3,12 +3,16 @@ package logic;
 import graphics.Engine;
 import graphics.Input;
 
+import java.util.ArrayList;
+
 import static logic.CharacterState.*;
 
 public class Player extends Character {
     private Weapon[] weapons;
     private int activeWeapon;
     private int immune;
+    public int stage;
+    public ArrayList<playerAction> actionList;
     private int stage;
 
     public Player() {
@@ -27,8 +31,10 @@ public class Player extends Character {
         this.activeWeapon = 0;
         init();
         this.hp = 3;
+        actionList = new ArrayList<>();
         //reset();
     }
+
 
     public void move() {
         float speed = 1;
@@ -104,6 +110,13 @@ public class Player extends Character {
             this.setActiveWeapon(1);
             Input.TWO_KEY = false;
         }
+        for (playerAction action : actionList)
+        {
+            action.action();
+        }
+
+        actionList.clear();
+
 
         weapons[activeWeapon].update();
     }

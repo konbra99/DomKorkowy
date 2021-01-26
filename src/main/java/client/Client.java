@@ -164,6 +164,12 @@ public class Client{
 		} catch (IOException ignored) {}
 	}
 
+	public void updateHit() {
+		try {
+			output.writeInt(MULTI_MY_HIT);
+		} catch (IOException ignored) {}
+	}
+
 	public void updateAttack(int id) {
 		try {
 			output.writeInt(MULTI_MY_ATTACK);

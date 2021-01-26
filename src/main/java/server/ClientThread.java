@@ -143,6 +143,11 @@ public class ClientThread extends Thread{
 						System.out.printf("Client [%d] MULTI_MY_DIRECTION %d \n", id, direction);
 						break;
 
+					case MULTI_MY_HIT:
+						lobby.updateHit(this);
+						System.out.printf("Client [%d] MULTI_MY_HIT\n", id);
+						break;
+
 					case PING:
 						System.out.printf("Client [%d] PING\n", id);
 						break;

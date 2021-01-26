@@ -194,6 +194,15 @@ public class Lobby implements JsonSerializable {
 		}
 	}
 
+	public synchronized void updateHit(ClientThread client) {
+		for(ClientThread c: clients) {
+			if (c != client) {
+				c.writeInt(MULTI_OTHER_HIT);
+				c.writeInt(client.id);
+			}
+		}
+	}
+
 	@Override
 	public JsonObject toJson() {
 		JsonObject obj = new JsonObject();

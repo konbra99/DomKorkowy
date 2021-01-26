@@ -61,6 +61,11 @@ public class MultiReader extends Thread{
 						System.out.printf("Client [%d] MULTI_OTHER_DIRECTION %d\n", tempId, direction);
 						GameplayContext.players.get(tempId).addAction(() -> GameplayContext.players.get(tempId).setDirection(direction));
 					}
+					case MULTI_OTHER_HIT -> {
+						int tempId = input.readInt();
+						System.out.printf("Client [%d] MULTI_OTHER_HIT\n", tempId);
+						GameplayContext.players.get(tempId).addAction(() -> GameplayContext.players.get(tempId).useWeapon());
+					}
 					case PING -> {
 						//System.out.println("Lobby [] PING ");
 						output.writeInt(PING);

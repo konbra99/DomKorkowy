@@ -105,6 +105,7 @@ public class Player extends Character {
     public void update() {
         if (Input.ATTACK) {
             weapons[activeWeapon].start();
+            Engine.client.updateHit();
             Input.ATTACK = false;
         }
         if (Input.ONE_KEY) {
@@ -121,6 +122,10 @@ public class Player extends Character {
 
     public void updateWeapon() {
         weapons[activeWeapon].update();
+    }
+
+    public void useWeapon() {
+        weapons[activeWeapon].start();
     }
 
     public void doActions() {

@@ -148,6 +148,12 @@ public class ClientThread extends Thread{
 						System.out.printf("Client [%d] MULTI_MY_HIT\n", id);
 						break;
 
+					case MULTI_MY_DEATH:
+						int enemyId = input.readInt();
+						lobby.updateDeath(this, enemyId);
+						System.out.printf("Client [%d] MULTI_MY_HIT %d\n", id, enemyId);
+						break;
+
 					case PING:
 						System.out.printf("Client [%d] PING\n", id);
 						break;

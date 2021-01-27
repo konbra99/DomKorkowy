@@ -203,6 +203,15 @@ public class Lobby implements JsonSerializable {
 		}
 	}
 
+	public synchronized void updateDeath(ClientThread client, int id) {
+		for(ClientThread c: clients) {
+			if (c.id == id) {
+				c.writeInt(MULTI_OTHER_DEATH);
+				break;
+			}
+		}
+	}
+
 	@Override
 	public JsonObject toJson() {
 		JsonObject obj = new JsonObject();

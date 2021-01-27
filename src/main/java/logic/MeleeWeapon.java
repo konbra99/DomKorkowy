@@ -58,6 +58,11 @@ public class MeleeWeapon extends Weapon {
 
         move();
         this.rectangle.setOrientation(direction == RIGHT);
+        //hit.update();
+    }
+
+    @Override
+    public void hitUpdate() {
         hit.update();
     }
 

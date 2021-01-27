@@ -13,6 +13,8 @@ public class Player extends Character {
     private int activeWeapon;
     private int immune;
     public int stage;
+    private int kills;
+    private int deaths;
     public ArrayList<playerAction> actionList;
 
     public Player(int id) {
@@ -37,7 +39,9 @@ public class Player extends Character {
         init();
         this.hp = 3;
         actionList = new ArrayList<>();
-        //reset();
+
+        kills = 0;
+        deaths = 0;
     }
 
     @Override
@@ -124,8 +128,8 @@ public class Player extends Character {
             Input.TWO_KEY = false;
         }
 
-
         weapons[activeWeapon].update();
+        weapons[activeWeapon].hitUpdate();
     }
 
     public void updateWeapon() {
@@ -163,16 +167,21 @@ public class Player extends Character {
         return this.activeWeapon;
     }
 
-    public void getDamage() {
+    public boolean getDamage() {
         hp--;
         immune = 30;
         if (hp == 0) {
             reset();
-            return;
+            return true;
         }
         Engine.gameplay.HEALTHBAR.setTexture(hp + "hp.png");
         vel_y *= 0.9f;
         vel_x *= 0.9f;
+        return false;
+    }
+
+    public void getDamage(int id) {
+        if (getDamage()) Engine.client.updateDeath(id);
     }
 
     public void heal(int x) {
@@ -190,6 +199,7 @@ public class Player extends Character {
         immune = 0;
         vel_x = 0.0f;
         vel_y = 0.0f;
+        deaths++;
     }
 
     public void setStage(int stage) {
@@ -199,4 +209,14 @@ public class Player extends Character {
     public int getStage() {
         return this.stage;
     }
+
+    public int getKills() {
+        return kills;
+    }
+
+    public int getDeaths() {
+        return deaths;
+    }
+
+    public void incKills() { this.kills++; }
 }

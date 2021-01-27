@@ -85,6 +85,12 @@ public class GameplayContext extends Context {
             if (p.getStage() == MapManager.getCurrentStageNoumber()) p.draw();
         KORKOWY.draw();
         HEALTHBAR.draw();
+
+        Engine.fontLoader.renderText("K:" + KORKOWY.getKills(), "msgothic.bmp",
+                -0.7f, 0.87f, 0.06f, 0.1f,0.0f, 0.0f, 0.0f, 1.0f);
+
+        Engine.fontLoader.renderText("D:" + KORKOWY.getDeaths(), "msgothic.bmp",
+                -0.37f, 0.87f, 0.06f, 0.1f,0.0f, 0.0f, 0.0f, 1.0f);
     }
 
     public Collection<Entity> getPlatforms() {

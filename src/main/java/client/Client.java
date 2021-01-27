@@ -184,6 +184,13 @@ public class Client{
 		} catch (IOException ignored) {}
 	}
 
+	public void updateDeath(int id) {
+		try {
+			output.writeInt(MULTI_MY_DEATH);
+			output.writeInt(id);
+		} catch (IOException ignored) {}
+	}
+
 	public void removeEntity(int stage, int id) {
 		try {
 			output.writeInt(MULTI_MY_REMOVE);

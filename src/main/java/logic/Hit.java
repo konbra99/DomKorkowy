@@ -75,7 +75,7 @@ public class Hit extends Entity {
                 // kolizja z mobami
                 for (Entity mob : Engine.gameplay.getMobs()) {
                     if (this.rectangle.collidesWith(mob.rectangle)) {
-                        mob.getDamage();
+                        if (mob.getDamage()) Engine.gameplay.KORKOWY.incKills();
                     }
                 }
 

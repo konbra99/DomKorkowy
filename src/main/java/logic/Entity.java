@@ -82,11 +82,13 @@ public abstract class Entity implements JsonSerializable {
 		vel_y -= 0.002f;
 	}
 
-	public void getDamage() {
+	public boolean getDamage() {
 		this.hp--;
 		if (this.hp < 1) {
 			Engine.gameplay.map.removeEntity(this.id);
+			return true;
 		}
+		return false;
 	}
 
 	public Rectangle getRectangle() {

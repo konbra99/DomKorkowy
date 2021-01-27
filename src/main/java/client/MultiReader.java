@@ -46,9 +46,13 @@ public class MultiReader extends Thread{
 						//System.out.printf("Client [%d] MULTI_OTHER_STAGE %d\n", id, s);
 					}
 					case MULTI_OTHER_ATTACK -> {
-						id = input.readInt();
+						int tempId = input.readInt();
 						//System.out.printf("Client [%d] MULTI_OTHER_ATTACK\n", id);
-						GameplayContext.KORKOWY.addAction(() -> GameplayContext.KORKOWY.getDamage());
+						GameplayContext.KORKOWY.addAction(() -> GameplayContext.KORKOWY.getDamage(tempId));
+					}
+					case MULTI_OTHER_DEATH -> {
+						System.out.printf("Client [] MULTI_OTHER_DEATH\n");
+						GameplayContext.KORKOWY.addAction(() -> GameplayContext.KORKOWY.incKills());
 					}
 					case MULTI_OTHER_REMOVE -> {
 						int stageId = input.readInt();

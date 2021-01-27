@@ -58,7 +58,7 @@ public class BrowserContext extends Context {
         button.setText("PLAY", "msgothic.bmp", 0.05f, 0.12f);
         button.action = () -> {
             if (browser.active != null) {
-                Engine.gameplay.map = browser.active.map;
+                GameplayContext.map = browser.active.map;
                 Engine.gameplay.refreshContext();
                 Engine.activeContext = Engine.gameplay;
                 Engine.STATE = Engine.GAME_STATE.GAMEPLAY;
@@ -155,9 +155,7 @@ public class BrowserContext extends Context {
         Button button = new Button(0.25f, 0.2f, 0.6f, 0.3f, null, Button.MEDIUM_BUTTON);
         button.setText("START", "msgothic.bmp", 0.05f, 0.12f);
         button.setActiveVisible(false, false);
-        button.action = () -> {
-            Engine.client.lobbyStart();
-        };
+        button.action = () -> Engine.client.lobbyStart();
         buttonMap.put(START, button);
     }
 
@@ -191,12 +189,15 @@ public class BrowserContext extends Context {
                 MapManager map = new MapManager();
                 for (DataField dataField: browser.dataFields)
                     dataField.getValue(map);
+                Engine.STATE = Engine.GAME_STATE.EDITOR;
                 Engine.editor = new EditorContext(map);
                 Engine.activeContext = Engine.editor;
-                Engine.STATE = Engine.GAME_STATE.EDITOR;
             }
             else {
-                System.out.println("NOT new map");
+                Engine.STATE = Engine.GAME_STATE.EDITOR;
+                Engine.editor = new EditorContext(browser.active.map);
+                Engine.activeContext = Engine.editor;
+                //System.out.println("NOT new map");
 //                Engine.activeContext = Engine.editor;
 //                Engine.STATE = Engine.GAME_STATE.EDITOR;
             }
@@ -230,9 +231,7 @@ public class BrowserContext extends Context {
     public void addNewMapButton() {
         Button button = new Button(0.25f, 0.27f, 0.62f, 0.3f, null, Button.MEDIUM_BUTTON);
         button.setText("New", "msgothic.bmp", 0.05f, 0.08f);
-        button.action = () -> {
-            browser.createNewMapButtons();
-        };
+        button.action = () -> browser.createNewMapButtons();
         buttonList.add(button);
     }
 

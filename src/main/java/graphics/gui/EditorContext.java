@@ -46,12 +46,29 @@ class Attributes extends Context {
     ArrayList<AttributeField> textFields;
     EditorContext editor;
     Map<String, Float> attr;
-    float x, y;
+    float x, y, width;
 
     public Attributes(float x, float width, Entity entity, EditorContext editor) {
         this.editor = editor;
         this.entity = entity;
         this.x = x;
+        this.width = width;
+    }
+
+    @Override
+    public void update() {
+        editor.editingText = this.rectangle.hasPoint(Input.MOUSE_X, Input.MOUSE_Y);
+        for (AttributeField attributeField : textFields) {
+            attributeField.update();
+        }
+        apply.update();
+    }
+
+    public void setEntity(Entity entity) {
+        if (this.entity == entity) {
+            return;
+        }
+        this.entity = entity;
         this.attr = entity.getAttributes();
         float h = (attr.size() + 2) * 0.1f;
         this.y = 1.0f - h;
@@ -82,17 +99,8 @@ class Attributes extends Context {
 
         delete = new Button(x + 0.33f, 1.0f - 0.1f * i, 0.25f, 0.1f, null, Button.SHORT_BUTTON);
         delete.setText("Usun", "msgothic.bmp", 0.03f, 0.08f);
-
         init();
-    }
-
-    @Override
-    public void update() {
-        editor.editingText = this.rectangle.hasPoint(Input.MOUSE_X, Input.MOUSE_Y);
-        for (AttributeField attributeField : textFields) {
-            attributeField.update();
-        }
-        apply.update();
+        System.out.println("po inicie");
     }
 
     public void refresh() {
@@ -138,7 +146,7 @@ class ElementButton extends Button {
                 }
             }
             editor.newElement.init();
-            editor.attributes = new Attributes(0.4f, 0.6f, editor.newElement, editor);
+            editor.attributes.setEntity(editor.newElement);
             editor.state = EditorContext.EDITING_STATE.NEW;
 
             editor.actClick = () -> {
@@ -181,11 +189,19 @@ public class EditorContext extends Context {
 
     public EditorContext(MapManager map) {
         this.map = map;
-        map.addStage(new Stage("background/sky.png", 0.0f, 0.0f));
-        map.nextStage();
+        if (!map.nextStage()) {
+            System.out.println("dodaje nowy");
+            map.addStage(new Stage("background/sky.png", 0.0f, 0.0f));
+            map.nextStage();
+        } else {
+            map.getCurrentStage().buildAllMap();
+        }
+
         addPlatform = new ElementButton(-0.95f, 0.35f, CHOSEN.PLATFORM, Button.PLAT, this);
         addObstacle = new ElementButton(-0.95f, -0.25f, CHOSEN.OBSTACLE, Button.OBS, this);
         addMob = new ElementButton(-0.95f, -0.85f, CHOSEN.MOB, Button.MOBS, this);
+        attributes = new Attributes(0.4f, 0.6f, null, this);
+
         state = EDITING_STATE.NONE;
         saveMap = new Button(0.7f, -1.0f, 0.25f, 0.5f, null, Button.RIGHT_ARROW);
         saveMap.setText("Zapisz", "msgothic.bmp", 0.03f, 0.08f);
@@ -210,6 +226,7 @@ public class EditorContext extends Context {
             for (Entity e : map.getCurrentStage().allMap) {
                 if (e.getRectangle().hasPoint(Input.MOUSE_X, Input.MOUSE_Y)) {
                     this.selected = e;
+                    attributes.setEntity(e);
                     this.xdrag_shift = Input.MOUSE_X - e.getRectangle().posX;
                     this.ydrag_shift = Input.MOUSE_Y - e.getRectangle().posY;
                     this.state = EDITING_STATE.DRAGGING;
@@ -225,8 +242,8 @@ public class EditorContext extends Context {
 
         this.actDrag = () -> {
             glfwSetInputMode(Window.windowHandle, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+            this.attributes.setEntity(this.selected);
             this.selected.moveTo(Input.MOUSE_POS_X - xdrag_shift, Input.MOUSE_POS_Y - ydrag_shift);
-            this.attributes.entity = this.selected;
         };
     }
 

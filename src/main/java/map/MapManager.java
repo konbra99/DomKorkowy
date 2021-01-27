@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import graphics.Engine;
+import graphics.gui.GameplayContext;
 import map.json.JsonSerializable;
 
 import java.util.ArrayList;
@@ -68,16 +69,18 @@ public class MapManager implements JsonSerializable {
 
 	/** Przechodzi do nastepnej sceny, zwraca false, jesli nastepna scena nie istnieje. */
 	public boolean nextStage() {
-		if (currentStage == stages.size()-1)
+		if (currentStage == stages.size()-1) {
 			return false;
-		else {
+		} else {
+			System.out.println(stages.size() + ", " + currentStage);
 			currentStage++;
 			System.out.println(currentStage);
 			stages.get(currentStage).buildHashMap();
 			stages.get(currentStage).buildStage();
 			stages.get(currentStage).initStage();
-			Engine.gameplay.KORKOWY.setStage(currentStage);
-			System.out.println("stage: " + currentStage);
+			if (Engine.activeContext == Engine.gameplay) {
+				GameplayContext.KORKOWY.setStage(currentStage);
+			}
 			return true;
 		}
 	}

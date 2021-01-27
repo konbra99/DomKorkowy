@@ -47,7 +47,7 @@ public class MultiReader extends Thread{
 					}
 					case MULTI_OTHER_ATTACK -> {
 						id = input.readInt();
-						//System.out.printf("Client [%d] MULTI_OTHER_ATTACK\n", id);
+						System.out.printf("Client [%d] MULTI_OTHER_ATTACK\n", id);
 					}
 					case MULTI_OTHER_REMOVE -> {
 						int stageId = input.readInt();

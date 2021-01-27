@@ -167,6 +167,10 @@ public class Stage implements JsonSerializable {
 		// allMap = null
 	}
 
+	public void buildAllMap() {
+		allMap.addAll(all.values());
+	}
+
 	public JsonObject toJson() {
 		JsonObject obj = new JsonObject();
 		JsonArray entities = new JsonArray();

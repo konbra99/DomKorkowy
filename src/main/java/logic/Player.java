@@ -2,6 +2,7 @@ package logic;
 
 import graphics.Engine;
 import graphics.Input;
+import graphics.gui.GameplayContext;
 
 import java.util.ArrayList;
 
@@ -85,11 +86,13 @@ public class Player extends Character {
             }
         }
 
-        for(Entity door: Engine.gameplay.getDoors())
-            if(door.isActive() && this.rectangle.collidesWith(door.rectangle)) {
-                Engine.gameplay.map.nextStage();
+        for (Entity door: Engine.gameplay.getDoors()) {
+            if (door.isActive() && this.rectangle.collidesWith(door.rectangle)) {
+                System.out.println("przenosze sie do " + ((Door) door).linkedStage);
+                GameplayContext.map.setStage(((Door) door).linkedStage);
                 reset();
             }
+        }
 
         //for()
 

@@ -1,10 +1,7 @@
 package graphics.gui;
 
 import graphics.*;
-import logic.Entity;
-import logic.Mob;
-import logic.Obstacle;
-import logic.Platform;
+import logic.*;
 import map.MapManager;
 import map.Stage;
 import map.json.JsonUtils;
@@ -62,6 +59,7 @@ class Attributes extends Context {
             attributeField.update();
         }
         apply.update();
+        delete.update();
     }
 
     public void setEntity(Entity entity) {
@@ -99,6 +97,10 @@ class Attributes extends Context {
 
         delete = new Button(x + 0.33f, 1.0f - 0.1f * i, 0.25f, 0.1f, null, Button.SHORT_BUTTON);
         delete.setText("Usun", "msgothic.bmp", 0.03f, 0.08f);
+        delete.action = () -> {
+            editor.map.getCurrentStage().removeMapEntity(editor.selected);
+            editor.state = EditorContext.EDITING_STATE.NONE;
+        };
         init();
         System.out.println("po inicie");
     }
@@ -127,7 +129,7 @@ class ElementButton extends Button {
     EditorContext editor;
 
     public ElementButton(float x, float y, EditorContext.CHOSEN state, String[] textures, EditorContext editor) {
-        super(x, y, 0.3f, 0.3f * Config.RESOLUTION, null, textures);
+        super(x, y, 0.2f, 0.2f * Config.RESOLUTION, null, textures);
         this.editor = editor;
         this.action = () -> {
             glfwSetInputMode(Window.windowHandle, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
@@ -143,6 +145,10 @@ class ElementButton extends Button {
                 case MOB -> {
                     editor.newElement = new Mob(0.0f, 0.0f, 0.1f, 0.2f, "mobs/enemy1.png",
                             0.0f, 0.0f, 0.0f, -1);
+                }
+                case DOOR -> {
+                    editor.newElement = new Door(0.0f, 0.0f, 0.1f, 0.2f,
+                            "door.png", 0, true);
                 }
             }
             editor.newElement.init();
@@ -166,7 +172,8 @@ public class EditorContext extends Context {
     enum CHOSEN {
         PLATFORM,
         OBSTACLE,
-        MOB
+        MOB,
+        DOOR
     }
 
     enum EDITING_STATE {
@@ -179,8 +186,9 @@ public class EditorContext extends Context {
     EDITING_STATE state;
     private float xdrag_shift, ydrag_shift;
     MapManager map;
-    ElementButton addPlatform, addObstacle, addMob;
+    ElementButton addPlatform, addObstacle, addMob, addDoor;
     Button saveMap, backButton;
+    Button prevStageButton, nextStageButton;
     Entity newElement = null;
     Entity selected = null;
     Action actClick, actDefClick, actDrag;
@@ -197,29 +205,41 @@ public class EditorContext extends Context {
             map.getCurrentStage().buildAllMap();
         }
 
-        addPlatform = new ElementButton(-0.95f, 0.35f, CHOSEN.PLATFORM, Button.PLAT, this);
-        addObstacle = new ElementButton(-0.95f, -0.25f, CHOSEN.OBSTACLE, Button.OBS, this);
-        addMob = new ElementButton(-0.95f, -0.85f, CHOSEN.MOB, Button.MOBS, this);
+        addPlatform = new ElementButton(-0.99f, 0.62f, CHOSEN.PLATFORM, Button.PLAT, this);
+        addObstacle = new ElementButton(-0.99f, 0.24f, CHOSEN.OBSTACLE, Button.OBS, this);
+        addMob = new ElementButton(-0.99f, -0.14f, CHOSEN.MOB, Button.MOBS, this);
+        addDoor = new ElementButton(-0.99f, -0.52f, CHOSEN.DOOR, Button.DOORS, this);
         attributes = new Attributes(0.4f, 0.6f, null, this);
 
         state = EDITING_STATE.NONE;
-        saveMap = new Button(0.7f, -1.0f, 0.25f, 0.5f, null, Button.RIGHT_ARROW);
+        saveMap = new Button(0.74f, -1.0f, 0.25f, 0.2f, null, Button.SHORT_BUTTON);
         saveMap.setText("Zapisz", "msgothic.bmp", 0.03f, 0.08f);
         saveMap.action = () -> {
             try {
                 map.getCurrentStage().buildHashMap();
                 map.getCurrentStage().buildStage();
                 JsonUtils.toFile(map.toJson(), Config.MAP_PATH + map.mapName + ".json");
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         };
 
-        backButton = new Button(0.4f, -1.0f, 0.25f, 0.5f, null, Button.LEFT_ARROW);
-        backButton.setText("BACK", "msgothic.bmp", 0.04f, 0.1f);
+        backButton = new Button(-0.99f, -1.0f, 0.2f, 0.3f, null, Button.LEFT_ARROW);
+        backButton.setText("BACK", "msgothic.bmp", 0.03f, 0.08f);
         backButton.action = () -> {
             Engine.activeContext = Engine.menu;
             Engine.STATE = Engine.GAME_STATE.MENU;
+        };
+
+        prevStageButton = new Button(0.74f, -0.79f, 0.12f, 0.17f, null, Button.LEFT_ARROW);
+        prevStageButton.action = () -> {
+
+        };
+
+        nextStageButton = new Button(0.87f, -0.79f, 0.12f, 0.17f, null, Button.RIGHT_ARROW);
+        nextStageButton.setText("", "msgothic.bmp", 0.06f, 0.15f);
+        nextStageButton.action = () -> {
+            this.map.nextStage();
         };
 
         this.actDefClick = () -> {
@@ -252,8 +272,22 @@ public class EditorContext extends Context {
         addPlatform.update();
         addObstacle.update();
         addMob.update();
+        addDoor.update();
         saveMap.update();
         backButton.update();
+        prevStageButton.update();
+        if (map.hasNext()) {
+            nextStageButton.setTextures(Button.RIGHT_ARROW);
+            nextStageButton.text = "";
+            map.nextStage();
+        } else {
+            nextStageButton.setTextures(Button.SHORT_BUTTON);
+            nextStageButton.text = " +";
+            nextStageButton.action = () -> {
+                map.addStage(new Stage("background/sky.png", 0.0f, 0.0f));
+            };
+        }
+        nextStageButton.update();
 
         switch (state) {
             case NEW -> {
@@ -284,8 +318,11 @@ public class EditorContext extends Context {
         addPlatform.draw();
         addObstacle.draw();
         addMob.draw();
+        addDoor.draw();
         saveMap.draw();
         backButton.draw();
+        prevStageButton.draw();
+        nextStageButton.draw();
 
         if (state == EDITING_STATE.NEW) {
             newElement.draw();

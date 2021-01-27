@@ -85,6 +85,40 @@ public class MapManager implements JsonSerializable {
 		}
 	}
 
+	public boolean setStage(int index) {
+		if (index >= stages.size()) {
+			return false;
+		}
+
+		currentStage = index;
+
+		if (stages.get(index).wasLoaded) {
+			System.out.println("wasloaded");
+			if (Engine.activeContext == Engine.gameplay) {
+				GameplayContext.KORKOWY.setStage(currentStage);
+			}
+			return true;
+		}
+
+		stages.get(currentStage).buildHashMap();
+		stages.get(currentStage).buildStage();
+		stages.get(currentStage).initStage();
+		if (Engine.activeContext == Engine.gameplay) {
+			GameplayContext.KORKOWY.setStage(currentStage);
+		}
+		stages.get(currentStage).wasLoaded = true;
+
+		return true;
+	}
+
+	public boolean hasNext() {
+		return currentStage < stages.size() - 1;
+	}
+
+	public boolean hasPrevious() {
+		return currentStage > 0;
+	}
+
 	public JsonObject toJson() {
 		JsonObject obj = new JsonObject();
 		JsonArray json_stages = new JsonArray();

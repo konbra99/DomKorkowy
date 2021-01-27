@@ -45,8 +45,8 @@ public class MapSerializationTest {
 		stage.addMapEntity(new StaticObject(-0.65f, -0.11f, 0.12f, 0.2f, "trees/tree1.png"));
 
 		// drzwi
-		stage.addMapEntity(new Door(-0.7f, -0.9f, 0.10f, 0.25f, "door.png", false));
-		stage.addMapEntity(new Door(0.8f, 0.3f, 0.10f, 0.25f, "door.png", true));
+		//stage.addMapEntity(new Door(-0.7f, -0.9f, 0.10f, 0.25f, "door.png", false));
+		//stage.addMapEntity(new Door(0.8f, 0.3f, 0.10f, 0.25f, "door.png", true));
 
 		// przeszkody
 		stage.addMapEntity(new Obstacle(-0.8f, -0.52f, 0.13f, 0.08f, "obstacles/spikes_2.png"));
@@ -75,8 +75,8 @@ public class MapSerializationTest {
 		stage = new Stage("background/back.png", 0.8f, -0.45f);
 
 		// drzwi
-		stage.addMapEntity(new Door(0.8f, -0.9f, 0.10f, 0.25f, "door.png", false));
-		stage.addMapEntity(new Door(0.8f, 0.6f, 0.10f, 0.25f, "door.png", true));
+		//stage.addMapEntity(new Door(0.8f, -0.9f, 0.10f, 0.25f, "door.png", false));
+		//stage.addMapEntity(new Door(0.8f, 0.6f, 0.10f, 0.25f, "door.png", true));
 
 		// przeszkody
 		stage.addMapEntity(new WheelObstacle(-1.0f, -0.6f, 0.20f, 0.20f*Config.RESOLUTION,  "obstacles/blade_2.png", -3.0f));
@@ -113,8 +113,8 @@ public class MapSerializationTest {
 		stage = new Stage("background/back.png", 0.8f, 0.34f);
 
 		// drzwi
-		stage.addMapEntity(new Door(0.8f, 0.6f, 0.10f, 0.25f, "door.png", false));
-		stage.addMapEntity(new Door(0.8f, -0.9f, 0.10f, 0.25f, "door.png", true));
+		//stage.addMapEntity(new Door(0.8f, 0.6f, 0.10f, 0.25f, "door.png", false));
+		//stage.addMapEntity(new Door(0.8f, -0.9f, 0.10f, 0.25f, "door.png", true));
 
 		// przeszkody
 		stage.addMapEntity(new WheelObstacle(-1f, -1.1f, 0.20f, 0.20f*Config.RESOLUTION, "obstacles/blade_2.png", -1.0f));

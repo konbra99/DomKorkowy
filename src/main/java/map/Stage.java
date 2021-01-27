@@ -25,6 +25,7 @@ public class Stage implements JsonSerializable {
 	private Rectangle background;
 	private String backgroundName;
 	public float[] start;
+	public boolean wasLoaded = false;
 
 	// mapy
 	public Map<Integer, Entity> all;

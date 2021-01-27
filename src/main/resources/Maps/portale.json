@@ -1,0 +1,15 @@
+{"mapName":"portale","author":"s","time":22,"description":"s","stages":[
+  {"backgroundName":"background/sky.png","startX":0.0,"startY":0.0,"entities":[
+    {"posX":-0.9953126,"posY":-0.5667969,"width":2.0,"height":0.056250002,"textureName":"platforms/platforma.png","hp":0,"direction":1,"id":0,"type":"Platform"},
+    {"posX":0.5953125,"posY":-0.509375,"width":0.1,"height":0.112500004,"textureName":"door.png","hp":0,"direction":1,"linkedStage":1,"activeFlag":true,"id":1,"type":"Door"},
+    {"posX":-0.1390625,"posY":-0.1453125,"width":0.3,"height":0.056250002,"textureName":"platforms/platforma.png","hp":0,"direction":1,"id":2,"type":"Platform"}]},
+  {"backgroundName":"background/sky.png","startX":0.0,"startY":0.0,"entities":[
+    {"posX":-1.0078125,"posY":-0.5689453,"width":2.0,"height":0.056250002,"textureName":"platforms/platforma.png","hp":0,"direction":1,"id":0,"type":"Platform"},
+    {"posX":-0.0984375,"posY":-0.515625,"width":0.1,"height":0.056250002,"textureName":"obstacles/spikes_2.png","hp":0,"direction":1,"id":1,"type":"Obstacle"},
+    {"posX":0.009375,"posY":-0.5140625,"width":0.1,"height":0.056250002,"textureName":"obstacles/spikes_2.png","hp":0,"direction":1,"id":2,"type":"Obstacle"},
+    {"posX":-0.453125,"posY":-0.1359375,"width":0.3,"height":0.056250002,"textureName":"platforms/platforma.png","hp":0,"direction":1,"id":3,"type":"Platform"},
+    {"posX":-0.365625,"posY":-0.071875,"width":0.1,"height":0.056250002,"textureName":"obstacles/spikes_2.png","hp":0,"direction":1,"id":4,"type":"Obstacle"},
+    {"posX":-0.634375,"posY":-0.33125,"width":0.3,"height":0.056250002,"textureName":"platforms/platforma.png","hp":0,"direction":1,"id":5,"type":"Platform"},
+    {"posX":0.39375,"posY":-0.5125,"width":0.1,"height":0.112500004,"textureName":"door.png","hp":0,"direction":1,"linkedStage":1,"activeFlag":true,"id":6,"type":"Door"},
+    {"posX":-0.346875,"posY":-0.5125,"width":0.1,"height":0.112500004,"textureName":"door.png","hp":0,"direction":1,"linkedStage":0,"activeFlag":true,"id":7,"type":"Door"}]}
+]}

@@ -32,7 +32,8 @@ public class Client{
 
 	public void connect() {
 		try {
-			Socket socket = new Socket(InetAddress.getLocalHost(), 7117);
+//			Socket socket = new Socket(InetAddress.getLocalHost(), 7117);
+			Socket socket = new Socket("77.255.227.105", 7117);
 			input = new DataInputStream(socket.getInputStream());
 			output = new DataOutputStream(socket.getOutputStream());
 			isConnected = true;

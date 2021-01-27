@@ -47,7 +47,8 @@ public class MultiReader extends Thread{
 					}
 					case MULTI_OTHER_ATTACK -> {
 						id = input.readInt();
-						System.out.printf("Client [%d] MULTI_OTHER_ATTACK\n", id);
+						//System.out.printf("Client [%d] MULTI_OTHER_ATTACK\n", id);
+						GameplayContext.KORKOWY.addAction(() -> GameplayContext.KORKOWY.getDamage());
 					}
 					case MULTI_OTHER_REMOVE -> {
 						int stageId = input.readInt();
@@ -58,12 +59,12 @@ public class MultiReader extends Thread{
 					case MULTI_OTHER_DIRECTION -> {
 						int tempId = input.readInt();
 						int direction = input.readInt();
-						System.out.printf("Client [%d] MULTI_OTHER_DIRECTION %d\n", tempId, direction);
+						//System.out.printf("Client [%d] MULTI_OTHER_DIRECTION %d\n", tempId, direction);
 						GameplayContext.players.get(tempId).addAction(() -> GameplayContext.players.get(tempId).setDirection(direction));
 					}
 					case MULTI_OTHER_HIT -> {
 						int tempId = input.readInt();
-						System.out.printf("Client [%d] MULTI_OTHER_HIT\n", tempId);
+						//System.out.printf("Client [%d] MULTI_OTHER_HIT\n", tempId);
 						GameplayContext.players.get(tempId).addAction(() -> GameplayContext.players.get(tempId).useWeapon());
 					}
 					case PING -> {

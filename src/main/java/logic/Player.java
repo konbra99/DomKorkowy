@@ -14,6 +14,11 @@ public class Player extends Character {
     public int stage;
     public ArrayList<playerAction> actionList;
 
+    public Player(int id) {
+        this();
+        this.id = id;
+    }
+
     public Player() {
         super(-0.7f, -0.8f, 0.1f, 0.18f, "korkowy_ludek.png", RIGHT);
         float posX = -0.7f;

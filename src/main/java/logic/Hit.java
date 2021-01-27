@@ -82,7 +82,7 @@ public class Hit extends Entity {
                 // kolizja z przeciwnikami
                 for(Player p: Engine.gameplay.getEnemies()) {
                     if (this.rectangle.collidesWith(p.rectangle))
-                        Engine.client.updateAttack(p.id);
+                        Engine.client.updateAttack(p.getId());
                 }
             }
         } else if (Engine.FRAMES <= fade_end) {

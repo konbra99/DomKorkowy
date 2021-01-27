@@ -57,7 +57,7 @@ public class GameplayContext extends Context {
             for (DataField d: Engine.browser.browser.dataFields) {
                 int id = d.getAsInteger();
                 if (id != -1 && id != Engine.client.id)
-                    players.put(id, new Player());
+                    players.put(id, new Player(id));
             }
             refresh = false;
             System.out.println("length: " + players.size());

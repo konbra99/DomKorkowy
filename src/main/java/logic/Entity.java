@@ -142,4 +142,6 @@ public abstract class Entity implements JsonSerializable {
 	public void setDirection(int direction) {
 		this.direction = direction;
 	}
+
+	public int getId() { return this.id; }
 }

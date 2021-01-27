@@ -127,7 +127,7 @@ public class ClientThread extends Thread{
 					case MULTI_MY_ATTACK:
 						int tempId = input.readInt();
 						System.out.printf("Client [%d] MULTI_MY_ATTACK %d\n", id, tempId);
-						lobby.updateAttack(this, id);
+						lobby.updateAttack(this, tempId);
 						break;
 
 					case MULTI_MY_REMOVE:

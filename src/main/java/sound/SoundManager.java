@@ -16,7 +16,15 @@ public class SoundManager {
     private long device;
     private long context;
 
+
+    private static SoundSource backgroundSource;
+    private static boolean soundEffects = true;
+    private static float volume = 0.1f;
+    private static SoundBuffer knifeBuffer;
+    private static SoundBuffer jumpBuffer;
+
     public SoundManager() {
+        // urzadzenia
         this.device = alcOpenDevice((ByteBuffer) null);
         if (device == NULL) {
             throw new IllegalStateException("Failed to open the default OpenAL device.");
@@ -28,6 +36,21 @@ public class SoundManager {
         }
         alcMakeContextCurrent(context);
         AL.createCapabilities(deviceCaps);
+
+        // muzyka w tle
+        try {
+            // muzyka w tle
+            SoundBuffer backgroundBuffer = new SoundBuffer("/Sounds/a_new_leaf.ogg");
+            backgroundSource = new SoundSource(true, true);
+            backgroundSource.setBuffer(backgroundBuffer.getBufferId());
+            backgroundSource.setGain(volume);
+
+            // efekty dzwiekowe
+            knifeBuffer = new SoundBuffer("/Sounds/knife1.ogg");
+            jumpBuffer = new SoundBuffer("/Sounds/jump1.ogg");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -51,16 +74,37 @@ public class SoundManager {
         }
     }
 
-    public void playBackgroundMusic() {
-        try {
-            SoundBuffer soundBuffer = new SoundBuffer("/Sounds/a_new_leaf.ogg");
-            SoundSource soundSource = new SoundSource(true, true);
+    public static void playBackgroundMusic() {
+        backgroundSource.play();
+    }
 
-            soundSource.setBuffer(soundBuffer.getBufferId());
-            soundSource.setGain(2.0f);
-            soundSource.play();
-        } catch (Exception e) {
-            e.printStackTrace();
+    public static void stopBackgroundMusic() {
+        backgroundSource.stop();
+    }
+
+    public static void enableSoundEffects() {
+        soundEffects = true;
+    }
+
+    public static void playKnifeSound() {
+        if (soundEffects) {
+            SoundSource source = new SoundSource(false, true);
+            source.setBuffer(knifeBuffer.getBufferId());
+            source.setGain(volume);
+            source.play();
         }
+    }
+
+    public static void playJumpSound() {
+        if (soundEffects) {
+            SoundSource source = new SoundSource(false, true);
+            source.setBuffer(jumpBuffer.getBufferId());
+            source.setGain(volume);
+            source.play();
+        }
+    }
+
+    public static void disableSoundEffects() {
+        soundEffects = false;
     }
 }

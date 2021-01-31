@@ -3,6 +3,7 @@ package logic;
 import graphics.Engine;
 import graphics.Input;
 import graphics.gui.GameplayContext;
+import sound.SoundManager;
 
 import java.util.ArrayList;
 
@@ -15,11 +16,17 @@ public class Player extends Character {
     public int stage;
     private int kills;
     private int deaths;
+    private int team;
     public ArrayList<playerAction> actionList;
 
     public Player(int id) {
         this();
         this.id = id;
+    }
+
+    public Player(int id, int color, int team) {
+        this();
+        setAttributes(id, color, team);
     }
 
     public Player() {
@@ -50,6 +57,12 @@ public class Player extends Character {
         this.rectangle.setOrientation(direction == RIGHT);
     }
 
+    public void setAttributes(int id, int color, int team) {
+        this.id = id;
+        this.team = team;
+        this.rectangle.setTexture("korkowy" + color + ".png");
+    }
+
     public void move() {
         float speed = 1;
 
@@ -70,6 +83,7 @@ public class Player extends Character {
                 vel_y *= 1.33f;
             }
             state = JUMPING;
+            SoundManager.playJumpSound();
         }
 
         this.gravity();
@@ -118,6 +132,7 @@ public class Player extends Character {
         if (Input.ATTACK) {
             weapons[activeWeapon].start();
             Engine.client.updateHit();
+            SoundManager.playKnifeSound();
             Input.ATTACK = false;
         }
         if (Input.ONE_KEY) {
@@ -219,4 +234,8 @@ public class Player extends Character {
     }
 
     public void incKills() { this.kills++; }
+
+    public boolean isInTeam(int team) { return this.team == team; }
+
+    public int getTeam() { return this.team; }
 }

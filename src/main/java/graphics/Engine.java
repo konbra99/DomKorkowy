@@ -1,11 +1,13 @@
 package graphics;
 
 import graphics.gui.*;
+import logic.playerAction;
 import org.lwjgl.Version;
 import org.lwjgl.opengl.GL;
 import client.Client;
 import sound.SoundManager;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
@@ -39,6 +41,7 @@ public class Engine implements Runnable {
     public static SettingsContext settings;
     public static Context activeContext;
     public static Client client;
+    public static ArrayList<playerAction> actionList;
 
     @Override
     public void run() {
@@ -57,7 +60,8 @@ public class Engine implements Runnable {
     private void init() {
         window = new Window();
         soundManager = new SoundManager();
-        soundManager.playBackgroundMusic();
+        SoundManager.playBackgroundMusic();
+        actionList = new ArrayList<>();
 
         GL.createCapabilities();
         glEnable(GL_BLEND);
@@ -97,6 +101,7 @@ public class Engine implements Runnable {
             // input
             glfwPollEvents();
             activeContext.update();
+            doActions();
 
             Input.resetInputs();
             activeContext.draw();
@@ -109,6 +114,19 @@ public class Engine implements Runnable {
             current = glfwGetTime();
             avg = (int) Math.floor(1.0 / (current - previous));
             ++FRAMES;
+        }
+    }
+
+    public static void doActions() {
+        synchronized (actionList) {
+            for (playerAction action : actionList) action.action();
+            actionList.clear();
+        }
+    }
+
+    public static void addAction(playerAction action) {
+        synchronized (actionList) {
+            actionList.add(action);
         }
     }
 }

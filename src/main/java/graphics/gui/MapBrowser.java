@@ -19,6 +19,7 @@ import java.util.Map;
 
 import static graphics.Config.MOUSE_SCROLL_SPEED;
 import static graphics.gui_enums.NewLobbyButtonNames.*;
+import static logic.constants.MultiModes.*;
 
 public class MapBrowser extends Entity {
     // searchRect to pasek na ktorym beda wyswietlane mapy
@@ -112,7 +113,7 @@ public class MapBrowser extends Entity {
         addButton(button);
         dataFieldsMap.put(LOBBY_NAME, button);
 
-        // MAKSYMALNA LICZBA BRACZU
+        // MAKSYMALNA LICZBA BRACZY
         button = new TextField(this, Button.LONG_BUTTON);
         button.setText("l.graczy:", "msgothic.bmp", 0.05f, 0.08f);
         addButton(button);
@@ -130,11 +131,18 @@ public class MapBrowser extends Entity {
                 map_contexts.add(JsonUtils.toString(file));
             } catch (Exception ignored) {}
         }
-
         button = new OptionField(this, Button.LONG_BUTTON, map_names.toArray(new String[1]), map_contexts.toArray());
         button.setText("mapa:", "msgothic.bmp", 0.05f, 0.08f);
         addButton(button);
         dataFieldsMap.put(LOBBY_MAP, button);
+
+        // TRYB ROZGRYWKI
+        String [] mode_names = {"DEADMAT", "TEAM", "COOPERA"};
+        Integer [] mode_values = { DEADMATCH, TEAM, COOPERATION};
+        button = new OptionField(this, Button.LONG_BUTTON,mode_names, mode_values);
+        button.setText("tryb:", "msgothic.bmp", 0.05f, 0.08f);
+        addButton(button);
+        dataFieldsMap.put(LOBBY_MODE, button);
     }
 
     public void createServerRoomsButtons() {

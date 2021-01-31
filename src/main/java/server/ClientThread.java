@@ -102,6 +102,8 @@ public class ClientThread extends Thread{
 
 					case LOBBY_START:
 						System.out.printf("Client [%d] LOBBY_START\n", id);
+						lobby.init();
+						lobby.teams();
 						lobby.start();
 						break;
 

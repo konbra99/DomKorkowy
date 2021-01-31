@@ -51,7 +51,7 @@ public class MultiReader extends Thread{
 						GameplayContext.KORKOWY.addAction(() -> GameplayContext.KORKOWY.getDamage(tempId));
 					}
 					case MULTI_OTHER_DEATH -> {
-						System.out.printf("Client [] MULTI_OTHER_DEATH\n");
+						// System.out.printf("Client [] MULTI_OTHER_DEATH\n");
 						GameplayContext.KORKOWY.addAction(() -> GameplayContext.KORKOWY.incKills());
 					}
 					case MULTI_OTHER_REMOVE -> {

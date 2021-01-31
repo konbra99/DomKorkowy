@@ -22,7 +22,7 @@ public class GameplayContext extends Context {
     public boolean refresh;
     static public Player KORKOWY;
     public static Map<Integer, Player> players;
-    private ClassPathXmlApplicationContext context;
+    private static ClassPathXmlApplicationContext context;
 
     public GameplayContext() {
         context = new ClassPathXmlApplicationContext("application_context.xml");
@@ -45,6 +45,37 @@ public class GameplayContext extends Context {
             e.printStackTrace();
         }
     }
+
+    public static void initGame() {
+        KORKOWY = (Player) context.getBean("player");
+        map = (MapManager) context.getBean("map");
+        players = new HashMap<>();
+
+        // init map
+        try {
+            map.fromJson(JsonUtils.fromString(Engine.browser.browser.roomActive.lobby.map_context));
+            map.nextStage();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void startGame() {
+        Engine.activeContext = Engine.gameplay;
+        Engine.STATE = Engine.GAME_STATE.GAMEPLAY;
+    }
+
+    public static void addPlayer(int id, int color, int team) {
+        if (id == Engine.client.id) {
+            // KORKOWY
+            KORKOWY.setAttributes(id, color, team);
+        }
+        else {
+            // inny gracz
+            players.put(id, new Player(id, color, team));
+        }
+    }
+
 
     @Override
     public void update() {

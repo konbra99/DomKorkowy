@@ -67,7 +67,10 @@ public class OptionField extends DataField {
     }
 
     public Object getAsObject() { return option_values[option_current]; }
+
     public String getAsString() { return (String)option_values[option_current]; }
+
+    public Integer getAsInteger() { return (Integer)option_values[option_current]; }
 
     public void nextValue() {
         option_current = (option_current+1) % option_length;

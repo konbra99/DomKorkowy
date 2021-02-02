@@ -156,6 +156,12 @@ public class ClientThread extends Thread{
 						System.out.printf("Client [%d] MULTI_MY_HIT %d\n", id, enemyId);
 						break;
 
+					case MULTI_MESSAGE:
+						String message = input.readUTF();
+						System.out.printf("Client [%d] MULTI_MY_HIT %s\n", id, message);
+						lobby.message(this, message);
+						break;
+
 					case PING:
 						System.out.printf("Client [%d] PING\n", id);
 						break;
@@ -197,6 +203,14 @@ public class ClientThread extends Thread{
 	public void writeBoolean(boolean v) {
 		try {
 			output.writeBoolean(v);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void writeUTF(String v) {
+		try {
+			output.writeUTF(v);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

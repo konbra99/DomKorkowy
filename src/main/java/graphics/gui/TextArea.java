@@ -100,4 +100,8 @@ public class TextArea extends Entity {
     public void setFont(String font) {
         this.font = font;
     }
+
+    public String getText() {
+        return this.text;
+    }
 }

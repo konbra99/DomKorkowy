@@ -40,6 +40,7 @@ public class Protocol {
 	public final static int MULTI_MY_DIRECTION = 105;   //      MULTI_MY_DIRECTION d        ---
 	public final static int MULTI_MY_HIT = 106;         //      MULTI_MY_HIT                ---
 	public final static int MULTI_MY_DEATH = 107;       //      MULTI_MY_DEATH id           ---
+	public final static int MULTI_MESSAGE = 108;        //      MULTI_MESSAGE m             MULTI_MESSAGE id m
 	public final static int MULTI_OTHER_POSITION = 110; //      ---                         MULTI_OTHER_POSITION id x y
 	public final static int MULTI_OTHER_STAGE = 111;    //      ---                         MULTI_OTHER_STAGE id stage
 	public final static int MULTI_OTHER_WEAPON = 112;   //      ---                         MULTI_OTHER_WEAPON id weapon

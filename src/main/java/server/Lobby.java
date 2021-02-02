@@ -258,6 +258,14 @@ public class Lobby implements JsonSerializable {
 		}
 	}
 
+	public synchronized void message(ClientThread client, String message) {
+		for(ClientThread c: clients) {
+			c.writeInt(MULTI_MESSAGE);
+			c.writeInt(client.id);
+			c.writeUTF(message);
+		}
+	}
+
 	@Override
 	public JsonObject toJson() {
 		JsonObject obj = new JsonObject();

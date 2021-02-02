@@ -27,7 +27,7 @@ public class SettingsContext extends Context {
         server.move(-0.5f, 0.3f);
 
         // MUSIC
-        music = new RadioField(Button.LONG_BUTTON, RadioField.ON, SoundManager::playBackgroundMusic, SoundManager::stopBackgroundMusic);
+        music = new RadioField(Button.LONG_BUTTON, RadioField.OFF, SoundManager::playBackgroundMusic, SoundManager::stopBackgroundMusic);
         music.setText("music", "msgothic.bmp", 0.05f, 0.08f);
         music.move(-0.5f, 0.1f);
 

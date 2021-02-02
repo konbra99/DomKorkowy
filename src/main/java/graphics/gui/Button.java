@@ -7,7 +7,7 @@ import logic.Entity;
 
 public class Button extends Entity {
     String text = "", font;
-    Action action;
+    public Action action;
     float text_x, text_y, charwidth, charheight;
     protected boolean is_selected;
     protected boolean is_invalid;
@@ -129,6 +129,13 @@ public class Button extends Entity {
             "gui/sign_upload_highlighted.png",
             "gui/sign_upload.png",
             "gui/sign_upload.png"};
+
+    public final static String[] SEND = {
+            "chat/marrow.png",
+            "chat/marrow.png",
+            "chat/marrow_highlighted.png",
+            "chat/marrow.png",
+            "chat/marrow.png"};
 
     public Button(float x, float y, float width, float height, Action action) {
         super(x, y, width, height, "gui/button.png");

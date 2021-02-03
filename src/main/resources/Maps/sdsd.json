@@ -1,0 +1,17 @@
+{"mapName":"sdsd","author":"ss","time":22,"description":"ss","stages": [
+  {"backgroundName":"background/sky.png","xIndex":0,"yIndex":0,"startX":0.0,"startY":0.0,"entities":[
+    {"posX":-0.9890625,"posY":-0.562793,"width":2.0,"height":0.056250002,"textureName":"platforms/platforma.png","hp":0,"direction":1,"type":"Platform"},
+    {"posX":-0.4875,"posY":-0.5015625,"width":0.1,"height":0.112500004,"textureName":"door.png","hp":0,"direction":1,"stageX":0,"stageY":0,"number":0,"linkedDoor":2,"activeFlag":true,"type":"Door"},
+    {"posX":0.309375,"posY":-0.503125,"width":0.1,"height":0.112500004,"textureName":"door.png","hp":0,"direction":1,"stageX":0,"stageY":0,"number":1,"linkedDoor":3,"activeFlag":true,"type":"Door"}
+  ]},
+  {"backgroundName":"background/sky.png","xIndex":1,"yIndex":0,"startX":0.0,"startY":0.0,"entities":[
+    {"posX":-1.0078125,"posY":-0.46005863,"width":2.1,"height":0.056250002,"textureName":"platforms/platforma.png","hp":0,"direction":1,"type":"Platform"},
+    {"posX":-0.340625,"posY":-0.3984375,"width":0.1,"height":0.056250002,"textureName":"obstacles/spikes_2.png","hp":0,"direction":1,"type":"Obstacle"},
+    {"posX":0.4734375,"posY":-0.4078125,"width":0.1,"height":0.112500004,"textureName":"door.png","hp":0,"direction":1,"stageX":1,"stageY":0,"number":3,"linkedDoor":1,"activeFlag":true,"type":"Door"}
+  ]},
+  {"backgroundName":"background/sky.png","xIndex":-1,"yIndex":0,"startX":0.0,"startY":0.0,"entities":[
+    {"posX":-1.0140625,"posY":-0.4303711,"width":2.1,"height":0.056250002,"textureName":"platforms/platforma.png","hp":0,"direction":1,"type":"Platform"},
+    {"posX":0.2703125,"posY":-0.378125,"width":0.1,"height":0.056250002,"textureName":"obstacles/spikes_2.png","hp":0,"direction":1,"type":"Obstacle"},
+    {"posX":-0.6,"posY":-0.375,"width":0.1,"height":0.112500004,"textureName":"door.png","hp":0,"direction":1,"stageX":-1,"stageY":0,"number":2,"linkedDoor":0,"activeFlag":true,"type":"Door"}
+  ]}
+]}

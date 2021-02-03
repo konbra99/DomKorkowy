@@ -1,0 +1,5 @@
+{"mapName":"sss","author":"ss","time":22,"description":"ss","stages":[
+  {"backgroundName":"background/sky.png","xIndex":0,"yIndex":0,"startX":0.0,"startY":0.0,"entities":[
+    {"posX":-0.9953125,"posY":-0.5629883,"width":2.0,"height":0.056250002,"textureName":"platforms/platforma.png","hp":0,"direction":1,"type":"Platform"}
+  ]}
+]}

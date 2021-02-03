@@ -1,8 +1,6 @@
 package graphics;
 
-import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWErrorCallback;
-import org.lwjgl.glfw.GLFWScrollCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.system.MemoryStack;
 
@@ -67,6 +65,7 @@ public class Window {
             GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 
             // Center the window
+            assert vidmode != null;
             glfwSetWindowPos(
                     windowHandle,
                     (vidmode.width() - pWidth.get(0)) / 2,

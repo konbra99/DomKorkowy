@@ -24,7 +24,7 @@ public class SoundUtils {
 	public static String loadResource(String fileName) throws Exception {
 		String result;
 		try (InputStream in = SoundUtils.class.getResourceAsStream(fileName);
-		     Scanner scanner = new Scanner(in, java.nio.charset.StandardCharsets.UTF_8.name())) {
+			 Scanner scanner = new Scanner(in, java.nio.charset.StandardCharsets.UTF_8.name())) {
 			result = scanner.useDelimiter("\\A").next();
 		}
 		return result;
@@ -101,5 +101,4 @@ public class SoundUtils {
 		newBuffer.put(buffer);
 		return newBuffer;
 	}
-
 }

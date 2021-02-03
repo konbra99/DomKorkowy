@@ -2,7 +2,8 @@ package server;
 
 public class Protocol {
 
-	private Protocol() {}
+	private Protocol() {
+	}
 
 	// PROTOKOL					                    //      KIENT->SERWER               SERWER->KLIENT
 	public final static int GET_MAPS = 1;           //      GET_MAPS                    GET_MAPS num map1 map2 ...

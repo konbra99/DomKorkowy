@@ -7,10 +7,10 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import static server.Protocol.*;
 
-public class MultiReader extends Thread{
+public class MultiReader extends Thread {
 
-	private DataInputStream input;
-	private DataOutputStream output;
+	private final DataInputStream input;
+	private final DataOutputStream output;
 
 	public MultiReader(DataInputStream input, DataOutputStream output) {
 		this.input = input;
@@ -19,7 +19,7 @@ public class MultiReader extends Thread{
 
 	@Override
 	public void run() {
-		int id, w, s, hp;
+		int id, w, sX, sY, hp;
 		float x, y;
 
 		while (true) {
@@ -41,9 +41,10 @@ public class MultiReader extends Thread{
 					}
 					case MULTI_OTHER_STAGE -> {
 						id = input.readInt();
-						s = input.readInt();
-						GameplayContext.players.get(id).setStage(s);
-						//System.out.printf("Client [%d] MULTI_OTHER_STAGE %d\n", id, s);
+						sX = input.readInt();
+						sY = input.readInt();
+						GameplayContext.players.get(id).setStage(sX, sY);
+						System.out.printf("Client [%d] MULTI_OTHER_STAGE %d %d\n", id, sX, sY);
 					}
 					case MULTI_OTHER_ATTACK -> {
 						int tempId = input.readInt();
@@ -55,10 +56,11 @@ public class MultiReader extends Thread{
 						GameplayContext.KORKOWY.addAction(() -> GameplayContext.KORKOWY.incKills());
 					}
 					case MULTI_OTHER_REMOVE -> {
-						int stageId = input.readInt();
+						int stageX = input.readInt();
+						int stageY = input.readInt();
 						int entityId = input.readInt();
 						//System.out.printf("Client [] MULTI_OTHER_REMOVE %d %d\n", stageId, entityId);
-						GameplayContext.KORKOWY.addAction(() -> GameplayContext.map.removeEntityFromStage(stageId, entityId));
+						GameplayContext.KORKOWY.addAction(() -> GameplayContext.map.removeEntity(stageX, stageY, entityId));
 					}
 					case MULTI_OTHER_DIRECTION -> {
 						int tempId = input.readInt();

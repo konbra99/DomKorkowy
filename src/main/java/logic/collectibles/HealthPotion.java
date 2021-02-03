@@ -1,6 +1,6 @@
 package logic.collectibles;
 
-public class HealthPotion extends Collectible{
+public class HealthPotion extends Collectible {
 
     public HealthPotion() {
         super();

@@ -18,7 +18,7 @@ public class WheelObstacle extends Obstacle {
 		angle += vel_angle;
 		angle %= 360f;
 		rectangle.rotate(angle);
-	};
+	}
 
 	@Override
 	public void init() {
@@ -31,11 +31,11 @@ public class WheelObstacle extends Obstacle {
 		JsonObject obj = super.toJson();
 		obj.addProperty("vel_angle", vel_angle);
 		return obj;
-	};
+	}
 
 	@Override
 	public void fromJson(JsonObject obj) {
 		this.vel_angle = obj.get("vel_angle").getAsFloat();
 		super.fromJson(obj);
-	};
+	}
 }

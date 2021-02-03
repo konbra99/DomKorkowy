@@ -6,7 +6,7 @@ import graphics.Input;
 import logic.Entity;
 
 public class Button extends Entity {
-    String text = "", font;
+    String text, font;
     Action action;
     float text_x, text_y, charwidth, charheight;
     protected boolean is_selected;
@@ -55,6 +55,22 @@ public class Button extends Entity {
             "gui/larrow_selected.png",
             "gui/larrow.png"};
 
+    public final static String[] UP_ARROW = {
+            "gui/uarrow.png",
+            "gui/uarrow.png",
+            "gui/uarrow.png",
+            "gui/uarrow.png",
+            "gui/uarrow.png"
+    };
+
+    public final static String[] DOWN_ARROW = {
+            "gui/darrow.png",
+            "gui/darrow.png",
+            "gui/darrow.png",
+            "gui/darrow.png",
+            "gui/darrow.png"
+    };
+
     public final static String[] BIG_BUTTON = {
             "gui/button_big.png",
             "gui/button_big_disabled.png",
@@ -82,14 +98,6 @@ public class Button extends Entity {
             "gui/sign_download_highlighted.png",
             "gui/sign_download.png",
             "gui/sign_download.png"};
-
-    public final static String[] SELECT = {
-            "gui/select.png",
-            "gui/select.png",
-            "gui/select.png",
-            "gui/select.png",
-            "gui/select.png"
-    };
 
     public final static String[] PLAT = {
             "gui/addplat.png",
@@ -190,6 +198,8 @@ public class Button extends Entity {
         this.text_y = (this.rectangle.posY + (this.rectangle.height / 2) - (charheight / 2)) * Config.RESOLUTION;
         if (is_active && this.rectangle.hasPoint(Input.MOUSE_X, Input.MOUSE_Y)) {
             this.action.action();
+            Input.resetInputs();
+            System.out.println(Input.MOUSE_X + ", " + Input.MOUSE_Y);
         }
     }
 

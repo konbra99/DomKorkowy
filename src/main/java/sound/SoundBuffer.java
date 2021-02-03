@@ -18,8 +18,6 @@ public class SoundBuffer {
 
     private ShortBuffer pcm = null;
 
-    private ByteBuffer vorbis = null;
-
     public SoundBuffer(String file) throws Exception {
         this.bufferId = alGenBuffers();
         try (STBVorbisInfo info = STBVorbisInfo.malloc()) {
@@ -43,7 +41,7 @@ public class SoundBuffer {
 
     private ShortBuffer readVorbis(String resource, int bufferSize, STBVorbisInfo info) throws Exception {
         try (MemoryStack stack = MemoryStack.stackPush()) {
-            vorbis = SoundUtils.ioResourceToByteBuffer(resource, bufferSize);
+            ByteBuffer vorbis = SoundUtils.ioResourceToByteBuffer(resource, bufferSize);
             IntBuffer error = stack.mallocInt(1);
             long decoder = stb_vorbis_open_memory(vorbis, error, null);
             if (decoder == NULL) {

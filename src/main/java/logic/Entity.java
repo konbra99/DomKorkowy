@@ -3,6 +3,7 @@ import com.google.gson.JsonObject;
 import graphics.Config;
 import graphics.Engine;
 import graphics.Rectangle;
+import graphics.gui.GameplayContext;
 import map.json.JsonSerializable;
 
 import java.util.HashMap;
@@ -11,11 +12,12 @@ import java.util.Map;
 public abstract class Entity implements JsonSerializable {
 
 	// grupy
-	public final static int GROUP_DEFAULT   = 0b00000001;
-	public final static int GROUP_PLATFORMS = 0b00000010;
-	public final static int GROUP_MOBS      = 0b00000100;
-	public final static int GROUP_OBSTACLES = 0b00001000;
-	public final static int GROUP_DOORS     = 0b00010000;
+	public final static int GROUP_DEFAULT =		0b00000001;
+	public final static int GROUP_PLATFORMS =	0b00000010;
+	public final static int GROUP_MOBS =		0b00000100;
+	public final static int GROUP_OBSTACLES =	0b00001000;
+	public final static int GROUP_DOORS =		0b00010000;
+	public final static int GROUP_CHECKPOINTS =	0b00100000;
 
 	// kierunki
 	public final static int LEFT = -1;
@@ -35,7 +37,7 @@ public abstract class Entity implements JsonSerializable {
 	protected int id;
 	protected int hp;
 
-	protected Rectangle rectangle;          /* SERIALIZED */
+	public Rectangle rectangle;          /* SERIALIZED */
 	protected String textureName;           /* SERIALIZED */
 	protected int groups;                   /* NOT SERIALIZED */
 
@@ -50,15 +52,19 @@ public abstract class Entity implements JsonSerializable {
 		groups |= GROUP_DEFAULT;
 	}
 
-	public void move() {}
+	public void move() {
+	}
 
 	public void moveTo(float x, float y) {
 		this.rectangle.move(x - this.rectangle.posX, y - this.rectangle.posY);
 	}
 
-	public void draw() { rectangle.draw(); }
+	public void draw() {
+		rectangle.draw();
+	}
 
-	public void update() {}
+	public void update() {
+	}
 
 	public void init() {
 		rectangle.initGL(this.textureName, "rectangle.vert.glsl", "rectangle.frag");
@@ -85,7 +91,7 @@ public abstract class Entity implements JsonSerializable {
 	public boolean getDamage() {
 		this.hp--;
 		if (this.hp < 1) {
-			Engine.gameplay.map.removeEntity(this.id);
+			GameplayContext.map.removeEntity(this.id);
 			return true;
 		}
 		return false;
@@ -124,15 +130,22 @@ public abstract class Entity implements JsonSerializable {
 	public void fromJson(JsonObject obj) {
 		textureName = obj.get("textureName").getAsString();
 		rectangle.fromJson(obj);
-		this.id = obj.get("id").getAsInt();
 	}
 
-	/** Sprawdza, czy encja znajduje sie w podanej grupie. */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	/**
+	 * Sprawdza, czy encja znajduje sie w podanej grupie.
+	 */
 	public boolean isInGroup(int group) {
 		return (groups & group) != 0;
 	}
 
-	/** Sprawdza, czy encja jest aktywna. */
+	/**
+	 * Sprawdza, czy encja jest aktywna.
+	 */
 	public boolean isActive() {
 		return this.activeFlag;
 	}
@@ -145,5 +158,7 @@ public abstract class Entity implements JsonSerializable {
 		this.direction = direction;
 	}
 
-	public int getId() { return this.id; }
+	public int getId() {
+		return this.id;
+	}
 }

@@ -27,7 +27,7 @@ public class TestRect extends Entity {
 		obj.addProperty("floatTest", floatTest);
 		obj.addProperty("stringTest", stringTest);
 		return obj;
-	};
+	}
 
 	@Override
 	public void fromJson(JsonObject obj) {
@@ -36,5 +36,5 @@ public class TestRect extends Entity {
 		this.floatTest = obj.get("floatTest").getAsFloat();
 		this.stringTest = obj.get("stringTest").getAsString();
 		super.fromJson(obj);
-	};
+	}
 }

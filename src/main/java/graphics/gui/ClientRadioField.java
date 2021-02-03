@@ -9,9 +9,10 @@ public class ClientRadioField extends DataField {
 	private boolean status = false;
 
 
-	public ClientRadioField(String [] textures) {
+	public ClientRadioField(String[] textures) {
 		super(0.0f, 0.0f, Config.MAP_BUTTON_WIDTH, Config.MAP_BUTTON_HEIGHT, null, textures);
-		this.action = ()->{};
+		this.action = () -> {
+		};
 		text = "EMPTY";
 	}
 
@@ -35,7 +36,7 @@ public class ClientRadioField extends DataField {
 	public void move(float dx, float dy) {
 		super.move(dx, dy);
 		this.text_x = this.rectangle.posX + 0.1f;
-		this.text_y = (this.rectangle.posY + (this.rectangle.height / 2) - (charheight / 2))* Config.RESOLUTION;
+		this.text_y = (this.rectangle.posY + (this.rectangle.height / 2) - (charheight / 2)) * Config.RESOLUTION;
 	}
 
 	public boolean join(int id) {
@@ -46,8 +47,7 @@ public class ClientRadioField extends DataField {
 			this.empty = false;
 			this.text = Integer.toString(id);
 			return true;
-		}
-		else {
+		} else {
 			// niepusty slot
 			return false;
 		}
@@ -59,19 +59,18 @@ public class ClientRadioField extends DataField {
 			this.empty = true;
 			this.id = -1;
 			return true;
-		}
-		else {
+		} else {
 			// nie wlasciciel slotu
 			return false;
 		}
 	}
+
 	public boolean status(int id, boolean status) {
 		if (this.id == id) {
 			// wlasciciel slotu
 			this.status = status;
 			return true;
-		}
-		else {
+		} else {
 			// nie wlasciciel slotu
 			return false;
 		}

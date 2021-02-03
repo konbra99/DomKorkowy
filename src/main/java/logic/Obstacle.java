@@ -6,6 +6,7 @@ public class Obstacle extends Entity {
 		super();
 		this.groups |= GROUP_OBSTACLES;
 	}
+
 	public Obstacle(float posX, float posY, float width, float height, String textureName) {
 		super(posX, posY, width, height, textureName);
 		this.groups |= GROUP_OBSTACLES;

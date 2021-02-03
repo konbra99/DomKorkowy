@@ -24,5 +24,6 @@ public abstract class Weapon extends Entity {
     public void start() {
     }
 
-    public void hitUpdate() {}
+    public void hitUpdate() {
+    }
 }

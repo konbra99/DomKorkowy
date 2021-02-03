@@ -26,7 +26,7 @@ public class Server {
 		lobbies = new HashMap<>();
 	}
 
-	public void run() throws IOException{
+	public void run() throws IOException {
 		Socket socket;
 		while (true) {
 			System.out.println("Waiting for client...");

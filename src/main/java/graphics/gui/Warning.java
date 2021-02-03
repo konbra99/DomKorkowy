@@ -6,8 +6,8 @@ import graphics.Rectangle;
 
 public class Warning extends Button {
 
-	private Rectangle exclamation;
-	private Rectangle background;
+	private final Rectangle exclamation;
+	private final Rectangle background;
 
 	public Warning() {
 		super(-0.5f, -0.5f, 1.0f, 1.0f, null, Button.BIG_BUTTON);
@@ -23,7 +23,7 @@ public class Warning extends Button {
 
 		this.action = this::action;
 	}
-	
+
 	@Override
 	public void draw() {
 		if (is_visible) {
@@ -31,14 +31,14 @@ public class Warning extends Button {
 			rectangle.draw();
 			exclamation.draw();
 			float y = 0.13f;
-			for(String str: text.split("(?<=\\G.{12})")) {
+			for (String str : text.split("(?<=\\G.{12})")) {
 				Engine.fontLoader.renderText(str, "msgothic.bmp", -0.2f, y, 0.05f, 0.08f,
 						0.0f, 0.0f, 0.0f, 1.0f);
 				y -= 0.15f;
 			}
 		}
 	}
-	
+
 	@Override
 	public void update() {
 		if (is_visible)

@@ -1,6 +1,7 @@
 package logic.collectibles;
 
 import graphics.Engine;
+import graphics.gui.GameplayContext;
 
 public class HealthPotionSmall extends HealthPotion {
 
@@ -14,7 +15,7 @@ public class HealthPotionSmall extends HealthPotion {
 
     @Override
     public void usage() {
-        Engine.gameplay.KORKOWY.heal(1);
-        Engine.gameplay.map.getCurrentStage().removeEntity(this.id);
+        GameplayContext.KORKOWY.heal(1);
+        GameplayContext.map.getCurrentStage().removeEntity(this.id);
     }
 }

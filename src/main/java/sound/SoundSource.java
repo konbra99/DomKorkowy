@@ -29,7 +29,7 @@ public class SoundSource {
     public void setProperty(int param, float value) {
         alSourcef(sourceId, param, value);
     }
-    
+
     public void play() {
         alSourcePlay(sourceId);
     }

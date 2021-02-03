@@ -1,7 +1,6 @@
 package database;
 
 import com.google.gson.JsonObject;
-import map.MapManager;
 import map.json.JsonUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;

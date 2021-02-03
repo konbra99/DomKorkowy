@@ -10,7 +10,7 @@ import java.util.List;
 
 import static server.Protocol.*;
 
-public class Client{
+public class Client {
 
 	private DataInputStream input;
 	private DataOutputStream output;
@@ -32,8 +32,8 @@ public class Client{
 
 	public void connect() {
 		try {
-//			Socket socket = new Socket(InetAddress.getLocalHost(), 7117);
-			Socket socket = new Socket("213.146.52.66", 7117);
+			Socket socket = new Socket(InetAddress.getLocalHost(), 7117);
+			//Socket socket = new Socket("213.146.52.66", 7117);
 			input = new DataInputStream(socket.getInputStream());
 			output = new DataOutputStream(socket.getOutputStream());
 			isConnected = true;
@@ -52,9 +52,10 @@ public class Client{
 			output.writeInt(GET_MAPS);
 			input.readInt();
 			int num = input.readInt();
-			for(int i = 0; i < num; i++)
+			for (int i = 0; i < num; i++)
 				maps.add(input.readUTF());
-		} catch (IOException ignored) {}
+		} catch (IOException ignored) {
+		}
 
 		return maps;
 	}
@@ -65,9 +66,10 @@ public class Client{
 			output.writeInt(GET_ROOMS);
 			input.readInt();
 			int num = input.readInt();
-			for(int i = 0; i < num; i++)
+			for (int i = 0; i < num; i++)
 				rooms.add(input.readUTF());
-		} catch (IOException ignored) {}
+		} catch (IOException ignored) {
+		}
 
 		return rooms;
 	}
@@ -89,7 +91,8 @@ public class Client{
 			output.writeInt(GET_CLIENT_ID);
 			input.readInt();
 			id = input.readInt();
-		} catch (IOException ignored) {}
+		} catch (IOException ignored) {
+		}
 	}
 
 	public int lobbyJoin(int lobbyId) {
@@ -101,7 +104,8 @@ public class Client{
 			input.readInt();
 			return input.readInt();
 
-		} catch (IOException ignored) {}
+		} catch (IOException ignored) {
+		}
 		return -1;
 	}
 
@@ -117,7 +121,7 @@ public class Client{
 		try {
 			output.writeInt(LOBBY_MY_STATUS);
 			output.writeBoolean(isReady);
-		} catch( IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -126,7 +130,7 @@ public class Client{
 		try {
 			output.writeInt(LOBBY_CREATE);
 			output.writeUTF(lobby);
-		} catch( IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -134,7 +138,7 @@ public class Client{
 	public void lobbyStart() {
 		try {
 			output.writeInt(LOBBY_START);
-		} catch( IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -149,10 +153,11 @@ public class Client{
 		}
 	}
 
-	public void updateStage(int stage) {
+	public void updateStage(int stageX, int stageY) {
 		try {
 			output.writeInt(MULTI_MY_STAGE);
-			output.writeInt(stage);
+			output.writeInt(stageX);
+			output.writeInt(stageY);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -162,47 +167,56 @@ public class Client{
 		try {
 			output.writeInt(MULTI_MY_WEAPON);
 			output.writeInt(weapon);
-		} catch (IOException ignored) {}
+		} catch (IOException ignored) {
+		}
 	}
 
 	public void updateHit() {
 		try {
 			output.writeInt(MULTI_MY_HIT);
-		} catch (IOException ignored) {}
+		} catch (IOException ignored) {
+		}
 	}
 
 	public void updateAttack(int id) {
 		try {
 			output.writeInt(MULTI_MY_ATTACK);
 			output.writeInt(id);
-		} catch (IOException ignored) {}
+		} catch (IOException ignored) {
+		}
 	}
 
 	public void updateDirection(int direction) {
 		try {
 			output.writeInt(MULTI_MY_DIRECTION);
 			output.writeInt(direction);
-		} catch (IOException ignored) {}
+		} catch (IOException ignored) {
+		}
 	}
 
 	public void updateDeath(int id) {
 		try {
 			output.writeInt(MULTI_MY_DEATH);
 			output.writeInt(id);
-		} catch (IOException ignored) {}
+		} catch (IOException ignored) {
+		}
 	}
 
-	public void removeEntity(int stage, int id) {
+	public void removeEntity(int stageX, int stageY, int id) {
 		try {
 			output.writeInt(MULTI_MY_REMOVE);
-			output.writeInt(stage);
+			output.writeInt(stageX);
+			output.writeInt(stageY);
 			output.writeInt(id);
-		} catch (IOException ignored) {}
+		} catch (IOException ignored) {
+		}
 	}
 
 	public void spawnLobbyReader() {
 		new LobbyReader(input, output).start();
 	}
 
-	public void spawnMultiReader() { new MultiReader(input, output).start(); }
+	public void spawnMultiReader() {
+		new MultiReader(input, output).start();
+	}
 }

@@ -48,7 +48,7 @@ public class MeleeWeapon extends Weapon {
             //System.out.println(this.rectangle.centreX);
         }
 
-        if(this.attackFrame <= this.duration) {
+        if (this.attackFrame <= this.duration) {
             this.rectangle.rotate(WeaponUtils.angle((this.id % 3), -this.direction, Config.ATTACK_MAX_ANGLES[id],
                     this.duration, this.attackFrame));
             this.attackFrame++;
@@ -72,4 +72,3 @@ public class MeleeWeapon extends Weapon {
         hit.draw();
     }
 }
-

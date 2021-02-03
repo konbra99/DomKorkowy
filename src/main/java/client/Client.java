@@ -1,5 +1,7 @@
 package client;
 
+import org.lwjgl.system.CallbackI;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -210,6 +212,13 @@ public class Client {
 			output.writeInt(id);
 		} catch (IOException ignored) {
 		}
+	}
+
+	public void sendMessage(String message) {
+		try {
+			output.writeInt(MULTI_MESSAGE);
+			output.writeUTF(message);
+		} catch (IOException ignored) {}
 	}
 
 	public void spawnLobbyReader() {

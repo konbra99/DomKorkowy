@@ -3,6 +3,7 @@ package graphics.gui;
 import graphics.Engine;
 import graphics.Input;
 import graphics.Rectangle;
+import graphics.chat.Chat;
 import logic.Entity;
 import logic.Player;
 import map.MapManager;
@@ -19,16 +20,16 @@ public class GameplayContext extends Context {
     public Rectangle HEALTHBAR;
     public boolean refresh;
     static public Player KORKOWY;
+    public static Chat chat;
     public static Map<Integer, Player> players;
-    private final ClassPathXmlApplicationContext context;
+    private static ClassPathXmlApplicationContext context;
 
     public GameplayContext() {
         context = new ClassPathXmlApplicationContext("application_context.xml");
         map = (MapManager) context.getBean("map");
         HEALTHBAR = new Rectangle(-1.0f, 0.9f, 0.18f, 0.08f);
         HEALTHBAR.initGL("3hp.png", "rectangle.vert.glsl", "rectangle.frag");
-        refresh = false;
-
+        chat = new Chat();
     }
 
     @Override
@@ -45,33 +46,45 @@ public class GameplayContext extends Context {
         }
     }
 
+    public static void initGame() {
+        KORKOWY = (Player) context.getBean("player");
+        map = (MapManager) context.getBean("map");
+        players = new HashMap<>();
+
+        // init map
+        try {
+            map.fromJson(JsonUtils.fromString(Engine.browser.browser.roomActive.lobby.map_context));
+            map.nextStage();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void startGame() {
+        Engine.activeContext = Engine.gameplay;
+    }
+
+    public static void addPlayer(int id, int color, int team) {
+        if (id == Engine.client.id) {
+            // KORKOWY
+            KORKOWY.setAttributes(id, color, team);
+        }
+        else {
+            // inny gracz
+            players.put(id, new Player(id, color, team));
+        }
+    }
+
+
     @Override
     public void update() {
-        // refresh
-        if (refresh) {
-            map = (MapManager) context.getBean("map");
-            map.fromJson(JsonUtils.fromString(Engine.browser.browser.roomActive.lobby.map_context));
-            refreshContext();
-
-            for (DataField d : Engine.browser.browser.dataFields) {
-                int id = d.getAsInteger();
-                if (id != -1 && id != Engine.client.id)
-                    players.put(id, new Player(id));
-            }
-            refresh = false;
-            System.out.println("length: " + players.size());
-            Engine.client.spawnMultiReader();
-        }
-
         // update
         map.move();
         map.update();
-        if (KORKOWY.getRectangle() == null) {
-            System.out.println("jest null");
-        }
         KORKOWY.move();
         KORKOWY.update();
         KORKOWY.doActions();
+        chat.update();
         for (Player p : players.values()) {
             p.doActions();
             p.updateWeapon();
@@ -96,6 +109,9 @@ public class GameplayContext extends Context {
 
         Engine.fontLoader.renderText("D:" + KORKOWY.getDeaths(), "msgothic.bmp",
                 -0.37f, 0.87f, 0.06f, 0.1f, 0.0f, 0.0f, 0.0f, 1.0f);
+                -0.37f, 0.87f, 0.06f, 0.1f,0.0f, 0.0f, 0.0f, 1.0f);
+
+        chat.draw();
     }
 
     public Collection<Entity> getPlatforms() {
@@ -118,6 +134,11 @@ public class GameplayContext extends Context {
         return players.values();
     }
 
+    public Collection<Player> getEnemies() { return players.values(); }
+
+    public static void addMessage(int id, String message) {
+        chat.addMessage(id, message);
+    }
     public float[] getStart() {
         return map.getCurrentStage().getStart();
     }

@@ -1,5 +1,6 @@
 package client;
 
+import graphics.Engine;
 import graphics.gui.GameplayContext;
 
 import java.io.DataInputStream;
@@ -31,7 +32,7 @@ public class MultiReader extends Thread {
 						float tempX = input.readFloat();
 						float tempY = input.readFloat();
 						//System.out.printf("Client [%d] MULTI_OTHER_POSITION %f %f\n", tempId, tempX, tempY);
-						GameplayContext.players.get(tempId).addAction(() -> GameplayContext.players.get(tempId).moveTo(tempX, tempY));
+						Engine.addAction(() -> GameplayContext.players.get(tempId).moveTo(tempX, tempY));
 					}
 					case MULTI_OTHER_WEAPON -> {
 						id = input.readInt();
@@ -49,29 +50,36 @@ public class MultiReader extends Thread {
 					case MULTI_OTHER_ATTACK -> {
 						int tempId = input.readInt();
 						//System.out.printf("Client [%d] MULTI_OTHER_ATTACK\n", id);
-						GameplayContext.KORKOWY.addAction(() -> GameplayContext.KORKOWY.getDamage(tempId));
+						Engine.addAction(() -> GameplayContext.KORKOWY.getDamage(tempId));
 					}
 					case MULTI_OTHER_DEATH -> {
-						System.out.printf("Client [] MULTI_OTHER_DEATH\n");
-						GameplayContext.KORKOWY.addAction(() -> GameplayContext.KORKOWY.incKills());
+						// System.out.printf("Client [] MULTI_OTHER_DEATH\n");
+						Engine.addAction(() -> GameplayContext.KORKOWY.incKills());
 					}
 					case MULTI_OTHER_REMOVE -> {
 						int stageX = input.readInt();
 						int stageY = input.readInt();
 						int entityId = input.readInt();
 						//System.out.printf("Client [] MULTI_OTHER_REMOVE %d %d\n", stageId, entityId);
+						Engine.addAction(() -> GameplayContext.map.removeEntityFromStage(stageId, entityId));
 						GameplayContext.KORKOWY.addAction(() -> GameplayContext.map.removeEntity(stageX, stageY, entityId));
 					}
 					case MULTI_OTHER_DIRECTION -> {
 						int tempId = input.readInt();
 						int direction = input.readInt();
 						//System.out.printf("Client [%d] MULTI_OTHER_DIRECTION %d\n", tempId, direction);
-						GameplayContext.players.get(tempId).addAction(() -> GameplayContext.players.get(tempId).setDirection(direction));
+						Engine.addAction(() -> GameplayContext.players.get(tempId).setDirection(direction));
 					}
 					case MULTI_OTHER_HIT -> {
 						int tempId = input.readInt();
 						//System.out.printf("Client [%d] MULTI_OTHER_HIT\n", tempId);
-						GameplayContext.players.get(tempId).addAction(() -> GameplayContext.players.get(tempId).useWeapon());
+						Engine.addAction(() -> GameplayContext.players.get(tempId).useWeapon());
+					}
+					case MULTI_MESSAGE -> {
+						int tempId = input.readInt();
+						String message = input.readUTF();
+						System.out.printf("Client [%d] MULTI_MESSAGE %s\n", tempId, message);
+						Engine.addAction(()->GameplayContext.addMessage(tempId, message));
 					}
 					case PING -> {
 						//System.out.println("Lobby [] PING ");

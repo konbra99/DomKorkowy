@@ -1,6 +1,8 @@
 package client;
 
 import graphics.Engine;
+import graphics.gui.GameplayContext;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -58,10 +60,24 @@ public class LobbyReader extends Thread {
 						System.out.println("Lobby [] LOBBY_READY " + s);
 						Engine.browser.buttonMap.get(START).setActive(s);
 					}
+					case LOBBY_INIT -> {
+						System.out.println("Lobby [] LOBBY_INIT ");
+						Engine.addAction(GameplayContext::initGame);
+					}
+
+					case LOBBY_PLAYER -> {
+						int tempId = input.readInt();
+						int tempColor = input.readInt();
+						int tempTeam = input.readInt();
+						System.out.printf("Lobby [] LOBBY_PLAYER %d %d %d \n", tempId, tempColor, tempTeam);
+						Engine.addAction(()->GameplayContext.addPlayer(tempId, tempColor, tempTeam));
+					}
 					case LOBBY_START -> {
 						System.out.println("Lobby [] LOBBY_START ");
 						Engine.activeContext = Engine.gameplay;
 						Engine.gameplay.refresh = true;
+						Engine.addAction(GameplayContext::startGame);
+						Engine.addAction(()->Engine.client.spawnMultiReader());
 						return;
 					}
 					case PING -> {

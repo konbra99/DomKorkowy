@@ -101,13 +101,15 @@ public class BrowserContext extends Context {
             String lobby_name = browser.dataFieldsMap.get(LOBBY_NAME).getAsNonemptyString();
             Integer max_players = browser.dataFieldsMap.get(LOBBY_MAX_PLAYERS).getAsPositiveInteger();
             String map_context = browser.dataFieldsMap.get(LOBBY_MAP).getAsString();
+            Integer game_mode = browser.dataFieldsMap.get(LOBBY_MODE).getAsInteger();
             System.out.println(map_context);
 
-            if (lobby_name != null && max_players != null && map_context != null) {
+            if (lobby_name != null && max_players != null && map_context != null && game_mode != null) {
                 Lobby lobby = new Lobby();
                 lobby.lobby_name = lobby_name;
                 lobby.max_players = max_players;
                 lobby.map_context = map_context;
+                lobby.game_mode = game_mode;
                 Engine.client.lobbyCreate(lobby.toJson().toString());
             }
         };

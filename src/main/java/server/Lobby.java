@@ -3,6 +3,8 @@ package server;
 import com.google.gson.JsonObject;
 import map.json.JsonSerializable;
 import java.util.ArrayList;
+
+import static logic.constants.MultiModes.*;
 import static server.Protocol.*;
 
 public class Lobby implements JsonSerializable {
@@ -13,10 +15,14 @@ public class Lobby implements JsonSerializable {
 	public String admin_name;
 	public String map_name;
 	public String map_context;
+	public int game_mode;
 	public int max_players;
 	public boolean prev_status;
 	private ClientThread admin;
 	ArrayList<ClientThread> clients;
+
+	// stale
+	public final static int MAX_COLORS = 8;
 
 	public Lobby() {
 		this.id = -1;
@@ -104,6 +110,46 @@ public class Lobby implements JsonSerializable {
 	public synchronized void start() {
 		for (ClientThread c : clients)
 			c.writeInt(LOBBY_START);
+	}
+
+	public synchronized void init() {
+		for(ClientThread c: clients) {
+			c.writeInt(LOBBY_INIT);
+		}
+	}
+
+	public synchronized void teams() {
+		int color = 0;
+		int team = 0;
+		for(ClientThread c1: clients) {
+			for(ClientThread c2: clients) {
+				c2.writeInt(LOBBY_PLAYER);
+				c2.writeInt(c1.id);
+				c2.writeInt(color % MAX_COLORS);
+				c2.writeInt(team);
+
+			}
+			color = nextColor(color);
+			team = nextTeam(team);
+		}
+	}
+
+	public synchronized int nextTeam(int team) {
+		return switch (game_mode) {
+			case DEADMATCH      -> team+1;
+			case TEAM           -> (team + 1) % 2;
+			case COOPERATION    -> 0;
+			default             -> 0;
+		};
+	}
+
+	public synchronized int nextColor(int color) {
+		return switch (game_mode) {
+			case DEADMATCH      -> color + 1;
+			case TEAM           -> (color + 1) % 2;
+			case COOPERATION    -> color + 1;
+			default             -> 0;
+		};
 	}
 
 	public synchronized void checkAdmin() {
@@ -211,6 +257,14 @@ public class Lobby implements JsonSerializable {
 		}
 	}
 
+	public synchronized void message(ClientThread client, String message) {
+		for(ClientThread c: clients) {
+			c.writeInt(MULTI_MESSAGE);
+			c.writeInt(client.id);
+			c.writeUTF(message);
+		}
+	}
+
 	@Override
 	public JsonObject toJson() {
 		JsonObject obj = new JsonObject();
@@ -220,6 +274,7 @@ public class Lobby implements JsonSerializable {
 		obj.addProperty("map_name", map_name);
 		obj.addProperty("max_players", max_players);
 		obj.addProperty("map_context", map_context);
+		obj.addProperty("game_mode", game_mode);
 		return obj;
 	}
 
@@ -231,6 +286,7 @@ public class Lobby implements JsonSerializable {
 		map_name = obj.get("map_name").getAsString();
 		max_players = obj.get("max_players").getAsInt();
 		map_context = obj.get("map_context").getAsString();
+		game_mode = obj.get("game_mode").getAsInt();
 
 		this.prev_status = false;
 		this.clients = new ArrayList<>();

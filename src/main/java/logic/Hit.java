@@ -75,6 +75,7 @@ public class Hit extends Entity {
                 // kolizja z mobami
                 for (Entity mob : Engine.gameplay.getMobs()) {
                     if (this.rectangle.collidesWith(mob.rectangle)) {
+                        Engine.addAction(()-> {if (mob.getDamage()) Engine.gameplay.KORKOWY.incKills();});
                         GameplayContext.KORKOWY.addAction(() -> {
                             if (mob.getDamage()) GameplayContext.KORKOWY.incKills();
                         });
@@ -82,8 +83,8 @@ public class Hit extends Entity {
                 }
 
                 // kolizja z przeciwnikami
-                for (Player p : Engine.gameplay.getEnemies()) {
-                    if (this.rectangle.collidesWith(p.rectangle))
+                for(Player p: Engine.gameplay.getEnemies()) {
+                    if (this.rectangle.collidesWith(p.rectangle) && !p.isInTeam(Engine.gameplay.KORKOWY.getTeam()))
                         Engine.client.updateAttack(p.getId());
                 }
             }

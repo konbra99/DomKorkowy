@@ -90,6 +90,8 @@ public class ClientThread extends Thread {
 					}
 					case LOBBY_START -> {
 						System.out.printf("Client [%d] LOBBY_START\n", id);
+						lobby.init();
+						lobby.teams();
 						lobby.start();
 					}
 					case MULTI_MY_POSITION -> {
@@ -134,10 +136,17 @@ public class ClientThread extends Thread {
 						lobby.updateDeath(this, enemyId);
 						System.out.printf("Client [%d] MULTI_MY_HIT %d\n", id, enemyId);
 					}
+					case MULTI_MESSAGE -> {
+						String message = input.readUTF();
+						System.out.printf("Client [%d] MULTI_MY_HIT %s\n", id, message);
+						lobby.message(this, message);
+					}
 					case PING -> System.out.printf("Client [%d] PING\n", id);
 					default -> System.out.println("ClientThread: nierozpoznany komunikat");
 				}
 			} catch (SocketTimeoutException e) {
+				}
+			catch (SocketTimeoutException e) {
 				// czas minal, sprawdzamy czy klient jeszcze zyje
 				if (lobby != null) writeInt(PING);
 			} catch (IOException e) {
@@ -168,6 +177,14 @@ public class ClientThread extends Thread {
 	public void writeBoolean(boolean v) {
 		try {
 			output.writeBoolean(v);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void writeUTF(String v) {
+		try {
+			output.writeUTF(v);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

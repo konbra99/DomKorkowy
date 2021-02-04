@@ -18,11 +18,17 @@ public class Player extends Character {
     public int stageX, stageY;
     private int kills;
     private int deaths;
+    private int team;
     public final ArrayList<playerAction> actionList;
 
     public Player(int id) {
         this();
         this.id = id;
+    }
+
+    public Player(int id, int color, int team) {
+        this();
+        setAttributes(id, color, team);
     }
 
     public Player() {
@@ -45,6 +51,12 @@ public class Player extends Character {
 
         kills = 0;
         deaths = 0;
+    }
+
+    public void setAttributes(int id, int color, int team) {
+        this.id = id;
+        this.team = team;
+        this.rectangle.setTexture("korkowy" + color + ".png");
     }
 
     @Override
@@ -244,7 +256,9 @@ public class Player extends Character {
         return deaths;
     }
 
-    public void incKills() {
-        this.kills++;
-    }
+    public void incKills() { this.kills++; }
+
+    public boolean isInTeam(int team) { return this.team == team; }
+
+    public int getTeam() { return this.team; }
 }

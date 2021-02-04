@@ -70,11 +70,6 @@ public class OptionField extends DataField {
         return option_values[option_current];
     }
 
-    public String getAsString() {
-        return (String) option_values[option_current];
-    }
-    public Object getAsObject() { return option_values[option_current]; }
-
     public String getAsString() { return (String)option_values[option_current]; }
 
     public Integer getAsInteger() { return (Integer)option_values[option_current]; }

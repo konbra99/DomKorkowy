@@ -54,7 +54,8 @@ public class GameplayContext extends Context {
         // init map
         try {
             map.fromJson(JsonUtils.fromString(Engine.browser.browser.roomActive.lobby.map_context));
-            map.nextStage();
+            map.buildStages();
+            map.setStage(0, 0);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -109,7 +110,6 @@ public class GameplayContext extends Context {
 
         Engine.fontLoader.renderText("D:" + KORKOWY.getDeaths(), "msgothic.bmp",
                 -0.37f, 0.87f, 0.06f, 0.1f, 0.0f, 0.0f, 0.0f, 1.0f);
-                -0.37f, 0.87f, 0.06f, 0.1f,0.0f, 0.0f, 0.0f, 1.0f);
 
         chat.draw();
     }
@@ -133,8 +133,6 @@ public class GameplayContext extends Context {
     public Collection<Player> getEnemies() {
         return players.values();
     }
-
-    public Collection<Player> getEnemies() { return players.values(); }
 
     public static void addMessage(int id, String message) {
         chat.addMessage(id, message);

@@ -145,8 +145,6 @@ public class ClientThread extends Thread {
 					default -> System.out.println("ClientThread: nierozpoznany komunikat");
 				}
 			} catch (SocketTimeoutException e) {
-				}
-			catch (SocketTimeoutException e) {
 				// czas minal, sprawdzamy czy klient jeszcze zyje
 				if (lobby != null) writeInt(PING);
 			} catch (IOException e) {

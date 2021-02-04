@@ -61,8 +61,7 @@ public class MultiReader extends Thread {
 						int stageY = input.readInt();
 						int entityId = input.readInt();
 						//System.out.printf("Client [] MULTI_OTHER_REMOVE %d %d\n", stageId, entityId);
-						Engine.addAction(() -> GameplayContext.map.removeEntityFromStage(stageId, entityId));
-						GameplayContext.KORKOWY.addAction(() -> GameplayContext.map.removeEntity(stageX, stageY, entityId));
+						Engine.addAction(() -> GameplayContext.map.removeEntity(stageX, stageY, entityId));
 					}
 					case MULTI_OTHER_DIRECTION -> {
 						int tempId = input.readInt();

@@ -89,6 +89,7 @@ public class MultiReader extends Thread {
 						String lobby = input.readUTF();
 						System.out.printf("Client [] MULTI_MESSAGE\n");
 						Engine.addAction(()->GameplayContext.endGame(lobby));
+						return;
 					}
 					case PING -> {
 						//System.out.println("Lobby [] PING ");

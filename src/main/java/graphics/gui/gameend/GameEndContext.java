@@ -44,7 +44,6 @@ public class GameEndContext extends Context {
 		backButton.setText("BACK", "msgothic.bmp", 0.04f, 0.1f);
 		backButton.action = () -> {
 			Engine.activeContext = Engine.menu;
-			Engine.STATE = Engine.GAME_STATE.MENU;
 		};
 
 		// BACKGROUND

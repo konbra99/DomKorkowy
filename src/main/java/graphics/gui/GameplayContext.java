@@ -48,13 +48,13 @@ public class GameplayContext extends Context {
     }
 
     public static void initGame() {
-        KORKOWY = (Player) context.getBean("player");
         map = (MapManager) context.getBean("map");
         players = new HashMap<>();
 
         // init map
         try {
             map.fromJson(JsonUtils.fromString(Engine.browser.browser.roomActive.lobby.map_context));
+            KORKOWY = (Player) context.getBean("player");
             map.buildStages();
             map.setStage(0, 0);
         } catch (Exception e) {

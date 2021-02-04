@@ -1,6 +1,7 @@
 package graphics.gui;
 
 import graphics.Engine;
+import sound.SoundManager;
 
 public class SettingsContext extends Context {
 
@@ -8,8 +9,7 @@ public class SettingsContext extends Context {
     protected Button nextButton;
     protected DataField server;
     protected DataField music;
-    protected DataField fps;
-    protected DataField fullScreen;
+    protected DataField sound;
 
     public SettingsContext() {
         super("gui/background1.png");
@@ -19,41 +19,35 @@ public class SettingsContext extends Context {
 
         // SERVER
         option_strings = new String[]{"konr_pc", "kacp_pc", "kuba_pc", "dam_pc"};
-        option_values = new Object[]{0, 1, 2, 3};
+        option_values = new Object[] {0, 1, 2, 3};
         server = new OptionField(null, Button.LONG_BUTTON, option_strings, option_values);
         server.setText("server", "msgothic.bmp", 0.05f, 0.08f);
         server.move(-0.5f, 0.3f);
 
         // MUSIC
-        option_strings = new String[]{"OFF", "ON"};
-        option_values = new Object[]{false, true};
-        music = new OptionField(null, Button.LONG_BUTTON, option_strings, option_values);
+        music = new RadioField(Button.LONG_BUTTON, RadioField.OFF, SoundManager::playBackgroundMusic, SoundManager::stopBackgroundMusic);
         music.setText("music", "msgothic.bmp", 0.05f, 0.08f);
         music.move(-0.5f, 0.1f);
 
-        // FPS
-        option_strings = new String[]{"30", "45", "60", "75", "120"};
-        option_values = new Object[]{30, 45, 60, 75, 120};
-        fps = new OptionField(null, Button.LONG_BUTTON, option_strings, option_values);
-        fps.setText("fps", "msgothic.bmp", 0.05f, 0.08f);
-        fps.move(-0.5f, -0.1f);
+        // SOUND
+        sound = new RadioField(Button.LONG_BUTTON, RadioField.ON, SoundManager::enableSoundEffects, SoundManager::disableSoundEffects);
+        sound.setText("sound", "msgothic.bmp", 0.05f, 0.08f);
+        sound.move(-0.5f, -0.1f);
 
-        // FULL_SCREEN
-        option_strings = new String[]{"OFF", "ON"};
-        option_values = new Object[]{false, true};
-        fullScreen = new OptionField(null, Button.LONG_BUTTON, option_strings, option_values);
-        fullScreen.setText("full", "msgothic.bmp", 0.05f, 0.08f);
-        fullScreen.move(-0.5f, -0.3f);
 
         // BACK
         backButton = new Button(-0.95f, -0.95f, 0.20f, 0.4f, null, Button.LEFT_ARROW);
         backButton.setText("BACK", "msgothic.bmp", 0.04f, 0.1f);
-        backButton.action = () -> Engine.activeContext = Engine.menu;
+        backButton.action = () -> {
+            Engine.activeContext = Engine.menu;
+        };
 
-        // BACK
+        // ACCEPT
         nextButton = new Button(0.75f, -0.95f, 0.20f, 0.4f, null, Button.RIGHT_ARROW);
         nextButton.setText("ACCEPT", "msgothic.bmp", 0.04f, 0.1f);
-        nextButton.action = () -> Engine.activeContext = Engine.menu;
+        nextButton.action = () -> {
+            Engine.activeContext = Engine.menu;
+        };
         super.init();
     }
 
@@ -62,8 +56,7 @@ public class SettingsContext extends Context {
         super.draw();
         server.draw();
         music.draw();
-        fps.draw();
-        fullScreen.draw();
+        sound.draw();
         backButton.draw();
         nextButton.draw();
     }
@@ -73,8 +66,7 @@ public class SettingsContext extends Context {
         super.update();
         server.update();
         music.update();
-        fps.update();
-        fullScreen.update();
+        sound.update();
         backButton.update();
         nextButton.update();
     }

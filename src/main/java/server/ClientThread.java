@@ -24,8 +24,8 @@ public class ClientThread extends Thread implements JsonSerializable, Comparable
 	public int kills;
 	public int deaths;
 	private Lobby lobby;
-	private final DataInputStream input;
-	private final DataOutputStream output;
+	private DataInputStream input;
+	private DataOutputStream output;
 
 	public ClientThread(JsonObject obj) {
 		fromJson(obj);

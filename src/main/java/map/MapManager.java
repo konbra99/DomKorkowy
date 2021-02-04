@@ -148,7 +148,6 @@ public class MapManager implements JsonSerializable {
 	}
 
 	public void addDoor(Entity entity) {
-		System.out.println("dodaje drzwi " + doorCounter);
 		Door door = (Door) entity;
 		door.doorNumber = doorCounter;
 		doorMap.put(doorCounter, door);

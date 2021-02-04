@@ -74,8 +74,6 @@ public class LobbyReader extends Thread {
 					}
 					case LOBBY_START -> {
 						System.out.println("Lobby [] LOBBY_START ");
-						Engine.activeContext = Engine.gameplay;
-						Engine.gameplay.refresh = true;
 						Engine.addAction(GameplayContext::startGame);
 						Engine.addAction(()->Engine.client.spawnMultiReader());
 						return;

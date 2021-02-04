@@ -1,6 +1,8 @@
 package server;
 
+import com.google.gson.JsonObject;
 import database.MapsConnector;
+import map.json.JsonSerializable;
 import org.lwjgl.system.CallbackI;
 
 import java.io.DataInputStream;
@@ -8,18 +10,27 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static server.Protocol.*;
 import static server.Protocol.CREATE_MAP;
 
-public class ClientThread extends Thread{
+public class ClientThread extends Thread implements JsonSerializable, Comparable {
 
 	public int id;
 	public boolean status;
+	public int color;
+	public int team;
+	public int kills;
+	public int deaths;
 	private Lobby lobby;
 	private DataInputStream input;
 	private DataOutputStream output;
+
+	public ClientThread(JsonObject obj) {
+		fromJson(obj);
+	}
 
 	public ClientThread(Socket socket, int id) throws IOException {
 		this.id = id;
@@ -218,5 +229,32 @@ public class ClientThread extends Thread{
 
 	public void setLobby(Lobby lobby) {
 		this.lobby = lobby;
+	}
+
+	public int getPoints() {
+		return kills - deaths;
+	}
+
+	@Override
+	public JsonObject toJson() {
+		JsonObject obj = new JsonObject();
+		obj.addProperty("id", id);
+		obj.addProperty("kills", kills);
+		obj.addProperty("deaths", deaths);
+		obj.addProperty("team", team);
+		return obj;
+	}
+
+	@Override
+	public void fromJson(JsonObject obj) {
+		id = obj.get("id").getAsInt();
+		kills = obj.get("kills").getAsInt();
+		deaths = obj.get("deaths").getAsInt();
+		team = obj.get("team").getAsInt();
+	}
+
+	@Override
+	public int compareTo(Object c) {
+		return this.getPoints() - ((ClientThread)c).getPoints();
 	}
 }

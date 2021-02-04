@@ -78,6 +78,16 @@ public class MultiReader extends Thread{
 						System.out.printf("Client [%d] MULTI_MESSAGE %s\n", tempId, message);
 						Engine.addAction(()->GameplayContext.addMessage(tempId, message));
 					}
+					case MULTI_TIME -> {
+						int time = input.readInt();
+						System.out.printf("Client [] MULTI_MESSAGE %d\n", time);
+						Engine.addAction(()->GameplayContext.setTime(time));
+					}
+					case MULTI_END -> {
+						String lobby = input.readUTF();
+						System.out.printf("Client [] MULTI_MESSAGE\n");
+						Engine.addAction(()->GameplayContext.endGame(lobby));
+					}
 					case PING -> {
 						//System.out.println("Lobby [] PING ");
 						output.writeInt(PING);

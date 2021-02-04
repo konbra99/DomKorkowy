@@ -119,6 +119,12 @@ public class MapBrowser extends Entity {
         addButton(button);
         dataFieldsMap.put(LOBBY_MAX_PLAYERS, button);
 
+        // CZAS
+        button = new TextField(this, Button.LONG_BUTTON);
+        button.setText("czas:", "msgothic.bmp", 0.05f, 0.08f);
+        addButton(button);
+        dataFieldsMap.put(LOBBY_TIME, button);
+
         // MAPA
         File directory = new File(Config.MAP_PATH);
         File[] files = directory.listFiles();
@@ -137,8 +143,8 @@ public class MapBrowser extends Entity {
         dataFieldsMap.put(LOBBY_MAP, button);
 
         // TRYB ROZGRYWKI
-        String [] mode_names = {"DEADMAT", "TEAM", "COOPERA"};
-        Integer [] mode_values = { DEADMATCH, TEAM, COOPERATION};
+        String [] mode_names = {"DEADMAT", "TEAM"};
+        Integer [] mode_values = {DEATHMATCH, TEAM};
         button = new OptionField(this, Button.LONG_BUTTON,mode_names, mode_values);
         button.setText("tryb:", "msgothic.bmp", 0.05f, 0.08f);
         addButton(button);

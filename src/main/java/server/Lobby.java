@@ -1,13 +1,16 @@
 package server;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import map.json.JsonSerializable;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static logic.constants.MultiModes.*;
 import static server.Protocol.*;
 
-public class Lobby implements JsonSerializable {
+public class Lobby extends Thread implements JsonSerializable {
 
 	// zmienne
 	public int id;
@@ -16,13 +19,21 @@ public class Lobby implements JsonSerializable {
 	public String map_name;
 	public String map_context;
 	public int game_mode;
+	public int game_time;
 	public int max_players;
 	public boolean prev_status;
+	public boolean is_active;
+	private long start;
+	private int time;
 	private ClientThread admin;
 	ArrayList<ClientThread> clients;
+	ArrayList<ClientThread> team1;
+	ArrayList<ClientThread> team2;
 
 	// stale
 	public final static int MAX_COLORS = 8;
+	public final static int TEAM1 = 0;
+	public final static int TEAM2 = 1;
 
 	public Lobby() {
 		this.id = -1;
@@ -31,6 +42,7 @@ public class Lobby implements JsonSerializable {
 		this.map_name = "default";
 		this.max_players = -1;
 		this.map_context = "default";
+		this.is_active = true;
 	}
 
 	public Lobby(int id, String lobby_name, String admin_name, String map_name, int max_players, String map_context) {
@@ -98,9 +110,11 @@ public class Lobby implements JsonSerializable {
 		if (admin == client)
 			admin = null;
 
-		if (clients.size() == 0)
+		if (clients.size() == 0) {
 			// puste lobby, usuwamy
+			is_active = false;
 			Server.lobbies.remove(id);
+		}
 		else {
 			// niepuste lobby, sprawdzamy admina i status
 			checkAdmin();
@@ -111,11 +125,20 @@ public class Lobby implements JsonSerializable {
 	public synchronized void start() {
 		for (ClientThread c: clients)
 			c.writeInt(LOBBY_START);
+		super.start();
 	}
 
 	public synchronized void init() {
-		for(ClientThread c: clients) {
+		for(ClientThread c: clients)
 			c.writeInt(LOBBY_INIT);
+	}
+
+	public void end() {
+		Collections.sort(clients);
+		JsonObject obj = clientsToJson();
+		for (ClientThread c: clients) {
+			c.writeInt(MULTI_END);
+			c.writeUTF(obj.toString());
 		}
 	}
 
@@ -130,26 +153,32 @@ public class Lobby implements JsonSerializable {
 				c2.writeInt(team);
 
 			}
+			c1.team = team;
+			c1.color = color;
 			color = nextColor(color);
 			team = nextTeam(team);
 		}
 	}
 
+	public void stats() {
+		for(ClientThread c: clients) {
+			System.out.printf("CLI[%d] %d %d\n", c.id, c.deaths, c.kills);
+		}
+	}
+
 	public synchronized int nextTeam(int team) {
 		return switch (game_mode) {
-			case DEADMATCH      -> team+1;
-			case TEAM           -> (team + 1) % 2;
-			case COOPERATION    -> 0;
-			default             -> 0;
+			case DEATHMATCH -> team+1;
+			case TEAM, COOPERATION -> (team + 1) % 2;
+			default -> 0;
 		};
 	}
 
 	public synchronized int nextColor(int color) {
 		return switch (game_mode) {
-			case DEADMATCH      -> color + 1;
-			case TEAM           -> (color + 1) % 2;
-			case COOPERATION    -> color + 1;
-			default             -> 0;
+			case DEATHMATCH, COOPERATION -> color + 1;
+			case TEAM  -> (color + 1) % 2;
+			default -> 0;
 		};
 	}
 
@@ -253,6 +282,8 @@ public class Lobby implements JsonSerializable {
 		for(ClientThread c: clients) {
 			if (c.id == id) {
 				c.writeInt(MULTI_OTHER_DEATH);
+				c.kills++;
+				client.deaths++;
 				break;
 			}
 		}
@@ -266,6 +297,29 @@ public class Lobby implements JsonSerializable {
 		}
 	}
 
+	public void run() {
+		start = System.currentTimeMillis();
+		while (is_active) {
+			long end = System.currentTimeMillis();
+			time = (int)(end - start)/1000;
+
+			if (time >= game_time) {
+				end();
+				return;
+			}
+
+			for(ClientThread c: clients) {
+				c.writeInt(MULTI_TIME);
+				c.writeInt(game_time - time);
+			}
+			try {
+				sleep(1000 - end % 1000);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 	@Override
 	public JsonObject toJson() {
 		JsonObject obj = new JsonObject();
@@ -276,6 +330,7 @@ public class Lobby implements JsonSerializable {
 		obj.addProperty("max_players", max_players);
 		obj.addProperty("map_context", map_context);
 		obj.addProperty("game_mode", game_mode);
+		obj.addProperty("game_time", game_time);
 		return obj;
 	}
 
@@ -288,10 +343,86 @@ public class Lobby implements JsonSerializable {
 		max_players = obj.get("max_players").getAsInt();
 		map_context = obj.get("map_context").getAsString();
 		game_mode = obj.get("game_mode").getAsInt();
+		game_time = obj.get("game_time").getAsInt();
 
 		this.prev_status = false;
 		this.clients = new ArrayList<>();
 		this.admin = null;
+	}
+
+	public JsonObject clientsToJson() {
+		JsonObject obj = new JsonObject();
+		obj.addProperty("game_mode", game_mode);
+		obj.addProperty("total_players", clients.size());
+
+		if (game_mode == DEATHMATCH) {
+			// DEATH MATCH
+			JsonArray array = new JsonArray();
+			for(ClientThread c: clients) array.add(c.toJson());
+			obj.addProperty("time", game_time);
+			obj.addProperty("winner", clients.get(0).id);
+			obj.add("clients", array);
+		}
+		else if (game_mode == TEAM) {
+			// TEAM
+			int team1_points = 0;
+			int team2_points = 0;
+
+			JsonArray team1 = new JsonArray();
+			JsonArray team2 = new JsonArray();
+			for(ClientThread c: clients) {
+				if (c.team == TEAM1) {
+					// team1 member
+					team1.add(c.toJson());
+					team1_points += c.getPoints();
+				}
+				else {
+					// team2 member
+					team2.add(c.toJson());
+					team2_points += c.getPoints();
+				}
+			}
+			obj.addProperty("time", game_time);
+			obj.addProperty("winner", (team1_points > team2_points) ? TEAM1 : TEAM2);
+			obj.add("team1", team1);
+			obj.add("team2", team2);
+		}
+		else {
+			// COOPERATION
+			JsonArray team1 = new JsonArray();
+			JsonArray team2 = new JsonArray();
+			for(ClientThread c: clients) {
+				if (c.team == TEAM1) {
+					// team1 member
+					team1.add(c.toJson());
+				}
+				else {
+					// team2 member
+					team2.add(c.toJson());
+				}
+			}
+			obj.addProperty("time", game_time);
+			obj.add("team1", team1);
+			obj.add("team2", team2);
+		}
+		return obj;
+	}
+
+	public void clientsFromJson(JsonObject obj) {
+		game_mode = obj.get("game_mode").getAsInt();
+
+		if (game_mode == DEATHMATCH) {
+			// DEATH MATCH
+			clients = new ArrayList<>();
+			JsonArray array = obj.get("clients").getAsJsonArray();
+			for(JsonElement o: array) clients.add(new ClientThread(o.getAsJsonObject()));
+		}
+		else if (game_mode == TEAM) {
+			// TEAM
+		}
+		else {
+			// COOPERATION
+		}
 	}
 
 	public void setId(int id) {

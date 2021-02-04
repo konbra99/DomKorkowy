@@ -41,6 +41,7 @@ public class Protocol {
 	public final static int MULTI_MY_HIT = 106;         //      MULTI_MY_HIT                ---
 	public final static int MULTI_MY_DEATH = 107;       //      MULTI_MY_DEATH id           ---
 	public final static int MULTI_MESSAGE = 108;        //      MULTI_MESSAGE m             MULTI_MESSAGE id m
+	public final static int MULTI_TIME = 109;           //      ---                         MULTI_TIME time
 	public final static int MULTI_OTHER_POSITION = 110; //      ---                         MULTI_OTHER_POSITION id x y
 	public final static int MULTI_OTHER_STAGE = 111;    //      ---                         MULTI_OTHER_STAGE id stage
 	public final static int MULTI_OTHER_WEAPON = 112;   //      ---                         MULTI_OTHER_WEAPON id weapon
@@ -49,6 +50,7 @@ public class Protocol {
 	public final static int MULTI_OTHER_DIRECTION = 115;//      ---                         MULTI_OTHER_DIRECTION id d
 	public final static int MULTI_OTHER_HIT = 116;      //      ---                         MULTI_OTHER_HIT id
 	public final static int MULTI_OTHER_DEATH = 117;    //      ---                         MULTI_OTHER_DEATH
+	public final static int MULTI_END = 150;            //      ---                         MULTI_END lobby
 
 	// STATUS LOBBY
 	public final static int LOBBY_NOT_EXIST = 1;

@@ -1,6 +1,7 @@
 package graphics;
 
 import graphics.gui.*;
+import graphics.gui.gameend.GameEndContext;
 import logic.playerAction;
 import org.lwjgl.Version;
 import org.lwjgl.opengl.GL;
@@ -36,6 +37,7 @@ public class Engine implements Runnable {
     public static MenuContext menu;
     public static BrowserContext browser;
     public static GameplayContext gameplay;
+    public static GameEndContext gameEnd;
     public static EditorContext editor;
     public static AuthorsContext authors;
     public static SettingsContext settings;
@@ -74,6 +76,7 @@ public class Engine implements Runnable {
         menu = new MenuContext("gui/background0.png");
         browser = new BrowserContext("gui/background0.png");
         gameplay = new GameplayContext();
+        gameEnd = new GameEndContext();
         editor = null;
         authors = new AuthorsContext();
         settings = new SettingsContext();
@@ -82,6 +85,9 @@ public class Engine implements Runnable {
 
         client = new Client();
         client.connect();
+
+        /////////// TEST
+//        activeContext = gameEnd;
     }
 
     private void loop() {

@@ -24,6 +24,7 @@ public class GameplayContext extends Context {
     public static Chat chat;
     public static Map<Integer, Player> players;
     private static ClassPathXmlApplicationContext context;
+    private static int time;
 
     public GameplayContext() {
         context = new ClassPathXmlApplicationContext("application_context.xml");
@@ -31,6 +32,7 @@ public class GameplayContext extends Context {
         HEALTHBAR = new Rectangle(-1.0f, 0.9f, 0.18f, 0.08f);
         HEALTHBAR.initGL("3hp.png", "rectangle.vert.glsl", "rectangle.frag");
         chat = new Chat();
+        time = 0;
     }
 
     @Override
@@ -108,6 +110,9 @@ public class GameplayContext extends Context {
         Engine.fontLoader.renderText("D:" + KORKOWY.getDeaths(), "msgothic.bmp",
                 -0.37f, 0.87f, 0.06f, 0.1f,0.0f, 0.0f, 0.0f, 1.0f);
 
+        Engine.fontLoader.renderText("TIME:" + time, "msgothic.bmp",
+                0.2f, 0.87f, 0.06f, 0.1f,0.0f, 0.0f, 0.0f, 1.0f);
+
         chat.draw();
     }
 
@@ -137,5 +142,14 @@ public class GameplayContext extends Context {
 
     public static void addMessage(int id, String message) {
         chat.addMessage(id, message);
+    }
+
+    public static void setTime(int newTime) {
+        time = newTime;
+    }
+
+    public static void endGame(String lobby) {
+        Engine.activeContext = Engine.gameEnd;
+        Engine.gameEnd.refresh(lobby);
     }
 }

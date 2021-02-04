@@ -3,21 +3,23 @@ package logic;
 import graphics.Engine;
 import graphics.Input;
 import graphics.gui.GameplayContext;
-import sound.SoundManager;
+import map.Stage;
 
 import java.util.ArrayList;
 
-import static logic.CharacterState.*;
+import static logic.CharacterState.JUMPING;
+import static logic.CharacterState.STANDING;
 
 public class Player extends Character {
-    private Weapon[] weapons;
+    private final Weapon[] weapons;
+    private Checkpoint checkpoint;
     private int activeWeapon;
     private int immune;
-    public int stage;
+    public int stageX, stageY;
     private int kills;
     private int deaths;
     private int team;
-    public ArrayList<playerAction> actionList;
+    public final ArrayList<playerAction> actionList;
 
     public Player(int id) {
         this();
@@ -30,7 +32,7 @@ public class Player extends Character {
     }
 
     public Player() {
-        super(-0.7f, -0.8f, 0.1f, 0.18f, "korkowy_ludek.png", RIGHT);
+        super(0.0f, 0.0f, 0.1f, 0.18f, "korkowy_ludek.png", RIGHT);
         float posX = -0.7f;
         float posY = -0.8f;
         float width = 0.1f;
@@ -51,16 +53,16 @@ public class Player extends Character {
         deaths = 0;
     }
 
-    @Override
-    public void moveTo(float x, float y) {
-        super.moveTo(x, y);
-        this.rectangle.setOrientation(direction == RIGHT);
-    }
-
     public void setAttributes(int id, int color, int team) {
         this.id = id;
         this.team = team;
         this.rectangle.setTexture("korkowy" + color + ".png");
+    }
+
+    @Override
+    public void moveTo(float x, float y) {
+        super.moveTo(x, y);
+        this.rectangle.setOrientation(direction == RIGHT);
     }
 
     public void move() {
@@ -83,7 +85,6 @@ public class Player extends Character {
                 vel_y *= 1.33f;
             }
             state = JUMPING;
-            SoundManager.playJumpSound();
         }
 
         this.gravity();
@@ -104,15 +105,14 @@ public class Player extends Character {
             }
         }
 
-        for (Entity door: Engine.gameplay.getDoors()) {
-            if (door.isActive() && this.rectangle.collidesWith(door.rectangle)) {
-                System.out.println("przenosze sie do " + ((Door) door).linkedStage);
-                GameplayContext.map.setStage(((Door) door).linkedStage);
-                reset();
+        for (Entity entity : Engine.gameplay.getDoors()) {
+            if (entity.isActive() && this.rectangle.collidesWith(entity.rectangle)) {
+                Door door = (Door) entity;
+                Door linked = (Door) GameplayContext.map.getDoor(door.linkedDoor);
+                GameplayContext.map.setStage(linked.stageX, linked.stageY);
+                moveTo(linked.rectangle.posX+linked.rectangle.width+0.05f, linked.rectangle.posY);
             }
         }
-
-        //for()
 
         this.rectangle.setOrientation(direction == RIGHT);
         this.rectangle.move(vel_x, vel_y);
@@ -121,7 +121,7 @@ public class Player extends Character {
         gravity_vel_dec();
         vel_x = 0.0f;
 
-        if (rectangle.posX <= -1f -rectangle.width)
+        if (rectangle.posX <= -1f - rectangle.width)
             reset();
         if (rectangle.posX >= 1f)
             reset();
@@ -132,13 +132,12 @@ public class Player extends Character {
         if (Input.ATTACK) {
             weapons[activeWeapon].start();
             Engine.client.updateHit();
-            SoundManager.playKnifeSound();
             Input.ATTACK = false;
         }
         if (Input.ONE_KEY) {
             this.setActiveWeapon(0);
             Input.ONE_KEY = false;
-        } else if(Input.TWO_KEY) {
+        } else if (Input.TWO_KEY) {
             this.setActiveWeapon(1);
             Input.TWO_KEY = false;
         }
@@ -201,14 +200,23 @@ public class Player extends Character {
 
     public void heal(int x) {
         hp += x;
-        if(hp>3) { hp = 3; }
+        if (hp > 3) {
+            hp = 3;
+        }
         Engine.gameplay.HEALTHBAR.setTexture(hp + "hp.png");
     }
 
     public void reset() {
         hp = 3;
         float[] start = Engine.gameplay.getStart();
-        rectangle.move(start[0] - rectangle.posX, start[1] - rectangle.posY);
+        if (checkpoint != null) {
+            GameplayContext.map.setStage(checkpoint.stageX, checkpoint.stageY);
+            moveTo(checkpoint.rectangle.posX, checkpoint.rectangle.posY);
+        } else {
+            GameplayContext.map.setStage(0, 0);
+            moveTo(start[0], start[1]);
+            System.out.println(start[0] + ", " + start[1]);
+        }
         Engine.gameplay.HEALTHBAR.setTexture(hp + "hp.png");
         state = JUMPING;
         immune = 0;
@@ -217,12 +225,27 @@ public class Player extends Character {
         deaths++;
     }
 
-    public void setStage(int stage) {
-        this.stage = stage;
+    public void collideCheckpoint(Checkpoint checkpoint) {
+        if (rectangle.collidesWith(checkpoint.rectangle)) {
+            setCheckpoint(checkpoint);
+        }
     }
 
-    public int getStage() {
-        return this.stage;
+    public void setStage(int stageX, int stageY) {
+        this.stageX = stageX;
+        this.stageY = stageY;
+    }
+
+    public int[] getStage() {
+        return new int[]{stageX, stageY};
+    }
+
+    public void setCheckpoint(Checkpoint checkpoint) {
+        if (this.checkpoint != null) {
+            this.checkpoint.uncheck();
+        }
+        checkpoint.check();
+        this.checkpoint = checkpoint;
     }
 
     public int getKills() {

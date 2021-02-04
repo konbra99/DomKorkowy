@@ -1,6 +1,6 @@
 package logic;
 
-public class Platform extends Entity{
+public class Platform extends Entity {
 
     public Platform() {
         super();

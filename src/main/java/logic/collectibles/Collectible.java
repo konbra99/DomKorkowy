@@ -1,6 +1,6 @@
 package logic.collectibles;
 
-import graphics.Engine;
+import graphics.gui.GameplayContext;
 import logic.Entity;
 
 public class Collectible extends Entity {
@@ -21,10 +21,11 @@ public class Collectible extends Entity {
 
     @Override
     public void update() {
-        if (Engine.gameplay.KORKOWY.getRectangle().collidesWith(this.getRectangle())) {
+        if (GameplayContext.KORKOWY.getRectangle().collidesWith(this.getRectangle())) {
             usage();
         }
     }
 
-    public void usage() {}
+    public void usage() {
+    }
 }

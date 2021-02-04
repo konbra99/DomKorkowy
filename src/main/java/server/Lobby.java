@@ -63,14 +63,13 @@ public class Lobby extends Thread implements JsonSerializable {
 			// brak miejsc
 			client.writeInt(LOBBY_MY_JOIN);
 			client.writeInt(LOBBY_IS_FULL);
-		}
-		else {
+		} else {
 			// jest wolne miejsce
 			client.setLobby(this);
 			client.writeInt(LOBBY_MY_JOIN);
 			client.writeInt(LOBBY_JOINED);
 
-			for(ClientThread c: clients) {
+			for (ClientThread c : clients) {
 				c.writeInt(LOBBY_OTHER_JOIN);
 				c.writeInt(client.id);
 				c.writeInt(LOBBY_OTHER_STATUS);
@@ -91,7 +90,7 @@ public class Lobby extends Thread implements JsonSerializable {
 
 	public synchronized void status(ClientThread client, boolean tempStatus) {
 		// komunikat do wszystkich graczy
-		for(ClientThread c: clients) {
+		for (ClientThread c : clients) {
 			c.writeInt(LOBBY_OTHER_STATUS);
 			c.writeInt(client.id);
 			c.writeBoolean(tempStatus);
@@ -102,7 +101,7 @@ public class Lobby extends Thread implements JsonSerializable {
 
 	public synchronized void exit(ClientThread client) {
 		// komunikat do wszystkich graczy
-		for(ClientThread c: clients) {
+		for (ClientThread c : clients) {
 			c.writeInt(LOBBY_OTHER_EXIT);
 			c.writeInt(client.id);
 		}
@@ -123,7 +122,7 @@ public class Lobby extends Thread implements JsonSerializable {
 	}
 
 	public synchronized void start() {
-		for (ClientThread c: clients)
+		for (ClientThread c : clients)
 			c.writeInt(LOBBY_START);
 		super.start();
 	}
@@ -191,25 +190,24 @@ public class Lobby extends Thread implements JsonSerializable {
 
 	public synchronized void checkStatus() {
 		boolean status = true;
-		for(ClientThread c: clients)
+		for (ClientThread c : clients)
 			status &= c.status;
 
 		if (status && !prev_status) {
 			// zmiana na ready
 			admin.writeInt(LOBBY_READY);
-			admin.writeBoolean(status);
-			prev_status = status;
-		}
-		else if (!status && prev_status) {
+			admin.writeBoolean(true);
+			prev_status = true;
+		} else if (!status && prev_status) {
 			// zmiana na not ready
 			admin.writeInt(LOBBY_READY);
-			admin.writeBoolean(status);
-			prev_status = status;
+			admin.writeBoolean(false);
+			prev_status = false;
 		}
 	}
 
 	public synchronized void updatePosition(ClientThread client, float x, float y) {
-		for(ClientThread c: clients) {
+		for (ClientThread c : clients) {
 			if (client != c) {
 				c.writeInt(MULTI_OTHER_POSITION);
 				c.writeInt(client.id);
@@ -220,7 +218,7 @@ public class Lobby extends Thread implements JsonSerializable {
 	}
 
 	public synchronized void updateWeapon(ClientThread client, int weapon) {
-		for(ClientThread c: clients) {
+		for (ClientThread c : clients) {
 			if (client != c) {
 				c.writeInt(MULTI_OTHER_WEAPON);
 				c.writeInt(client.id);
@@ -229,18 +227,19 @@ public class Lobby extends Thread implements JsonSerializable {
 		}
 	}
 
-	public synchronized void updateStage(ClientThread client, int stage) {
-		for(ClientThread c: clients) {
+	public synchronized void updateStage(ClientThread client, int stageX, int stageY) {
+		for (ClientThread c : clients) {
 			if (client != c) {
 				c.writeInt(MULTI_OTHER_STAGE);
 				c.writeInt(client.id);
-				c.writeInt(stage);
+				c.writeInt(stageX);
+				c.writeInt(stageY);
 			}
 		}
 	}
 
 	public synchronized void updateAttack(ClientThread client, int id) {
-		for(ClientThread c: clients) {
+		for (ClientThread c : clients) {
 			if (c.id == id) {
 				c.writeInt(MULTI_OTHER_ATTACK);
 				c.writeInt(client.id);
@@ -250,7 +249,7 @@ public class Lobby extends Thread implements JsonSerializable {
 	}
 
 	public synchronized void updateDirection(ClientThread client, int direction) {
-		for(ClientThread c: clients) {
+		for (ClientThread c : clients) {
 			if (client != c) {
 				c.writeInt(MULTI_OTHER_DIRECTION);
 				c.writeInt(client.id);
@@ -260,7 +259,7 @@ public class Lobby extends Thread implements JsonSerializable {
 	}
 
 	public synchronized void removeEntity(ClientThread client, int stage, int id) {
-		for(ClientThread c: clients) {
+		for (ClientThread c : clients) {
 			if (c != client) {
 				c.writeInt(MULTI_OTHER_REMOVE);
 				c.writeInt(stage);
@@ -270,7 +269,7 @@ public class Lobby extends Thread implements JsonSerializable {
 	}
 
 	public synchronized void updateHit(ClientThread client) {
-		for(ClientThread c: clients) {
+		for (ClientThread c : clients) {
 			if (c != client) {
 				c.writeInt(MULTI_OTHER_HIT);
 				c.writeInt(client.id);
@@ -279,7 +278,7 @@ public class Lobby extends Thread implements JsonSerializable {
 	}
 
 	public synchronized void updateDeath(ClientThread client, int id) {
-		for(ClientThread c: clients) {
+		for (ClientThread c : clients) {
 			if (c.id == id) {
 				c.writeInt(MULTI_OTHER_DEATH);
 				c.kills++;

@@ -24,7 +24,7 @@ public class MapField extends DataField {
     boolean delete_flag;
     boolean upload_flag;
 
-    public MapField(MapManager map, MapBrowser browser, boolean is_local, String [] textures) {
+    public MapField(MapManager map, MapBrowser browser, boolean is_local, String[] textures) {
         super(0.0f, 0.0f, Config.MAP_BUTTON_WIDTH, Config.MAP_BUTTON_HEIGHT, null, textures);
         this.browser = browser;
         this.map = map;
@@ -38,7 +38,7 @@ public class MapField extends DataField {
         };
 
         delete = new Button(0.83f, 0.1f, 0.1f, 0.1f, null, Button.DELETE);
-        local = new Button(0.83f, 0.1f, 0.1f, 0.1f, ()-> System.out.println("local"), Button.LOCAL);
+        local = new Button(0.83f, 0.1f, 0.1f, 0.1f, () -> System.out.println("local"), Button.LOCAL);
         download = new Button(0.83f, 0.1f, 0.1f, 0.1f, null, Button.DOWNLOAD);
         upload = new Button(0.71f, 0.1f, 0.1f, 0.1f, null, Button.UPLOAD);
 
@@ -69,8 +69,7 @@ public class MapField extends DataField {
         upload.action = () -> {
             if (Engine.client.isNotConnected()) {
                 Engine.browser.warning.showWarning("Klient nie zostal polaczony z serwerem");
-            }
-            else {
+            } else {
                 Engine.client.addMap(JsonUtils.toString(map.mapObject));
             }
             System.out.println("upload ");
@@ -93,15 +92,15 @@ public class MapField extends DataField {
     public void draw() {
         super.draw();
         if (this.author.length() > 0 && this.font.length() > 0) {
-            Engine.fontLoader.renderText(author, font, text_x-0.25f, text_y-0.04f, charwidth*0.7f, charheight*0.7f,
+            Engine.fontLoader.renderText(author, font, text_x - 0.25f, text_y - 0.04f, charwidth * 0.7f, charheight * 0.7f,
                     0.0f, 0.0f, 0.0f, 1.0f);
         }
         if (this.rating.length() > 0 && this.font.length() > 0) {
-            Engine.fontLoader.renderText(rating, font, text_x+0.4f, text_y-0.04f, charwidth*0.7f, charheight*0.7f,
+            Engine.fontLoader.renderText(rating, font, text_x + 0.4f, text_y - 0.04f, charwidth * 0.7f, charheight * 0.7f,
                     0.0f, 0.0f, 0.0f, 1.0f);
         }
         if (this.stages.length() > 0 && this.font.length() > 0) {
-            Engine.fontLoader.renderText(stages, font, text_x+0.1f, text_y-0.04f, charwidth*0.7f, charheight*0.7f,
+            Engine.fontLoader.renderText(stages, font, text_x + 0.1f, text_y - 0.04f, charwidth * 0.7f, charheight * 0.7f,
                     0.0f, 0.0f, 0.0f, 1.0f);
         }
         if (delete_flag)

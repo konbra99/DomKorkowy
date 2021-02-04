@@ -16,6 +16,8 @@ public class Input {
     public static boolean DRAG = false;
     public static float MOUSE_POS_X = 0.0f, MOUSE_POS_Y = 0.0f;
     public static float MOUSE_SCROLL_X = 0.0f, MOUSE_SCROLL_Y = 0.0f;
+    private static float prevSCROLL_Y;
+    public static boolean SCROLLED = false;
     public static ArrayList<Character> singlePressed = new ArrayList<>();
 
     public static void handleKeyboard(int key, int action) {
@@ -59,8 +61,11 @@ public class Input {
     }
 
     public static void handleMouseScroll(double dx, double dy) {
-        MOUSE_SCROLL_X = (float)dx;
-        MOUSE_SCROLL_Y = (float)dy;
+        prevSCROLL_Y = MOUSE_SCROLL_Y;
+        MOUSE_SCROLL_X = (float) dx;
+        MOUSE_SCROLL_Y = (float) dy;
+        if (MOUSE_SCROLL_Y != prevSCROLL_Y)
+            SCROLLED = true;
     }
 
     public static void handleMousePosition(double dx, double dy) {

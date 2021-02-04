@@ -1,10 +1,10 @@
 package graphics.gui;
 
-import graphics.Rectangle;
 import logic.Entity;
 
 public abstract class Context extends Entity {
-    public Context() {}
+    public Context() {
+    }
 
     public Context(String background) {
         super(-1.0f, -1.0f, 2.0f, 2.0f, background);

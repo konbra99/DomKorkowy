@@ -162,6 +162,10 @@ public class Rectangle implements JsonSerializable {
         this.texture.setImage(imageName);
     }
 
+    public String getTexture() {
+        return texture.getTextureName();
+    }
+
     /**
      * Poczatek procesu serializacji.
      */

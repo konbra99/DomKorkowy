@@ -16,22 +16,11 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
 public class Engine implements Runnable {
-    public enum GAME_STATE {
-        MENU,
-        BROWSER,
-        GAMEPLAY,
-        MULTIPLAYER,
-        EDITOR,
-        AUTHORS,
-        SETTINGS,
-        EXIT
-    }
 
     public Window window;
     private SoundManager soundManager;
 
     public static int FRAMES;
-    public static GAME_STATE STATE;
     public static FontLoader fontLoader;
     public static TextArea active;
     public static MenuContext menu;
@@ -81,7 +70,6 @@ public class Engine implements Runnable {
         authors = new AuthorsContext();
         settings = new SettingsContext();
         activeContext = menu;
-        STATE = GAME_STATE.MENU;
 
         client = new Client();
         client.connect();
@@ -100,7 +88,7 @@ public class Engine implements Runnable {
         int avg = 0;
 
         // glowna petla programu
-        while (!glfwWindowShouldClose(window.getWindowHandle()) && STATE != GAME_STATE.EXIT) {
+        while (!glfwWindowShouldClose(window.getWindowHandle())) {
             previous = current;
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
 

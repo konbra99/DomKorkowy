@@ -20,7 +20,6 @@ public class MenuContext extends Context {
                     Engine.browser.addLocalMapsButton();
                     Engine.browser.addServerMapsButton();
                     Engine.activeContext = Engine.browser;
-                    Engine.STATE = Engine.GAME_STATE.BROWSER;
                 },
                 Button.LONG_BUTTON);
         this.singleplayer.setText("Singleplayer", "msgothic.bmp", 0.05f, 0.1f);
@@ -35,7 +34,6 @@ public class MenuContext extends Context {
                     Engine.browser.buttonMap.get(JOIN_LOBBY).setActiveVisible(true, true);
                     Engine.browser.browser.removeAll();
                     Engine.activeContext = Engine.browser;
-                    Engine.STATE = Engine.GAME_STATE.BROWSER;
                 },
                 Button.LONG_BUTTON);
         this.multiplayer.setText("Multiplayer", "msgothic.bmp", 0.05f, 0.1f);
@@ -52,27 +50,18 @@ public class MenuContext extends Context {
                     Engine.browser.addServerMapsButton();
                     Engine.browser.addNewMapButton();
                     Engine.activeContext = Engine.browser;
-                    Engine.STATE = Engine.GAME_STATE.BROWSER;
                 },
                 Button.LONG_BUTTON);
         this.editor.setText("Edytor map", "msgothic.bmp", 0.05f, 0.1f);
         this.settings = new Button(-0.5f, -0.2f, 1.0f, 0.25f,
-                () -> {
-                    Engine.STATE = Engine.GAME_STATE.SETTINGS;
-                    Engine.activeContext = Engine.settings;
-                },
+                () -> Engine.activeContext = Engine.settings,
                 Button.LONG_BUTTON);
         this.settings.setText("Ustawienia", "msgothic.bmp", 0.05f, 0.1f);
         this.authors = new Button(-0.5f, -0.5f, 1.0f, 0.25f,
-                () -> {
-                    Engine.STATE = Engine.GAME_STATE.AUTHORS;
-                    Engine.activeContext = Engine.authors;
-                },
+                () -> Engine.activeContext = Engine.authors,
                 Button.LONG_BUTTON);
         this.authors.setText("Autorzy", "msgothic.bmp", 0.05f, 0.1f);
-        this.quit = new Button(-0.5f, -0.8f, 1.0f, 0.25f,
-                () -> Engine.STATE = Engine.GAME_STATE.EXIT,
-                Button.LONG_BUTTON);
+        this.quit = new Button(-0.5f, -0.8f, 1.0f, 0.25f, null, Button.LONG_BUTTON);
         this.quit.setText("Wyjdz z gry", "msgothic.bmp", 0.05f, 0.1f);
     }
 

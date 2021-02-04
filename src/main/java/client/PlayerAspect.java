@@ -38,7 +38,8 @@ public class PlayerAspect {
 	}
 
 	public void stageChange() {
-		Engine.client.updateStage(player.getStage());
+		int[] point = player.getStage();
+		Engine.client.updateStage(point[0], point[1]);
 	}
 
 	public void weaponChange() {

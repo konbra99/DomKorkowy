@@ -14,8 +14,8 @@ public class Mob extends Character {
         groups |= GROUP_MOBS;
     }
 
-    public Mob (float posX, float posY, float width, float height, String texture,
-                float beginX, float endX, float velocityX, int direction){
+    public Mob(float posX, float posY, float width, float height, String texture,
+               float beginX, float endX, float velocityX, int direction) {
         super(posX, posY, width, height, texture, direction);
         this.vel_x = velocityX;
         this.beginX = beginX;
@@ -32,15 +32,12 @@ public class Mob extends Character {
 
     @Override
     public void move() {
-        if (rectangle.posX > endX) {
-            direction = LEFT;
-        }
-        else if (rectangle.posX < beginX) {
-            direction = RIGHT;
+        if (rectangle.posX > endX || rectangle.posX < beginX) {
+            direction *= -1;
         }
 
-        rectangle.setOrientation(direction != RIGHT);
-        rectangle.move(direction*vel_x, 0f);
+        rectangle.setOrientation(direction == RIGHT);
+        rectangle.move(direction * vel_x, 0f);
     }
 
     @Override

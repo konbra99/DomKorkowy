@@ -164,7 +164,7 @@ public class MapsEntity {
 		MapsEntity that = (MapsEntity) o;
 		return id == that.id &&
 				time == that.time &&
-				numOfPlays == that.numOfPlays &&
+				numOfPlays.equals(that.numOfPlays) &&
 				numOfStages == that.numOfStages &&
 				Objects.equals(name, that.name) &&
 				Objects.equals(author, that.author) &&

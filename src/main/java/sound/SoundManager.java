@@ -13,8 +13,8 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class SoundManager {
 
-    private long device;
-    private long context;
+    private final long device;
+    private final long context;
 
 
     private static SoundSource backgroundSource;
@@ -63,7 +63,7 @@ public class SoundManager {
     public void setAttenuationModel(int model) {
         alDistanceModel(model);
     }
-    
+
     public void cleanup() {
 
         if (context != NULL) {

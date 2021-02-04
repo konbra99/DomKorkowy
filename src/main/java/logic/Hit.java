@@ -2,12 +2,12 @@ package logic;
 
 import graphics.Config;
 import graphics.Engine;
-import graphics.Main;
 import graphics.Rectangle;
+import graphics.gui.GameplayContext;
 
 public class Hit extends Entity {
-    private int shift_time = 10;
-    private int fade_time = 30;
+    private final int shift_time = 10;
+    private final int fade_time = 30;
     private int shift_end = 0, fade_end = 0;
 
     int direction;
@@ -76,6 +76,9 @@ public class Hit extends Entity {
                 for (Entity mob : Engine.gameplay.getMobs()) {
                     if (this.rectangle.collidesWith(mob.rectangle)) {
                         Engine.addAction(()-> {if (mob.getDamage()) Engine.gameplay.KORKOWY.incKills();});
+                        GameplayContext.KORKOWY.addAction(() -> {
+                            if (mob.getDamage()) GameplayContext.KORKOWY.incKills();
+                        });
                     }
                 }
 

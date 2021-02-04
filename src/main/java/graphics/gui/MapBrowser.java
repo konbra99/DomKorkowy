@@ -42,14 +42,16 @@ public class MapBrowser extends Entity {
         File directory = new File(Config.MAP_PATH);
         File[] files = directory.listFiles();
 
-        for(File file: files)
+        assert files != null;
+        for (File file : files)
             try {
                 MapManager mapManager = new MapManager();
                 JsonObject obj = JsonUtils.fromFile(file.getAbsolutePath());
                 mapManager.fromJson(obj);
                 addMapButton(mapManager, true).filepath = file.getAbsolutePath();
 
-            } catch (Exception ignored) { }
+            } catch (Exception ignored) {
+            }
     }
 
     public void createServerMapButtons() {
@@ -92,7 +94,7 @@ public class MapBrowser extends Entity {
         addButton(button);
 
         String[] option_strings = new String[]{"EASY", "MEDIUM", "HARD"};
-        Object[] option_values = new Object[] {0.0f, 0.5f, 1.0f};
+        Object[] option_values = new Object[]{0.0f, 0.5f, 1.0f};
         button = new OptionField(this, Button.LONG_BUTTON, option_strings, option_values);
         button.setText("trud:", "msgothic.bmp", 0.05f, 0.08f);
         addButton(button);
@@ -131,11 +133,13 @@ public class MapBrowser extends Entity {
         List<String> map_names = new ArrayList<>();
         List<String> map_contexts = new ArrayList<>();
 
-        for(File file: files) {
+        assert files != null;
+        for (File file : files) {
             try {
-                map_names.add(file.getName().substring(0,7));
+                map_names.add(file.getName().substring(0, 7));
                 map_contexts.add(JsonUtils.toString(file));
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+            }
         }
         button = new OptionField(this, Button.LONG_BUTTON, map_names.toArray(new String[1]), map_contexts.toArray());
         button.setText("mapa:", "msgothic.bmp", 0.05f, 0.08f);
@@ -193,7 +197,7 @@ public class MapBrowser extends Entity {
     @Override
     public void update() {
         for (Button button : dataFields) {
-            button.move(0.0f, -Input.MOUSE_SCROLL_Y*MOUSE_SCROLL_SPEED);
+            button.move(0.0f, -Input.MOUSE_SCROLL_Y * MOUSE_SCROLL_SPEED);
             if (searchRect.collidesWith(button.getRectangle())) {
                 button.update();
             }
@@ -212,7 +216,7 @@ public class MapBrowser extends Entity {
     }
 
     public void deselectAll() {
-        for(Button button: dataFields) {
+        for (Button button : dataFields) {
             button.is_selected = false;
         }
     }
@@ -237,20 +241,20 @@ public class MapBrowser extends Entity {
     }
 
     public void join(int id) {
-        for (DataField field: dataFields) {
-            if (((ClientRadioField)field).join(id)) break;
+        for (DataField field : dataFields) {
+            if (((ClientRadioField) field).join(id)) break;
         }
     }
 
     public void exit(int id) {
-        for (DataField field: dataFields) {
-            if (((ClientRadioField)field).exit(id)) break;
+        for (DataField field : dataFields) {
+            if (((ClientRadioField) field).exit(id)) break;
         }
     }
 
     public void status(int id, boolean s) {
-        for (DataField field: dataFields) {
-            if (((ClientRadioField)field).status(id, s)) break;
+        for (DataField field : dataFields) {
+            if (((ClientRadioField) field).status(id, s)) break;
         }
     }
 }

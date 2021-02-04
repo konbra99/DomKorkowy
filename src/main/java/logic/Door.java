@@ -2,42 +2,48 @@ package logic;
 
 import com.google.gson.JsonObject;
 import graphics.Rectangle;
+import map.Stage;
 
 import java.util.Map;
 
 public class Door extends Entity {
-	public int linkedStage;
+	public int stageX, stageY;
+	public int doorNumber;
+	public int linkedDoor;
 
 	public Door() {
 		super();
 		this.groups |= GROUP_DOORS;
 	}
 
-	public Door(float posX, float posY, float width, float height, String textureName, int linkedStage, boolean activeFlag) {
+	public Door(float posX, float posY, float width, float height, String textureName,
+				Stage stage, int linkedDoor, boolean activeFlag) {
 		this.rectangle = new Rectangle(posX, posY, width, height);
 		this.textureName = textureName;
 		this.activeFlag = activeFlag;
-		this.linkedStage = linkedStage;
+		this.stageX = stage.getxIndex();
+		this.stageY = stage.getyIndex();
+		this.linkedDoor = linkedDoor;
 		this.groups |= GROUP_DOORS;
-	}
-
-	@Override
-	public void init() {
-		super.init();
-		this.rectangle.initGL(this.textureName, "rectangle.vert.glsl", "rectangle.frag");
 	}
 
 	@Override
 	public JsonObject toJson() {
 		JsonObject obj = super.toJson();
-		obj.addProperty("linkedStage", linkedStage);
+		obj.addProperty("stageX", stageX);
+		obj.addProperty("stageY", stageY);
+		obj.addProperty("number", doorNumber);
+		obj.addProperty("linkedDoor", linkedDoor);
 		obj.addProperty("activeFlag", activeFlag);
 		return obj;
 	}
 
 	@Override
 	public void fromJson(JsonObject obj) {
-		this.linkedStage = obj.get("linkedStage").getAsInt();
+		this.stageX = obj.get("stageX").getAsInt();
+		this.stageY = obj.get("stageY").getAsInt();
+		this.doorNumber = obj.get("number").getAsInt();
+		this.linkedDoor = obj.get("linkedDoor").getAsInt();
 		this.activeFlag = obj.get("activeFlag").getAsBoolean();
 		super.fromJson(obj);
 	}
@@ -45,13 +51,18 @@ public class Door extends Entity {
 	@Override
 	public Map<String, Float> getAttributes() {
 		Map<String, Float> attr = super.getAttributes();
-		attr.put("link", (float) this.linkedStage);
+		attr.put("link", (float) linkedDoor);
 		return attr;
 	}
 
 	@Override
 	public void setAttributes(Map<String, Float> map) {
 		super.setAttributes(map);
-		linkedStage = (int) Math.floor(map.get("link"));
+		linkedDoor = (int) Math.floor(map.get("link"));
+	}
+
+	public Door getLinkedDoor(Map<Integer, Entity> doorList) {
+		System.out.println("zwracam " + linkedDoor);
+		return ((Door) doorList.get(linkedDoor));
 	}
 }

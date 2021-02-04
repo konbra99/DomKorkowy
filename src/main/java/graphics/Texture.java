@@ -9,8 +9,10 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class Texture {
     private final int texture;
+    private String textureName;
 
     public Texture(String textureName, float[] texCoords, boolean X_WRAP, boolean Y_WRAP, float width, float height) {
+        this.textureName = textureName;
         texture = glGenTextures();
         glBindTexture(GL_TEXTURE_2D, texture);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -36,7 +38,12 @@ public class Texture {
         }
     }
 
+    public String getTextureName() {
+        return textureName;
+    }
+
     public void setImage(String imageName) {
+        this.textureName = imageName;
         bind();
         IntBuffer buffer = BufferUtils.getBuffer(imageName);
         int[] dims = ImageUtils.sizeMap.get(imageName);

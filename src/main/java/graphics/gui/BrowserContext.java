@@ -16,7 +16,6 @@ import static server.Protocol.*;
 public class BrowserContext extends Context {
 
 
-
     // ZMIENNE
     public MapBrowser browser;
     ArrayList<Button> buttonList;
@@ -45,7 +44,7 @@ public class BrowserContext extends Context {
     @Override
     public void refreshContext() {
         this.buttonList.clear();
-        for(Button b: buttonMap.values())
+        for (Button b : buttonMap.values())
             b.setActiveVisible(false, false);
     }
 
@@ -61,7 +60,6 @@ public class BrowserContext extends Context {
                 GameplayContext.map = browser.active.map;
                 Engine.gameplay.refreshContext();
                 Engine.activeContext = Engine.gameplay;
-                Engine.STATE = Engine.GAME_STATE.GAMEPLAY;
             }
 
         };
@@ -77,11 +75,9 @@ public class BrowserContext extends Context {
                 int status = Engine.client.lobbyJoin(browser.roomActive.lobby.id);
                 if (status == LOBBY_NOT_EXIST) {
                     System.out.println("lobby nie istnieje");
-                }
-                else if (status == LOBBY_IS_FULL) {
+                } else if (status == LOBBY_IS_FULL) {
                     System.out.println("lobby nie ma miejsc");
-                }
-                else if (status == LOBBY_JOINED) {
+                } else if (status == LOBBY_JOINED) {
                     System.out.println("dolaczono do lobby");
                     Engine.browser.refreshContext();
                     Engine.browser.addExitButton();
@@ -89,7 +85,6 @@ public class BrowserContext extends Context {
                     Engine.browser.browser.removeAll();
                     Engine.activeContext = Engine.browser;
                     Engine.browser.browser.createLobbyButtons();
-                    Engine.STATE = Engine.GAME_STATE.BROWSER;
                     Engine.browser.browser.join(Engine.client.id);
                     Engine.client.spawnLobbyReader();
                 }
@@ -166,10 +161,7 @@ public class BrowserContext extends Context {
     public void addBackButton() {
         Button button = new Button(0.28f, -0.85f, 0.25f, 0.5f, null, Button.LEFT_ARROW);
         button.setText("BACK", "msgothic.bmp", 0.05f, 0.12f);
-        button.action = () -> {
-            Engine.activeContext = Engine.menu;
-            Engine.STATE = Engine.GAME_STATE.MENU;
-        };
+        button.action = () -> Engine.activeContext = Engine.menu;
         buttonList.add(button);
     }
 
@@ -180,7 +172,6 @@ public class BrowserContext extends Context {
             System.out.println("BrowserContext -> ROOM EXIT");
             Engine.client.lobbyExit();
             Engine.activeContext = Engine.menu;
-            Engine.STATE = Engine.GAME_STATE.MENU;
         };
         buttonList.add(button);
     }
@@ -191,21 +182,17 @@ public class BrowserContext extends Context {
         button.action = () -> {
             if (browser.is_new_map) {
                 MapManager map = new MapManager();
-                for (DataField dataField: browser.dataFields)
+                for (DataField dataField : browser.dataFields)
                     dataField.getValue(map);
-                Engine.STATE = Engine.GAME_STATE.EDITOR;
                 Engine.editor = new EditorContext(map);
-                Engine.activeContext = Engine.editor;
-            }
-            else {
-                Engine.STATE = Engine.GAME_STATE.EDITOR;
+            } else {
                 Engine.editor = new EditorContext(browser.active.map);
-                Engine.activeContext = Engine.editor;
                 //System.out.println("NOT new map");
 //                Engine.activeContext = Engine.editor;
 //                Engine.STATE = Engine.GAME_STATE.EDITOR;
             }
 
+            Engine.activeContext = Engine.editor;
         };
         buttonList.add(button);
     }
@@ -259,7 +246,7 @@ public class BrowserContext extends Context {
             this.browser.update();
             for (Button b : buttonList)
                 b.update();
-            for(Button b: buttonMap.values())
+            for (Button b : buttonMap.values())
                 b.update();
         }
     }
@@ -270,7 +257,7 @@ public class BrowserContext extends Context {
         this.browser.draw();
         for (Button b : buttonList)
             b.draw();
-        for(Button b: buttonMap.values())
+        for (Button b : buttonMap.values())
             b.draw();
         this.warning.draw();
     }

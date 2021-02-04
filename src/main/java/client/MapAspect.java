@@ -5,13 +5,12 @@ import map.MapManager;
 import org.aspectj.lang.JoinPoint;
 
 public class MapAspect {
-	private MapManager map;
 
 	public MapAspect(MapManager map) {
-		this.map = map;
 	}
 
 	public void afterEntityRemove(JoinPoint joinPoint) {
-		Engine.client.removeEntity(MapManager.getCurrentStageNoumber(), (Integer)joinPoint.getArgs()[0]);
+		int[] point = MapManager.getCurrentStageTab();
+		Engine.client.removeEntity(point[0], point[1], (Integer) joinPoint.getArgs()[0]);
 	}
 }

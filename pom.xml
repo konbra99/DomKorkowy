@@ -16,6 +16,7 @@
                     <source>15</source>
                     <target>15</target>
                 </configuration>
+                <version>3.8.1</version>
             </plugin>
         </plugins>
     </build>

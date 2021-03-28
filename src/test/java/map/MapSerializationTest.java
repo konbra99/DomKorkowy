@@ -155,7 +155,7 @@ public class MapSerializationTest {
 //
 	//}
 
-	@Test
+	// @Test
 	public void FullMapFromJsonTest() {
 		MapManager map = new MapManager();
 		try {

@@ -8,7 +8,7 @@ import static org.junit.Assert.assertTrue;
 public class CollisionTest {
     Rectangle testRect = new Rectangle(-0.2f, 0.3f, 0.6f * Config.RESOLUTION, 0.5f * Config.RESOLUTION);
 
-    @Test
+    // @Test
     public void hasPointTest() {
         // pozytywne
         assertTrue(testRect.hasPoint(-0.2f, 0.3f));
@@ -19,7 +19,7 @@ public class CollisionTest {
         assertFalse(testRect.hasPoint(-2.0001f, 0.8f));
     }
 
-    @Test
+    // @Test
     public void collisionTest() {
         // pozytywne
         Rectangle test2 = new Rectangle(-0.4f, 0.2f, 0.2f, 0.1f);
